@@ -64,7 +64,7 @@ Z16 !s110 1570055170
 !i10b 1
 Z17 !s108 1570055170.000000
 Z18 !s90 -reportprogress|300|-work|work|fulladder.vhd|
-!s107 fulladder.vhd|
+Z19 !s107 fulladder.vhd|
 !i113 1
 R11
 R12
@@ -82,7 +82,7 @@ R16
 !i10b 1
 R17
 R18
-Z19 !s107 fulladder.vhd|
+R19
 !i113 1
 R11
 R12
@@ -320,13 +320,73 @@ R10
 !i113 1
 R11
 R12
+Eright_shifter
+Z54 w1570399405
+Z55 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+R2
+R3
+R0
+Z56 8right_shifter_32bit.vhd
+Z57 Fright_shifter_32bit.vhd
+l0
+L16
+VBUf@]?5<RJ6ooKPiRz[z50
+!s100 ^36jlFoaY;QlibXM:jc2g3
+R6
+32
+Z58 !s110 1570399422
+!i10b 1
+Z59 !s108 1570399422.000000
+Z60 !s90 -reportprogress|300|-work|work|right_shifter_32bit.vhd|
+Z61 !s107 right_shifter_32bit.vhd|
+!i113 1
+R11
+R12
+Abehavioral
+R55
+R2
+R3
+Z62 DEx4 work 13 right_shifter 0 22 BUf@]?5<RJ6ooKPiRz[z50
+l36
+L25
+VH`Q4[4RlG@zWg5`McW@KJ0
+!s100 kk=L2b;Lg9ejXVcOOf6<j1
+R6
+32
+R58
+!i10b 1
+R59
+R60
+R61
+!i113 1
+R11
+R12
+Astructure
+R2
+R3
+DEx4 work 13 right_shifter 0 22 W3BHNTbz5^MaXZFkU?[j>1
+l31
+L23
+VbbDVKLSK0NYXg1S`6<<e@3
+!s100 AjcM5mffKm9L8?GTEFeW42
+R6
+32
+!s110 1570392529
+!i10b 1
+!s108 1570392529.000000
+R60
+R61
+!i113 1
+R11
+R12
+w1570392527
 Exorg2
 R51
 R2
 R3
 R0
-Z54 8xorg2.vhd
-Z55 Fxorg2.vhd
+Z63 8xorg2.vhd
+Z64 Fxorg2.vhd
 l0
 L23
 V;hb`C0MKik;h36`3`SzM60
