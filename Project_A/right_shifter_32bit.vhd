@@ -24,12 +24,6 @@ end right_shifter;
 
 architecture behavioral of right_shifter is
 
-component mux_2to1_1bit
-  port(i_0, i_1          : in std_logic;
-       i_sel		 : in std_logic;  
-       o_F     	         : out std_logic);
-end component;
-
 begin
 
 	process is 
