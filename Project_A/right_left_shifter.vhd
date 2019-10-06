@@ -6,7 +6,7 @@
 -- right__left_shifter.vhd
 -------------------------------------------------------------------------
 -- DESCRIPTION: This file contains an implementation of a 32-bit right 
--- right shifter.
+-- left shifter.
 -------------------------------------------------------------------------
 
 library IEEE;
@@ -18,7 +18,7 @@ entity right_left_shifter is
   port( i_shift			: in std_logic_vector(31 downto 0);
 	ctl_bits_to_shift 	: in std_logic_vector(4 downto 0);
 	ctl_which_shift		: in std_logic_vector(1 downto 0);	--'00' <= arithmetic shift right     '01' <= logical shift right     '10' <= Shift left 	
-	o_shift		: out std_logic_vector(31 downto 0));
+	o_shift			: out std_logic_vector(31 downto 0));
 
 end right_left_shifter;
 
@@ -33,7 +33,6 @@ begin
 		if ctl_which_shift = "00" then 
 			o_shift <= std_logic_vector(shift_right(signed(i_shift), to_integer(unsigned(ctl_bits_to_shift))));
  
-
 		--Logical Left Shift
 		elsif ctl_which_shift = "01" then
 			o_shift <= std_logic_vector(shift_right(unsigned(i_shift), to_integer(unsigned(ctl_bits_to_shift))));
