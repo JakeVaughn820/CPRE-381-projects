@@ -59,6 +59,7 @@ signal      s_a_xor_b        : std_logic;
 signal      s_sum            : std_logic;
 signal      s_notA           : std_logic;
 signal      s_notB           : std_logic;
+signal      s_Carryout       : std_logic;
 
 
 begin
@@ -82,8 +83,10 @@ fulladder1: fulladder
   port map(i_A1 => s_ainvert_out,
        i_B1 => s_binvert_out,
        i_Cin => Carryin,
-       o_carry => Carryout,
+       o_carry => s_Carryout,
        o_sum => s_sum);
+
+ Carryout <= s_Carryout; 
 
  s_a_and_b <= s_ainvert_out AND s_binvert_out;
 
@@ -104,6 +107,6 @@ resultMux: mux_5to1_1bit
 
  Set <= s_sum;
 
- Overflow <= Carryin XOR Carryout;
+ Overflow <= Carryin XOR s_Carryout;
 
 end arch;
