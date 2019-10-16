@@ -29,16 +29,7 @@ component MIPS_processor_V3
        i_rd         : in std_logic_vector(4 downto 0);     -- Write address
 
        i_ALUSrc     : in std_logic;  -- rt or Immediate
-       i_ALUOp      : in std_logic_vector(5 downto 0); --Operation for the ALU
-                                                       --000000 : AND
-                                                       --000011 : xor
-                                                       --011100 : slt
-                                                       --110000 : NOR
-                                                       --110001 : NAND
-                                                       --011010 : Sub
-                                                       --111100 : arithmetic shift right
-                                                       --111101 : logical shift right
-                                                       --111110 : Shift left
+       i_ALUOp      : in std_logic_vector(5 downto 0);
        i_regWrite   : in std_logic;  -- Write to reg?
        i_mem_we     : in std_logic;  -- Write to mem?
        i_MemtoReg   : in std_logic;  -- lw

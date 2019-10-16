@@ -3,16 +3,18 @@
 -- Nickolas Mitchell
 -------------------------------------------------------------------------
 
--- ALU_32_bit.vhd
+-- ALU_and_Shifter.vhd
 library IEEE;
 use IEEE.std_logic_1164.all;
 use ieee.std_logic_misc.all;
 
-entity ALU_32_bit is
+entity ALU_and_Shifter is
   port(A         : in   std_logic_vector(31 downto 0);
        B         : in   std_logic_vector(31 downto 0);
-       ALUOp     : in   std_logic_vector(5 downto 0);  --Operation for the ALU
+       ALUOp     : in   std_logic_vector(5 downto 0); --Operation for the ALU
                                                        --000000 : AND
+                                                       --000001 : or
+                                                       --000010 : add
                                                        --000011 : xor
                                                        --011100 : slt
                                                        --110000 : NOR
@@ -26,9 +28,9 @@ entity ALU_32_bit is
        Carryout  : out  std_logic;
        Overflow  : out  std_logic;
        Zero      : out  std_logic); 
-end ALU_32_bit;
+end ALU_and_Shifter;
 
-architecture arch of ALU_32_bit is
+architecture arch of ALU_and_Shifter is
 
 --components
 component ALU_32_bit

@@ -27,7 +27,7 @@ begin
 	ctl_bits_to_shift <= Shift_Amount when (Op =  "111100") else
 		             Shift_Amount when (Op =  "111101") else
                              Shift_Amount when (Op =  "111110") else
-		             "0000";
+		             "00000";
 
 end arch;
 

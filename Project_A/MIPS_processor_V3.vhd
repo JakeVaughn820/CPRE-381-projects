@@ -17,6 +17,8 @@ entity MIPS_processor_V3 is
        i_ALUSrc     : in std_logic;  -- rt or Immediate
        i_ALUOp      : in std_logic_vector(5 downto 0); --Operation for the ALU
                                                        --000000 : AND
+                                                       --000001 : or
+                                                       --000010 : add
                                                        --000011 : xor
                                                        --011100 : slt
                                                        --110000 : NOR
@@ -159,7 +161,7 @@ begin
 
   ALU1: ALU_and_Shifter
   port map(A => s_rs_data,
-       B => s_rt_data,
+       B => s_ALUSrc_out,
        ALUOp => i_ALUOp,
        Shift_Amount => i_immediate(4 downto 0),
        F => s_ALU_result,
