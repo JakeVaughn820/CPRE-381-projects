@@ -1,9 +1,11 @@
-   -- add $rd $rs $rt
+-----------------Add Instructions----------------- 
+
+  -- add $rd $rs $rt
        s_rs <= "xxxxx";
        s_rt <= "xxxxx";
        s_rd <= "xxxxx";
        s_ALUSrc <= '0';
-       s_ALUOp <= '000010';
+       s_ALUOp <= "000010";
        s_regWrite <= '1';
        s_mem_we <= '0';
        s_MemtoReg <= '0';
@@ -14,7 +16,7 @@
        s_rs <= "xxxxx";
        s_rd <= "xxxxx";
        s_ALUSrc <= '1';
-       s_ALUOp <= '000010';
+       s_ALUOp <= "000010";
        s_regWrite <= '1';
        s_mem_we <= '0';
        s_MemtoReg <= '0';
@@ -22,23 +24,26 @@
     wait for cCLK_PER;
 
 
+
+-----------------Sub Instructions----------------- 
+
    -- sub $rd $rs $rt
        s_rs <= "xxxxx";
        s_rt <= "xxxxx";
        s_rd <= "xxxxx";
        s_ALUSrc <= '0';
-       s_ALUOp <= '011010';
+       s_ALUOp <= "011010";
        s_regWrite <= '1';
        s_mem_we <= '0';
        s_MemtoReg <= '0';
     wait for cCLK_PER; 
 
-
+ 
    -- subi $rd $rs imm
        s_rs <= "xxxxx";
        s_rd <= "xxxxx";
        s_ALUSrc <= '1';
-       s_ALUOp <= '011010';
+       s_ALUOp <= "011010";
        s_regWrite <= '1';
        s_mem_we <= '0';
        s_MemtoReg <= '0';
@@ -46,12 +51,15 @@
     wait for cCLK_PER; 
 
 
+
+-----------------And Instructions----------------- 
+
    -- and $rd $rs $rt
        s_rs <= "xxxxx";
        s_rt <= "xxxxx";
        s_rd <= "xxxxx";
        s_ALUSrc <= '0';
-       s_ALUOp <= '000000';
+       s_ALUOp <= "000000";
        s_regWrite <= '1';
        s_mem_we <= '0';
        s_MemtoReg <= '0';
@@ -62,7 +70,7 @@
        s_rs <= "xxxxx";
        s_rd <= "xxxxx";
        s_ALUSrc <= '1';
-       s_ALUOp <= '000000';
+       s_ALUOp <= "000000";
        s_regWrite <= '1';
        s_mem_we <= '0';
        s_MemtoReg <= '0';
@@ -70,12 +78,15 @@
     wait for cCLK_PER; 
 
 
+
+-----------------Or Instructions----------------- 
+
    -- or $rd $rs $rt
        s_rs <= "xxxxx";
        s_rt <= "xxxxx";
        s_rd <= "xxxxx";
        s_ALUSrc <= '0';
-       s_ALUOp <= '000001';
+       s_ALUOp <= "000001";
        s_regWrite <= '1';
        s_mem_we <= '0';
        s_MemtoReg <= '0';
@@ -86,7 +97,7 @@
        s_rs <= "xxxxx";
        s_rd <= "xxxxx";
        s_ALUSrc <= '1';
-       s_ALUOp <= '000001';
+       s_ALUOp <= "000001";
        s_regWrite <= '1';
        s_mem_we <= '0';
        s_MemtoReg <= '0';
@@ -94,12 +105,15 @@
     wait for cCLK_PER; 
 
 
+
+-----------------Xor Instructions----------------- 
+
    -- xor $rd $rs $rt
        s_rs <= "xxxxx";
        s_rt <= "xxxxx";
        s_rd <= "xxxxx";
        s_ALUSrc <= '0';
-       s_ALUOp <= '000011';
+       s_ALUOp <= "000011";
        s_regWrite <= '1';
        s_mem_we <= '0';
        s_MemtoReg <= '0';
@@ -110,7 +124,7 @@
        s_rs <= "xxxxx";
        s_rd <= "xxxxx";
        s_ALUSrc <= '1';
-       s_ALUOp <= '000011';
+       s_ALUOp <= "000011";
        s_regWrite <= '1';
        s_mem_we <= '0';
        s_MemtoReg <= '0';
@@ -118,12 +132,15 @@
     wait for cCLK_PER; 
 
 
+
+-----------------Nor Instructions-----------------
+ 
    -- nor $rd $rs $rt
        s_rs <= "xxxxx";
        s_rt <= "xxxxx";
        s_rd <= "xxxxx";
        s_ALUSrc <= '0';
-       s_ALUOp <= '110000';
+       s_ALUOp <= "110000";
        s_regWrite <= '1';
        s_mem_we <= '0';
        s_MemtoReg <= '0';
@@ -134,7 +151,7 @@
        s_rs <= "xxxxx";
        s_rd <= "xxxxx";
        s_ALUSrc <= '1';
-       s_ALUOp <= '110000';
+       s_ALUOp <= "110000";
        s_regWrite <= '1';
        s_mem_we <= '0';
        s_MemtoReg <= '0';
@@ -142,12 +159,15 @@
     wait for cCLK_PER; 
 
 
+
+-----------------Nand Instructions----------------- 
+
    -- nand $rd $rs $rt
        s_rs <= "xxxxx";
        s_rt <= "xxxxx";
        s_rd <= "xxxxx";
        s_ALUSrc <= '0';
-       s_ALUOp <= '110001';
+       s_ALUOp <= "110001";
        s_regWrite <= '1';
        s_mem_we <= '0';
        s_MemtoReg <= '0';
@@ -158,7 +178,7 @@
        s_rs <= "xxxxx";
        s_rd <= "xxxxx";
        s_ALUSrc <= '1';
-       s_ALUOp <= '110001';
+       s_ALUOp <= "110001";
        s_regWrite <= '1';
        s_mem_we <= '0';
        s_MemtoReg <= '0';
@@ -166,12 +186,15 @@
     wait for cCLK_PER; 
 
 
+
+-----------------Shift/Load/Store Instructions----------------- 
+
    -- slt $rd $rs $rt
        s_rs <= "xxxxx";
        s_rt <= "xxxxx";
        s_rd <= "xxxxx";
        s_ALUSrc <= '0';
-       s_ALUOp <= '011100';
+       s_ALUOp <= "011100";
        s_regWrite <= '1';
        s_mem_we <= '0';
        s_MemtoReg <= '0';
@@ -182,7 +205,7 @@
        s_rs <= "xxxxx";
        s_rd <= "xxxxx";
        s_ALUSrc <= '1';
-       s_ALUOp <= '011100';
+       s_ALUOp <= "011100";
        s_regWrite <= '1';
        s_mem_we <= '0';
        s_MemtoReg <= '0';
@@ -194,7 +217,7 @@
        s_rs <= "xxxxx";
        s_rd <= "xxxxx"; 
        s_ALUSrc <= '1';
-       s_ALUOp <= '000010';
+       s_ALUOp <= "000010";
        s_regWrite <= '1';
        s_mem_we <= '0';
        s_MemtoReg <= '1';
@@ -206,7 +229,7 @@
        s_rs <= "xxxxx";
        s_rt <= "xxxxx";
        s_ALUSrc <= '1';
-       s_ALUOp <= '000010';
+       s_ALUOp <= "000010";
        s_regWrite <= '0';
        s_mem_we <= '1';
        s_immediate <= x"XXXX";
@@ -217,7 +240,7 @@
        s_rt <= "xxxxx";
        s_rd <= "xxxxx";
        s_ALUSrc <= '0';
-       s_ALUOp <= '111110';
+       s_ALUOp <= "111110";
        s_regWrite <= '1';
        s_mem_we <= '0';
        s_MemtoReg <= '0';
@@ -229,7 +252,7 @@
        s_rt <= "xxxxx";
        s_rd <= "xxxxx";
        s_ALUSrc <= '0';
-       s_ALUOp <= '111101';
+       s_ALUOp <= "111101";
        s_regWrite <= '1';
        s_mem_we <= '0';
        s_MemtoReg <= '0';
@@ -241,7 +264,7 @@
        s_rt <= "xxxxx";
        s_rd <= "xxxxx";
        s_ALUSrc <= '0';
-       s_ALUOp <= '111100';
+       s_ALUOp <= "111100";
        s_regWrite <= '1';
        s_mem_we <= '0';
        s_MemtoReg <= '0';
