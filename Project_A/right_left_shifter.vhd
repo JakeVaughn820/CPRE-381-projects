@@ -6,7 +6,7 @@
 -- right__left_shifter.vhd
 -------------------------------------------------------------------------
 -- DESCRIPTION: This file contains an implementation of a 32-bit right 
--- left shifter.
+-- left shifter. Works
 -------------------------------------------------------------------------
 
 library IEEE;
