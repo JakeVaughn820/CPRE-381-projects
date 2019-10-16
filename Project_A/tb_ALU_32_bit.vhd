@@ -81,6 +81,35 @@ tb_ALU_32_bit: ALU_32_bit
      s_B <= x"00000000";
      s_control <= "000000";
      wait for cCLK_PER; 
+
+
+     s_A <= x"01110001";
+     s_B <= x"01000000";
+     s_control <= "011100";
+     wait for cCLK_PER; 
+
+
+     s_A <= x"01110001";
+     s_B <= x"01111111";
+     s_control <= "011100";
+     wait for cCLK_PER; 
+
+
+     s_A <= x"01110001";
+     s_B <= x"01000100";
+     s_control <= "000001";
+     wait for cCLK_PER; 
+
+     s_A <= x"01110001";
+     s_B <= x"01000000";
+     s_control <= "000011";
+     wait for cCLK_PER; 
+
+
+     s_A <= x"01110001";
+     s_B <= x"01000000";
+     s_control <= "110000";
+     wait for cCLK_PER; 
   wait;
   end process;
 end arch;
