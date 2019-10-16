@@ -89,7 +89,7 @@ component zero_sign_ext_16_32bit
 
 end component;
 
-component ALU_32_bit
+component ALU_and_Shifter
   port(A         : in   std_logic_vector(31 downto 0);
        B         : in   std_logic_vector(31 downto 0);
        ALUOp     : in   std_logic_vector(5 downto 0);
@@ -102,8 +102,6 @@ end component;
 --end components
 
 --signals
-signal       s_Add_Sub_S  : std_logic_vector(31 downto 0);
-
 signal       s_rs_data    : std_logic_vector(31 downto 0);
 signal       s_rt_data    : std_logic_vector(31 downto 0);
 signal       s_mem_q      : std_logic_vector(31 downto 0);
@@ -143,7 +141,7 @@ begin
 
    dmem: mem
    port map( clk => i_CLK,
-             addr => s_Add_Sub_S(9 downto 0),
+             addr => s_ALU_result(9 downto 0),
              data => s_rt_data,
              we => i_mem_we,
              q => s_mem_q);
@@ -159,7 +157,7 @@ begin
 	    i_X => i_MemtoReg,
        	    o_Y => s_MemtoReg_out);
 
-  ALU1: ALU_32_bit
+  ALU1: ALU_and_Shifter
   port map(A => s_rs_data,
        B => s_rt_data,
        ALUOp => i_ALUOp,

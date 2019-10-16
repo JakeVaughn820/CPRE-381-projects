@@ -96,7 +96,7 @@ P_TB: process
        s_rs <= "00000";
        s_rd <= "00001";
        s_ALUSrc <= '1';
-       s_ALUOp <= '000010';
+       s_ALUOp <= "000010";
        s_regWrite <= '1';
        s_mem_we <= '0';
        s_MemtoReg <= '0';
@@ -107,22 +107,77 @@ P_TB: process
        s_rs <= "00000";
        s_rd <= "00010";
        s_ALUSrc <= '1';
-       s_ALUOp <= '000010';
+       s_ALUOp <= "000010";
        s_regWrite <= '1';
        s_mem_we <= '0';
        s_MemtoReg <= '0';
        s_immediate <= x"0002";
     wait for cCLK_PER;
 
-    -- sw $rt, imm($rs)
+    -- sw $1, 0($1)
        s_rs <= "00001";
        s_rt <= "00001";
        s_ALUSrc <= '1';
-       s_ALUOp <= '000010';
+       s_ALUOp <= "000010";
        s_regWrite <= '0';
        s_mem_we <= '1';
        s_immediate <= x"0000";
     wait for cCLK_PER; 
+
+    -- sw $2, 0($2)
+       s_rs <= "00010";
+       s_rt <= "00010";
+       s_ALUSrc <= '1';
+       s_ALUOp <= "000010";
+       s_regWrite <= '0';
+       s_mem_we <= '1';
+       s_immediate <= x"0000";
+    wait for cCLK_PER; 
+
+    -- lw $3, 0($1)
+       s_rs <= "00001";
+       s_rd <= "00011"; 
+       s_ALUSrc <= '1';
+       s_ALUOp <= "000010";
+       s_regWrite <= '1';
+       s_mem_we <= '0';
+       s_MemtoReg <= '1';
+       s_immediate <= x"0000";
+    wait for cCLK_PER; 
+
+    -- lw $4, 0($2)
+       s_rs <= "00010";
+       s_rd <= "00100"; 
+       s_ALUSrc <= '1';
+       s_ALUOp <= "000010";
+       s_regWrite <= '1';
+       s_mem_we <= '0';
+       s_MemtoReg <= '1';
+       s_immediate <= x"0000";
+    wait for cCLK_PER; 
+
+   -- add $3 $3 $4
+       s_rs <= "00011";
+       s_rt <= "00100";
+       s_rd <= "00011";
+       s_ALUSrc <= '0';
+       s_ALUOp <= "000010";
+       s_regWrite <= '1';
+       s_mem_we <= '0';
+       s_MemtoReg <= '0';
+    wait for cCLK_PER; 
+
+   -- add $4 $3 $1
+       s_rs <= "00011";
+       s_rt <= "00001";
+       s_rd <= "00100";
+       s_ALUSrc <= '0';
+       s_ALUOp <= "000010";
+       s_regWrite <= '1';
+       s_mem_we <= '0';
+       s_MemtoReg <= '0';
+    wait for cCLK_PER; 
+
    wait;
 end process;
 
