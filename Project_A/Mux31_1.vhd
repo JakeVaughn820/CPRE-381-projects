@@ -7,7 +7,7 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
-entity Mux5_32 is
+entity Mux31_1 is
   port(i_data0        : in  STD_LOGIC_VECTOR (31 downto 0);
        i_data1        : in  STD_LOGIC_VECTOR (31 downto 0);
        i_data2        : in  STD_LOGIC_VECTOR (31 downto 0);
@@ -43,9 +43,9 @@ entity Mux5_32 is
        i_Sel          : in std_logic_vector(4 downto 0);     -- Data value input
        o_data          : out std_logic_vector(31 downto 0));   -- Data value output
 
-end Mux5_32;
+end Mux31_1;
 
-architecture Behavioral of Mux5_32 is
+architecture Behavioral of Mux31_1 is
 
 begin
 

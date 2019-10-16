@@ -110,6 +110,7 @@ end component;
   signal s_data29       :   STD_LOGIC_VECTOR (31 downto 0);
   signal s_data30       :   STD_LOGIC_VECTOR (31 downto 0);
   signal s_data31       :   STD_LOGIC_VECTOR (31 downto 0);
+
 begin
 
    Dec: Decoder5_32

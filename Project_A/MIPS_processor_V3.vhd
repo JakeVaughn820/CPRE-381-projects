@@ -134,7 +134,6 @@ begin
             o_rs_data => s_rs_data,
             o_rt_data => s_rt_data);
 
-  
    ALUSrc: mux2_1_D
    port map(i_A => s_rt_data,
 	    i_B => s_32Imm,
