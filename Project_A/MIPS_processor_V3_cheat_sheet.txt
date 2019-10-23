@@ -1,3 +1,22 @@
+ALUOp "000000"
+"ainvert,binvert,Carryin,Operation(2downto0)"
+or 
+--111100 : sra
+--111101 : srl
+--111110 : sra
+
+
+Operation(2downto0) 000 and
+                    001 or
+                    010 sum
+                    011 xor
+                    100 less
+
+ALUSrc                   
+regWrite
+mem_we
+MemtoReg
+
 -----------------Add Instructions----------------- 
 
   -- add $rd $rs $rt
