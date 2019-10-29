@@ -17,6 +17,7 @@ regWrite
 mem_we
 MemtoReg
 
+https://creately.com/diagram/example/i13bud9a1/mips
 -----------------Add Instructions----------------- 
 
   -- add $rd $rs $rt
