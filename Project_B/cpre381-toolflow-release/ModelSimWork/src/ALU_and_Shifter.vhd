@@ -27,7 +27,7 @@ entity ALU_and_Shifter is
        F         : out  std_logic_vector(31 downto 0);
        Carryout  : out  std_logic;
        Overflow  : out  std_logic;
-       Zero      : out  std_logic); 
+       Zero      : out  std_logic);
 end ALU_and_Shifter;
 
 architecture arch of ALU_and_Shifter is
@@ -40,14 +40,14 @@ component ALU_32_bit
        F         : out  std_logic_vector(31 downto 0);
        Carryout  : out  std_logic;
        Overflow  : out  std_logic;
-       Zero      : out  std_logic); 
+       Zero      : out  std_logic);
 end component;
 
 component right_left_shifter
 --generic(N : integer:=32);
   port( i_shift			: in std_logic_vector(31 downto 0);
 	ctl_bits_to_shift 	: in std_logic_vector(4 downto 0);
-	ctl_which_shift		: in std_logic_vector(1 downto 0);	--'00' <= arithmetic shift right     '01' <= logical shift right     '10' <= Shift left 	
+	ctl_which_shift		: in std_logic_vector(1 downto 0);	--'00' <= arithmetic shift right     '01' <= logical shift right     '10' <= Shift left
 	o_shift			: out std_logic_vector(31 downto 0));
 
 end component;
@@ -57,7 +57,7 @@ component ALU_control
        Op 	                : in std_logic_vector(5 downto 0);
        ctl_bits_to_shift 	: out std_logic_vector(4 downto 0);
        ctl_which_shift		: out std_logic_vector(1 downto 0));
-       
+
 end component;
 
  --signals
@@ -72,7 +72,7 @@ signal       s_ctl_which_shift		: std_logic_vector(1 downto 0);
 
 begin
 
-  ALU: ALU_32_bit 
+  ALU: ALU_32_bit
   port map(A => A,
            B => B,
           control => ALUOp,
@@ -80,9 +80,9 @@ begin
            Carryout => Carryout,
            Overflow => Overflow,
            Zero => Zero );
-   
-   
-   Shifter: right_left_shifter         
+
+
+   Shifter: right_left_shifter
    port map(i_shift => B,
 	    ctl_bits_to_shift => s_ctl_bits_to_shift,
 	    ctl_which_shift => s_ctl_which_shift,
