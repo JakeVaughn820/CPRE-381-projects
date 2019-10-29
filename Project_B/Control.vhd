@@ -23,53 +23,28 @@ entity Control is
 	o_Branch	: out std_logic; 
 	--o_MemRead	: out std_logic; 
 	o_MemtoReg	: out std_logic;
-	o_ALUOp		: out std_logic_vector(1 downto 0);
+	o_ALUOp		: out std_logic_vector(2 downto 0);
 	o_MemWrite	: out std_logic;
 	o_ALUSrc	: out std_logic;
 	o_ReWrite	: out std_logic); 
 
 end Control;
 
-architecture dataflow of Control is
+architecture my_ctl of Control is
 
 begin
 
-	o_RegDst	<=	
-	o_Jump 		<= '1' when (i_opCode = "000010") else '0';
-	o_Branch	<=
-	--o_MemRead	<=
-	o_MemtoReg	<=
-	o_ALUOp		<=
-	o_MemWrite	<=
-	o_ALUSrc	<=
-	o_ReWrite	<=
+	o_RegDst	<= '0' when (i_opCode = "100011" ) else '1';	--Only 0 when 'lw'	
+	o_Jump 		<= '1' when (i_opCode = "000010" or i_opCode = "000011" or i_opCode = "001000") else '0';	--Only 1 when 'j' or 'jal' or 'jr'
+	o_Branch	<= '1' when (i_opCode = "000100" or i_opCode = "000101");	--Only 1 when 'beq' or 'bne'
+	--o_MemRead	<= '1' when (i_opCode = "100011");	--Only 1 when 'lw'
+	o_MemtoReg	<= '1' when (i_opCode = "100011");	--Only 1 when 'lw'
+	o_ALUOp		<= "XXX";
+	o_MemWrite	<= '1' when(i_opCode = "101011");	--Only 1 when 'sw' 
+	o_ALUSrc	<= '1' when(i_opCode = "100011" or i_opCode = "101011");	--Only 1 when 'lw' or 'sw'
+	o_ReWrite	<= '0' when (i_opCode = "101011" or i_opCode = "000100") else '1';	--Only 0 when 'sw' or 'beq'
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   process(i_opCode, i_fnCode)
-   	begin
-	case i_opCode and i_fnCode is
-
-
- 
-
-
-
-   	end case;
-    end process;
-end dataflow;
+end my_ctl;
 
 
 
