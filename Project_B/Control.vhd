@@ -23,7 +23,7 @@ entity Control is
 	o_Branch	: out std_logic; 
 	--o_MemRead	: out std_logic; 
 	o_MemtoReg	: out std_logic;
-	o_ALUOp		: out std_logic_vector(2 downto 0);
+	o_ALUOp		: out std_logic_vector(5 downto 0);
 	o_MemWrite	: out std_logic;
 	o_ALUSrc	: out std_logic;
 	o_ReWrite	: out std_logic); 
@@ -32,17 +32,39 @@ end Control;
 
 architecture my_ctl of Control is
 
+--Either look at opCode or fnCode
+signal s_code : std_logic_vector(5 downto 0); 
+
 begin
 
-	o_RegDst	<= '0' when (i_opCode = "100011" ) else '1';	--Only 0 when 'lw'	
-	o_Jump 		<= '1' when (i_opCode = "000010" or i_opCode = "000011" or i_opCode = "001000") else '0';	--Only 1 when 'j' or 'jal' or 'jr'
-	o_Branch	<= '1' when (i_opCode = "000100" or i_opCode = "000101");	--Only 1 when 'beq' or 'bne'
-	--o_MemRead	<= '1' when (i_opCode = "100011");	--Only 1 when 'lw'
-	o_MemtoReg	<= '1' when (i_opCode = "100011");	--Only 1 when 'lw'
-	o_ALUOp		<= "XXX";
-	o_MemWrite	<= '1' when(i_opCode = "101011");	--Only 1 when 'sw' 
-	o_ALUSrc	<= '1' when(i_opCode = "100011" or i_opCode = "101011");	--Only 1 when 'lw' or 'sw'
-	o_ReWrite	<= '0' when (i_opCode = "101011" or i_opCode = "000100") else '1';	--Only 0 when 'sw' or 'beq'
+s_code = i_fnCode when (i_opCode = "000000") else i_opCode; 
+
+	--0 for 		      addiu 		   andi                 lui                  lw                   xori                 ori                  slti                 sltiu                sw                   beq                  bne  
+	o_RegDst <= '0' when(s_code = "001001" or s_code = "001000" or s_code = "001111" or s_code = "100011" or s_code = "001110" or s_code = "001101" or s_code = "001010" or s_code = "001011" or s_code = "101011" or s_code = "000100" or s_code = "000101") else '1';  
+
+	--1 for                     j                    jal                  jr 
+	o_Jump <= '1' when(s_code = "000010" or s_code = "000011" or s_code = "001000") else '0';
+
+	--1 for                       beq                  bne 
+	o_Branch <= '1' when(s_code = "000100" or s_code = "000101") else '0'; 
+
+	--1 for                        lui                  lw 
+	o_MemRead <= '1; when(s_code = "001111" or s_code = "100011") else '0';
+
+	--1 for                         lui                  lw 
+	o_MemtoReg <= '1; when(s_code = "001111" or s_code = "100011") else '0';
+
+	-- Send opCode to ALU control block  
+	o_ALUOp <= i_opCode; 
+
+	--1 for                         sw 
+	o_MemWrite <= '1' when(s_code = "101011") else '0'; 
+
+	-- 
+	o_ALUSrc <=
+
+	--0 for                        sw                   beq                bne                  j                    jr
+	o_ReWrite <= '0' when(s_code = "101011" or s_code = "000100" or s_code "000101" or s_code = "000010" or s_code = "001000") else '1';  
 	
 end my_ctl;
 
