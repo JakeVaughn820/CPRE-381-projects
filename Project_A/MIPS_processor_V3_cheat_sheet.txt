@@ -12,6 +12,20 @@ Operation(2downto0) 000 and
                     011 xor
                     100 less
 
+
+--Operation for the ALU
+                                                       --000000 : AND
+                                                       --000001 : or
+                                                       --000010 : add
+                                                       --000011 : xor
+                                                       --011100 : slt
+                                                       --110000 : NOR
+                                                       --110001 : NAND
+                                                       --011010 : Sub
+                                                       --111100 : arithmetic shift right
+                                                       --111101 : logical shift right
+                                                       --111110 : Shift left
+
 ALUSrc                   
 regWrite
 mem_we
