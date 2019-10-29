@@ -65,6 +65,20 @@ architecture structure of MIPS_Processor is
   -- TODO: You may add any additional signals or components your implementation 
   --       requires below this comment
 
+component Control is 
+  port (i_opCode	: in std_logic_vector(5 downto 0);
+	i_fnCode	: in std_logic_vector(5 downto 0);
+	o_RegDst	: out std_logic;
+	o_Jump		: out std_logic;
+	o_Branch	: out std_logic; 
+	--o_MemRead	: out std_logic; 
+	o_MemtoReg	: out std_logic;
+	o_ALUOp		: out std_logic_vector(2 downto 0);
+	o_MemWrite	: out std_logic;
+	o_ALUSrc	: out std_logic;
+	o_ReWrite	: out std_logic); 
+end component;
+
 begin
 
   -- TODO: This is required to be your final input to your instruction memory. This provides a feasible method to externally load the memory module which means that the synthesis tool must assume it knows nothing about the values stored in the instruction memory. If this is not included, much, if not all of the design is optimized out because the synthesis tool will believe the memory to be all zeros.
