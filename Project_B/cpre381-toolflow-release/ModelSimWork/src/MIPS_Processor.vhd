@@ -112,10 +112,10 @@ component ALU_and_Shifter is
 end component;
 
 component Control is
-  port (i_opCode	: in std_logic_vector(5 downto 0);
+  port (i_opCode: in std_logic_vector(5 downto 0);
    i_fnCode	: in std_logic_vector(5 downto 0);
    o_RegDst	: out std_logic;
-   o_Jump		: out std_logic;
+   o_Jump	: out std_logic;
    o_Branch	: out std_logic;
    --o_MemRead	: out std_logic;
    o_MemtoReg	: out std_logic;

@@ -37,7 +37,7 @@ signal s_code : std_logic_vector(5 downto 0);
 
 begin
 
-s_code = i_fnCode when (i_opCode = "000000") else i_opCode; 
+s_code <= i_fnCode when (i_opCode = "000000") else i_opCode; 
 
 	--0 for 		      addiu 		   andi                 lui                  lw                   xori                 ori                  slti                 sltiu                sw                   beq                  bne  
 	o_RegDst <= '0' when(s_code = "001001" or s_code = "001000" or s_code = "001111" or s_code = "100011" or s_code = "001110" or s_code = "001101" or s_code = "001010" or s_code = "001011" or s_code = "101011" or s_code = "000100" or s_code = "000101") else '1';  
@@ -49,10 +49,10 @@ s_code = i_fnCode when (i_opCode = "000000") else i_opCode;
 	o_Branch <= '1' when(s_code = "000100" or s_code = "000101") else '0'; 
 
 	--1 for                        lui                  lw 
-	o_MemRead <= '1; when(s_code = "001111" or s_code = "100011") else '0';
+	--o_MemRead <= '1' when(s_code = "001111" or s_code = "100011") else '0';
 
 	--1 for                         lui                  lw 
-	o_MemtoReg <= '1; when(s_code = "001111" or s_code = "100011") else '0';
+	o_MemtoReg <= '1' when(s_code = "001111" or s_code = "100011") else '0';
 
 	-- Send opCode to ALU control block  
 	o_ALUOp <= i_opCode; 
@@ -61,10 +61,10 @@ s_code = i_fnCode when (i_opCode = "000000") else i_opCode;
 	o_MemWrite <= '1' when(s_code = "101011") else '0'; 
 
 	-- 
-	o_ALUSrc <=
+	--o_ALUSrc <=
 
 	--0 for                        sw                   beq                bne                  j                    jr
-	o_ReWrite <= '0' when(s_code = "101011" or s_code = "000100" or s_code "000101" or s_code = "000010" or s_code = "001000") else '1';  
+	o_ReWrite <= '0' when(s_code = "101011" or s_code = "000100" or s_code = "000101" or s_code = "000010" or s_code = "001000") else '1';  
 	
 end my_ctl;
 
