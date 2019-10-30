@@ -119,7 +119,7 @@ component Control is
    o_Branch	: out std_logic;
    --o_MemRead	: out std_logic;
    o_MemtoReg	: out std_logic;
-   o_ALUOp		: out std_logic_vector(2 downto 0);
+   o_ALUOp	: out std_logic_vector(5 downto 0);
    o_MemWrite	: out std_logic;
    o_ALUSrc	: out std_logic;
    o_ReWrite	: out std_logic);
@@ -138,7 +138,7 @@ signal       s_32Imm      : std_logic_vector(31 downto 0);
 
 signal       s_ALUSrc_out     : std_logic_vector(31 downto 0);
 
-signal       s_ALU_operation  : std_logic_vector(5 downto 0)
+signal       s_ALU_operation  : std_logic_vector(5 downto 0);
 
 signal       s_Cout : std_logic;
 signal       s_Overflow : std_logic;
@@ -203,7 +203,7 @@ begin
                o_Y => s_RegWrAddr);
 
    RegFile1: RegFile
-      port map(i_CLK => i_CLK,
+      port map(i_CLK => iCLK,
             i_read_write => s_RegWr,
             i_rs => s_Inst(25 downto 21),
             i_rt => s_Inst(20 downto 16),
@@ -242,7 +242,7 @@ begin
      port map(A => s_rs_data,
               B => s_ALUSrc_out,
               ALUOp => s_ALU_operation,
-              Shift_Amount => i_immediate(4 downto 0),
+              Shift_Amount => s_Inst(10 downto 6),
               F => s_ALU_result,
               Carryout => s_Cout,
               Overflow => s_Overflow,
