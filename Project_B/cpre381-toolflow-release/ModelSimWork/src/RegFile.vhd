@@ -15,7 +15,8 @@ entity RegFile is
        i_reset      : in std_logic;     -- Reset registers
        i_data       : in std_logic_vector(31 downto 0);     -- Data value input
        o_rs_data    : out std_logic_vector(31 downto 0);   -- Data value output
-       o_rt_data    : out std_logic_vector(31 downto 0));   -- Data value output
+       o_rt_data    : out std_logic_vector(31 downto 0);   -- Data value output
+       o_reg2       : out std_logic_vector(31 downto 0));
 
 end RegFile;
 
@@ -413,5 +414,7 @@ begin
         i_data31 => s_data31,
         i_Sel => i_rt,
         o_data => o_rt_data);
+
+   o_reg2 <= s_data2;
   
 end arch;

@@ -48,7 +48,8 @@ component RegFile
        i_reset      : in std_logic;     -- Reset registers
        i_data       : in std_logic_vector(31 downto 0);     -- Data value input
        o_rs_data    : out std_logic_vector(31 downto 0);   -- Data value output
-       o_rt_data    : out std_logic_vector(31 downto 0));   -- Data value output
+       o_rt_data    : out std_logic_vector(31 downto 0);   -- Data value output
+       o_reg2       : out std_logic_vector(31 downto 0));
 end component;
 
 component Add_Sub
@@ -118,6 +119,8 @@ signal       s_Overflow : std_logic;
 signal       s_Zero       : std_logic;
 signal       s_ALU_result : std_logic_vector(31 downto 0);
 
+signal       s_reg2 : std_logic_vector(31 downto 0); 
+
 
 --end signals
 
@@ -132,7 +135,8 @@ begin
             i_reset => '0',
             i_data => s_MemtoReg_out,
             o_rs_data => s_rs_data,
-            o_rt_data => s_rt_data);
+            o_rt_data => s_rt_data,
+	    o_reg2 => s_reg2);
 
    ALUSrc: mux2_1_D
    port map(i_A => s_rt_data,
