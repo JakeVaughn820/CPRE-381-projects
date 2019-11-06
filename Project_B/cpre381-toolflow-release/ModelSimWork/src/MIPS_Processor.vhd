@@ -143,8 +143,6 @@ end component;
 signal       s_rs_data    : std_logic_vector(31 downto 0);
 signal       s_rt_data    : std_logic_vector(31 downto 0);
 signal       s_32Imm      : std_logic_vector(31 downto 0);
-signal       s_seImm      : std_logic_vector(31 downto 0);
-signal       s_Imm_Shift16 : std_logic_vector(31 downto 0);
 
 signal s_shift_amount : std_logic_vector(4 downto 0);
 
@@ -156,6 +154,7 @@ signal       s_Cout : std_logic;
 signal       s_Overflow : std_logic;
 signal       s_Zero       : std_logic;
 signal       s_ALU_result : std_logic_vector(31 downto 0);
+signal       s_shift_out  : std_logic_vector(4 downto 0);
 
 
 signal s_RegDst : std_logic;
@@ -166,7 +165,7 @@ signal s_ALUOp : std_logic_vector(5 downto 0);
 signal s_ALUSrc : std_logic;
 signal s_Shift : std_logic;
 signal s_Sign : std_logic;
-singal s_UpperImm : std_logic;
+signal s_UpperImm : std_logic;
 
 begin
 
@@ -210,7 +209,7 @@ begin
                o_ALUSrc => s_ALUSrc,
                o_ReWrite => s_RegWr,
                o_Shift => s_shift,
-               o_Sign => s_Sign
+               o_Sign => s_Sign,
                o_UpperImm => s_UpperImm);
 
    RegDst: mux_2to1_5bit
@@ -242,7 +241,7 @@ begin
    Ext1: zero_sign_ext_16_32bit
       port map( i_16in => s_Inst(15 downto 0),
                 i_sel => s_Sign,
-                o_32out => s_seImm);
+                o_32out => s_32Imm);
 
    MemtoReg: mux2_1_D
       port map(i_A => s_ALU_result,
@@ -265,20 +264,18 @@ begin
               Overflow => s_Overflow,
               Zero => s_Zero);
 
-   shift: mux_2to1_5bit
+   Shift: mux_2to1_5bit
       port map(i_0 => s_Inst(10 downto 6),
                i_1 => s_rs_data(4 downto 0),
                sel => s_shift,
+               o_f => s_shift_out);
+
+   UpperImm: mux_2to1_5bit
+      port map(i_0 => s_shift_out,
+               i_1 => "10000",
+               sel => s_UpperImm,
                o_f => s_shift_amount);
 
-   s_Imm_Shift16(31 downto 16) <= s_Inst(15 downto 0);
-   s_imm_shift16(15 downto 0) <= "0000000000000000";
-
-   UpperImm: mux2_1_D
-      port map(i_A => s_seImm,
-               i_B => s_Imm_Shift16,
-               i_X => s_UpperImm,
-               o_Y => s_32Imm);
 
    s_DMemAddr <= s_ALU_result;
    oALUOut <= s_ALU_result;

@@ -72,6 +72,6 @@ s_code <= i_fnCode when (i_opCode = "000000") else i_opCode;
 	o_Sign <= '0' when(s_code = "001001" or s_code = "100001" or s_code = "001011" or s_code = "101011" or s_code = "100011") else '1';
 
 	--1 for                          lui
-	o_UpperImm <= '1' when(s_code = 001111") else '0';
+	o_UpperImm <= '1' when(s_code = "001111") else '0';
 
 end my_ctl;
