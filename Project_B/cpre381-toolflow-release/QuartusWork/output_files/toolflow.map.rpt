@@ -1,0 +1,1464 @@
+Analysis & Synthesis report for toolflow
+Wed Nov 06 17:15:56 2019
+Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Standard Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. Registers Removed During Synthesis
+  9. General Register Statistics
+ 10. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 11. Parameter Settings for User Entity Instance: Top-level Entity: |MIPS_Processor
+ 12. Parameter Settings for User Entity Instance: mem:IMem
+ 13. Parameter Settings for User Entity Instance: mem:DMem
+ 14. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg0
+ 15. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg1
+ 16. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg2
+ 17. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg3
+ 18. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg4
+ 19. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg5
+ 20. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg6
+ 21. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg7
+ 22. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg8
+ 23. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg9
+ 24. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg10
+ 25. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg11
+ 26. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg12
+ 27. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg13
+ 28. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg14
+ 29. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg15
+ 30. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg16
+ 31. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg17
+ 32. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg18
+ 33. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg19
+ 34. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg20
+ 35. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg21
+ 36. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg22
+ 37. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg23
+ 38. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg24
+ 39. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg25
+ 40. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg26
+ 41. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg27
+ 42. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg28
+ 43. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg29
+ 44. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg30
+ 45. Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg31
+ 46. Parameter Settings for User Entity Instance: mux2_1_D:ALUSrc
+ 47. Parameter Settings for User Entity Instance: mux2_1_D:MemtoReg
+ 48. Port Connectivity Checks: "mux_2to1_5bit:UpperImm"
+ 49. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit_MostSig:My_ALU_1_bit_MostSig"
+ 50. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:30:ALU_1_bitX"
+ 51. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:29:ALU_1_bitX"
+ 52. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:28:ALU_1_bitX"
+ 53. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:27:ALU_1_bitX"
+ 54. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:26:ALU_1_bitX"
+ 55. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:25:ALU_1_bitX"
+ 56. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:24:ALU_1_bitX"
+ 57. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:23:ALU_1_bitX"
+ 58. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:22:ALU_1_bitX"
+ 59. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:21:ALU_1_bitX"
+ 60. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:20:ALU_1_bitX"
+ 61. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:19:ALU_1_bitX"
+ 62. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:18:ALU_1_bitX"
+ 63. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:17:ALU_1_bitX"
+ 64. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:16:ALU_1_bitX"
+ 65. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:15:ALU_1_bitX"
+ 66. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:14:ALU_1_bitX"
+ 67. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:13:ALU_1_bitX"
+ 68. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:12:ALU_1_bitX"
+ 69. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:11:ALU_1_bitX"
+ 70. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:10:ALU_1_bitX"
+ 71. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:9:ALU_1_bitX"
+ 72. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:8:ALU_1_bitX"
+ 73. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:7:ALU_1_bitX"
+ 74. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:6:ALU_1_bitX"
+ 75. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:5:ALU_1_bitX"
+ 76. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:4:ALU_1_bitX"
+ 77. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:3:ALU_1_bitX"
+ 78. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:2:ALU_1_bitX"
+ 79. Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:1:ALU_1_bitX"
+ 80. Port Connectivity Checks: "ALU_and_Shifter:ALU1"
+ 81. Port Connectivity Checks: "RegFile:RegFile1|N_bit_reg:Reg0"
+ 82. Port Connectivity Checks: "RegFile:RegFile1|Decoder5_32:Dec"
+ 83. Port Connectivity Checks: "RegFile:RegFile1"
+ 84. Port Connectivity Checks: "Control:Control1"
+ 85. Post-Synthesis Netlist Statistics for Top Partition
+ 86. Elapsed Time Per Partition
+ 87. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2018  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details.
+
+
+
++--------------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                         ;
++------------------------------------+-------------------------------------------------+
+; Analysis & Synthesis Status        ; Successful - Wed Nov 06 17:15:55 2019           ;
+; Quartus Prime Version              ; 18.1.0 Build 625 09/12/2018 SJ Standard Edition ;
+; Revision Name                      ; toolflow                                        ;
+; Top-level Entity Name              ; MIPS_Processor                                  ;
+; Family                             ; Cyclone IV E                                    ;
+; Total logic elements               ; 105,380                                         ;
+;     Total combinational functions  ; 44,036                                          ;
+;     Dedicated logic registers      ; 61,408                                          ;
+; Total registers                    ; 61408                                           ;
+; Total pins                         ; 99                                              ;
+; Total virtual pins                 ; 0                                               ;
+; Total memory bits                  ; 0                                               ;
+; Embedded Multiplier 9-bit elements ; 0                                               ;
+; Total PLLs                         ; 0                                               ;
++------------------------------------+-------------------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                              ;
++------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                           ; Setting            ; Default Value      ;
++------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                           ; EP4CE115F29C7      ;                    ;
+; Top-level entity name                                            ; MIPS_Processor     ; toolflow           ;
+; Family name                                                      ; Cyclone IV E       ; Cyclone V          ;
+; Use smart compilation                                            ; Off                ; Off                ;
+; Enable parallel Assembler and Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                      ; Off                ; Off                ;
+; Restructure Multiplexers                                         ; Auto               ; Auto               ;
+; Create Debugging Nodes for IP Cores                              ; Off                ; Off                ;
+; Preserve fewer node names                                        ; On                 ; On                 ;
+; Intel FPGA IP Evaluation Mode                                    ; Enable             ; Enable             ;
+; Verilog Version                                                  ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                     ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                         ; Auto               ; Auto               ;
+; Safe State Machine                                               ; Off                ; Off                ;
+; Extract Verilog State Machines                                   ; On                 ; On                 ;
+; Extract VHDL State Machines                                      ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                       ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                   ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                          ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                        ; On                 ; On                 ;
+; Parallel Synthesis                                               ; On                 ; On                 ;
+; DSP Block Balancing                                              ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                               ; On                 ; On                 ;
+; Power-Up Don't Care                                              ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                     ; Off                ; Off                ;
+; Remove Duplicate Registers                                       ; On                 ; On                 ;
+; Ignore CARRY Buffers                                             ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                           ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                            ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                        ; Off                ; Off                ;
+; Ignore LCELL Buffers                                             ; Off                ; Off                ;
+; Ignore SOFT Buffers                                              ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                   ; Off                ; Off                ;
+; Optimization Technique                                           ; Balanced           ; Balanced           ;
+; Carry Chain Length                                               ; 70                 ; 70                 ;
+; Auto Carry Chains                                                ; On                 ; On                 ;
+; Auto Open-Drain Pins                                             ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                            ; Off                ; Off                ;
+; Auto ROM Replacement                                             ; On                 ; On                 ;
+; Auto RAM Replacement                                             ; On                 ; On                 ;
+; Auto DSP Block Replacement                                       ; On                 ; On                 ;
+; Auto Shift Register Replacement                                  ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                  ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                    ; On                 ; On                 ;
+; Strict RAM Replacement                                           ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                           ; Off                ; Off                ;
+; Auto RAM Block Balancing                                         ; On                 ; On                 ;
+; Auto RAM to Logic Cell Conversion                                ; Off                ; Off                ;
+; Auto Resource Sharing                                            ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                               ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                               ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                    ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing              ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                ; Off                ; Off                ;
+; Timing-Driven Synthesis                                          ; On                 ; On                 ;
+; Report Parameter Settings                                        ; On                 ; On                 ;
+; Report Source Assignments                                        ; On                 ; On                 ;
+; Report Connectivity Checks                                       ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                               ; Off                ; Off                ;
+; Synchronization Register Chain Length                            ; 2                  ; 2                  ;
+; Power Optimization During Synthesis                              ; Normal compilation ; Normal compilation ;
+; HDL message level                                                ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                  ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report         ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report               ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report        ; 100                ; 100                ;
+; Clock MUX Protection                                             ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                      ; Off                ; Off                ;
+; Block Design Naming                                              ; Auto               ; Auto               ;
+; SDC constraint protection                                        ; Off                ; Off                ;
+; Synthesis Effort                                                 ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal     ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                             ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                               ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                      ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                           ; On                 ; On                 ;
++------------------------------------------------------------------+--------------------+--------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 8           ;
+; Maximum allowed            ; 4           ;
+;                            ;             ;
+; Average used               ; 1.01        ;
+; Maximum used               ; 4           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processor 2            ;   0.2%      ;
+;     Processor 3            ;   0.2%      ;
+;     Processor 4            ;   0.1%      ;
++----------------------------+-------------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                                                     ;
++------------------------------------------------+-----------------+-----------------+-------------------------------------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path               ; Used in Netlist ; File Type       ; File Name with Absolute Path                                                                                ; Library ;
++------------------------------------------------+-----------------+-----------------+-------------------------------------------------------------------------------------------------------------+---------+
+; ../ModelSimWork/src/ALU_1_bit.vhd              ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_1_bit.vhd              ;         ;
+; ../ModelSimWork/src/ALU_1_bit_MostSig.vhd      ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_1_bit_MostSig.vhd      ;         ;
+; ../ModelSimWork/src/ALU_32_bit.vhd             ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_32_bit.vhd             ;         ;
+; ../ModelSimWork/src/ALU_Control.vhd            ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_Control.vhd            ;         ;
+; ../ModelSimWork/src/ALU_and_Shifter.vhd        ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_and_Shifter.vhd        ;         ;
+; ../ModelSimWork/src/Control.vhd                ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/Control.vhd                ;         ;
+; ../ModelSimWork/src/Control_ALU.vhd            ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/Control_ALU.vhd            ;         ;
+; ../ModelSimWork/src/Decoder5_32.vhd            ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/Decoder5_32.vhd            ;         ;
+; ../ModelSimWork/src/MIPS_Processor.vhd         ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd         ;         ;
+; ../ModelSimWork/src/Mux31_1.vhd                ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/Mux31_1.vhd                ;         ;
+; ../ModelSimWork/src/N_bit_reg.vhd              ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/N_bit_reg.vhd              ;         ;
+; ../ModelSimWork/src/RegFile.vhd                ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/RegFile.vhd                ;         ;
+; ../ModelSimWork/src/andg2.vhd                  ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/andg2.vhd                  ;         ;
+; ../ModelSimWork/src/fulladder.vhd              ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/fulladder.vhd              ;         ;
+; ../ModelSimWork/src/mem.vhd                    ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/mem.vhd                    ;         ;
+; ../ModelSimWork/src/mux2_1_D.vhd               ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/mux2_1_D.vhd               ;         ;
+; ../ModelSimWork/src/mux_2to1_1bit.vhd          ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/mux_2to1_1bit.vhd          ;         ;
+; ../ModelSimWork/src/mux_2to1_32bit.vhd         ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/mux_2to1_32bit.vhd         ;         ;
+; ../ModelSimWork/src/mux_2to1_5bit.vhd          ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/mux_2to1_5bit.vhd          ;         ;
+; ../ModelSimWork/src/mux_5to1_1bit.vhd          ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/mux_5to1_1bit.vhd          ;         ;
+; ../ModelSimWork/src/org2.vhd                   ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/org2.vhd                   ;         ;
+; ../ModelSimWork/src/right_left_shifter.vhd     ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/right_left_shifter.vhd     ;         ;
+; ../ModelSimWork/src/xorg2.vhd                  ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/xorg2.vhd                  ;         ;
+; ../ModelSimWork/src/zero_sign_ext_16_32bit.vhd ; yes             ; User VHDL File  ; U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/zero_sign_ext_16_32bit.vhd ;         ;
++------------------------------------------------+-----------------+-----------------+-------------------------------------------------------------------------------------------------------------+---------+
+
+
++----------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary              ;
++---------------------------------------------+------------+
+; Resource                                    ; Usage      ;
++---------------------------------------------+------------+
+; Estimated Total logic elements              ; 105,380    ;
+;                                             ;            ;
+; Total combinational functions               ; 44036      ;
+; Logic element usage by number of LUT inputs ;            ;
+;     -- 4 input functions                    ; 41852      ;
+;     -- 3 input functions                    ; 1078       ;
+;     -- <=2 input functions                  ; 1106       ;
+;                                             ;            ;
+; Logic elements by mode                      ;            ;
+;     -- normal mode                          ; 44036      ;
+;     -- arithmetic mode                      ; 0          ;
+;                                             ;            ;
+; Total registers                             ; 61408      ;
+;     -- Dedicated logic registers            ; 61408      ;
+;     -- I/O registers                        ; 0          ;
+;                                             ;            ;
+; I/O pins                                    ; 99         ;
+;                                             ;            ;
+; Embedded Multiplier 9-bit elements          ; 0          ;
+;                                             ;            ;
+; Maximum fan-out node                        ; iCLK~input ;
+; Maximum fan-out                             ; 61408      ;
+; Total fan-out                               ; 358201     ;
+; Average fan-out                             ; 3.39       ;
++---------------------------------------------+------------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                                                                            ;
++---------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------------------------------------------------------------------------------------------------+-------------------+--------------+
+; Compilation Hierarchy Node                        ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                          ; Entity Name       ; Library Name ;
++---------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------------------------------------------------------------------------------------------------+-------------------+--------------+
+; |MIPS_Processor                                   ; 44036 (0)           ; 61408 (0)                 ; 0           ; 0            ; 0       ; 0         ; 99   ; 0            ; |MIPS_Processor                                                                                                              ; MIPS_Processor    ; work         ;
+;    |ALU_and_Shifter:ALU1|                         ; 191 (115)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1                                                                                         ; ALU_and_Shifter   ; work         ;
+;       |ALU_32_bit:ALU|                            ; 75 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU                                                                          ; ALU_32_bit        ; work         ;
+;          |ALU_1_bit:ALU_1_bit0|                   ; 8 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:ALU_1_bit0                                                     ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:ALU_1_bit0|fulladder:fulladder1                                ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:ALU_1_bit0|fulladder:fulladder1|org2:g_Or                      ; org2              ; work         ;
+;                |xorg2:g_XOR2|                     ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:ALU_1_bit0|fulladder:fulladder1|xorg2:g_XOR2                   ; xorg2             ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:ALU_1_bit0|mux_2to1_1bit:Mux_ainvert                           ; mux_2to1_1bit     ; work         ;
+;             |mux_5to1_1bit:resultMux|             ; 5 (5)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:ALU_1_bit0|mux_5to1_1bit:resultMux                             ; mux_5to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:10:ALU_1_bitX|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:10:ALU_1_bitX                                              ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:10:ALU_1_bitX|fulladder:fulladder1                         ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:10:ALU_1_bitX|fulladder:fulladder1|org2:g_Or               ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:10:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                    ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:11:ALU_1_bitX|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:11:ALU_1_bitX                                              ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:11:ALU_1_bitX|fulladder:fulladder1                         ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:11:ALU_1_bitX|fulladder:fulladder1|org2:g_Or               ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:11:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                    ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:12:ALU_1_bitX|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:12:ALU_1_bitX                                              ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:12:ALU_1_bitX|fulladder:fulladder1                         ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:12:ALU_1_bitX|fulladder:fulladder1|org2:g_Or               ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:12:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                    ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:13:ALU_1_bitX|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:13:ALU_1_bitX                                              ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:13:ALU_1_bitX|fulladder:fulladder1                         ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:13:ALU_1_bitX|fulladder:fulladder1|org2:g_Or               ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:13:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                    ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:14:ALU_1_bitX|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:14:ALU_1_bitX                                              ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:14:ALU_1_bitX|fulladder:fulladder1                         ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:14:ALU_1_bitX|fulladder:fulladder1|org2:g_Or               ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:14:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                    ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:15:ALU_1_bitX|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:15:ALU_1_bitX                                              ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:15:ALU_1_bitX|fulladder:fulladder1                         ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:15:ALU_1_bitX|fulladder:fulladder1|org2:g_Or               ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:15:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                    ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:16:ALU_1_bitX|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:16:ALU_1_bitX                                              ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:16:ALU_1_bitX|fulladder:fulladder1                         ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:16:ALU_1_bitX|fulladder:fulladder1|org2:g_Or               ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:16:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                    ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:17:ALU_1_bitX|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:17:ALU_1_bitX                                              ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:17:ALU_1_bitX|fulladder:fulladder1                         ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:17:ALU_1_bitX|fulladder:fulladder1|org2:g_Or               ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:17:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                    ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:18:ALU_1_bitX|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:18:ALU_1_bitX                                              ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:18:ALU_1_bitX|fulladder:fulladder1                         ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:18:ALU_1_bitX|fulladder:fulladder1|org2:g_Or               ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:18:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                    ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:19:ALU_1_bitX|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:19:ALU_1_bitX                                              ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:19:ALU_1_bitX|fulladder:fulladder1                         ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:19:ALU_1_bitX|fulladder:fulladder1|org2:g_Or               ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:19:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                    ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:1:ALU_1_bitX|             ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:1:ALU_1_bitX                                               ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:1:ALU_1_bitX|fulladder:fulladder1                          ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:1:ALU_1_bitX|fulladder:fulladder1|org2:g_Or                ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:1:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                     ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:20:ALU_1_bitX|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:20:ALU_1_bitX                                              ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:20:ALU_1_bitX|fulladder:fulladder1                         ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:20:ALU_1_bitX|fulladder:fulladder1|org2:g_Or               ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:20:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                    ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:21:ALU_1_bitX|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:21:ALU_1_bitX                                              ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:21:ALU_1_bitX|fulladder:fulladder1                         ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:21:ALU_1_bitX|fulladder:fulladder1|org2:g_Or               ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:21:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                    ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:22:ALU_1_bitX|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:22:ALU_1_bitX                                              ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:22:ALU_1_bitX|fulladder:fulladder1                         ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:22:ALU_1_bitX|fulladder:fulladder1|org2:g_Or               ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:22:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                    ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:23:ALU_1_bitX|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:23:ALU_1_bitX                                              ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:23:ALU_1_bitX|fulladder:fulladder1                         ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:23:ALU_1_bitX|fulladder:fulladder1|org2:g_Or               ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:23:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                    ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:24:ALU_1_bitX|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:24:ALU_1_bitX                                              ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:24:ALU_1_bitX|fulladder:fulladder1                         ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:24:ALU_1_bitX|fulladder:fulladder1|org2:g_Or               ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:24:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                    ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:25:ALU_1_bitX|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:25:ALU_1_bitX                                              ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:25:ALU_1_bitX|fulladder:fulladder1                         ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:25:ALU_1_bitX|fulladder:fulladder1|org2:g_Or               ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:25:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                    ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:26:ALU_1_bitX|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:26:ALU_1_bitX                                              ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:26:ALU_1_bitX|fulladder:fulladder1                         ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:26:ALU_1_bitX|fulladder:fulladder1|org2:g_Or               ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:26:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                    ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:27:ALU_1_bitX|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:27:ALU_1_bitX                                              ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:27:ALU_1_bitX|fulladder:fulladder1                         ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:27:ALU_1_bitX|fulladder:fulladder1|org2:g_Or               ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:27:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                    ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:28:ALU_1_bitX|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:28:ALU_1_bitX                                              ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:28:ALU_1_bitX|fulladder:fulladder1                         ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:28:ALU_1_bitX|fulladder:fulladder1|org2:g_Or               ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:28:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                    ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:29:ALU_1_bitX|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:29:ALU_1_bitX                                              ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:29:ALU_1_bitX|fulladder:fulladder1                         ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:29:ALU_1_bitX|fulladder:fulladder1|org2:g_Or               ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:29:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                    ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:2:ALU_1_bitX|             ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:2:ALU_1_bitX                                               ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:2:ALU_1_bitX|fulladder:fulladder1                          ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:2:ALU_1_bitX|fulladder:fulladder1|org2:g_Or                ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:2:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                     ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:30:ALU_1_bitX|            ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:30:ALU_1_bitX                                              ; ALU_1_bit         ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:30:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                    ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:3:ALU_1_bitX|             ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:3:ALU_1_bitX                                               ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:3:ALU_1_bitX|fulladder:fulladder1                          ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:3:ALU_1_bitX|fulladder:fulladder1|org2:g_Or                ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:3:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                     ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:4:ALU_1_bitX|             ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:4:ALU_1_bitX                                               ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:4:ALU_1_bitX|fulladder:fulladder1                          ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:4:ALU_1_bitX|fulladder:fulladder1|org2:g_Or                ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:4:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                     ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:5:ALU_1_bitX|             ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:5:ALU_1_bitX                                               ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:5:ALU_1_bitX|fulladder:fulladder1                          ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:5:ALU_1_bitX|fulladder:fulladder1|org2:g_Or                ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:5:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                     ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:6:ALU_1_bitX|             ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:6:ALU_1_bitX                                               ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:6:ALU_1_bitX|fulladder:fulladder1                          ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:6:ALU_1_bitX|fulladder:fulladder1|org2:g_Or                ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:6:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                     ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:7:ALU_1_bitX|             ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:7:ALU_1_bitX                                               ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:7:ALU_1_bitX|fulladder:fulladder1                          ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:7:ALU_1_bitX|fulladder:fulladder1|org2:g_Or                ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:7:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                     ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:8:ALU_1_bitX|             ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:8:ALU_1_bitX                                               ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:8:ALU_1_bitX|fulladder:fulladder1                          ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:8:ALU_1_bitX|fulladder:fulladder1|org2:g_Or                ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:8:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                     ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit:\G1:9:ALU_1_bitX|             ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:9:ALU_1_bitX                                               ; ALU_1_bit         ; work         ;
+;             |fulladder:fulladder1|                ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:9:ALU_1_bitX|fulladder:fulladder1                          ; fulladder         ; work         ;
+;                |org2:g_Or|                        ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:9:ALU_1_bitX|fulladder:fulladder1|org2:g_Or                ; org2              ; work         ;
+;             |mux_2to1_1bit:Mux_ainvert|           ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:9:ALU_1_bitX|mux_2to1_1bit:Mux_ainvert                     ; mux_2to1_1bit     ; work         ;
+;          |ALU_1_bit_MostSig:My_ALU_1_bit_MostSig| ; 7 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit_MostSig:My_ALU_1_bit_MostSig                                   ; ALU_1_bit_MostSig ; work         ;
+;             |fulladder:fulladder1|                ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit_MostSig:My_ALU_1_bit_MostSig|fulladder:fulladder1              ; fulladder         ; work         ;
+;                |xorg2:g_XOR2|                     ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit_MostSig:My_ALU_1_bit_MostSig|fulladder:fulladder1|xorg2:g_XOR2 ; xorg2             ; work         ;
+;             |mux_5to1_1bit:resultMux|             ; 4 (4)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit_MostSig:My_ALU_1_bit_MostSig|mux_5to1_1bit:resultMux           ; mux_5to1_1bit     ; work         ;
+;       |ALU_control:ALU_cont|                      ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_control:ALU_cont                                                                    ; ALU_control       ; work         ;
+;    |Control:Control1|                             ; 15 (15)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|Control:Control1                                                                                             ; Control           ; work         ;
+;    |Control_ALU:Control_ALU1|                     ; 37 (37)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|Control_ALU:Control_ALU1                                                                                     ; Control_ALU       ; work         ;
+;    |RegFile:RegFile1|                             ; 1339 (0)            ; 992 (0)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1                                                                                             ; RegFile           ; work         ;
+;       |Decoder5_32:Dec|                           ; 49 (49)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|Decoder5_32:Dec                                                                             ; Decoder5_32       ; work         ;
+;       |Mux31_1:mux1|                              ; 645 (645)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|Mux31_1:mux1                                                                                ; Mux31_1           ; work         ;
+;       |Mux31_1:mux2|                              ; 645 (645)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|Mux31_1:mux2                                                                                ; Mux31_1           ; work         ;
+;       |N_bit_reg:Reg10|                           ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg10                                                                             ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg11|                           ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg11                                                                             ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg12|                           ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg12                                                                             ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg13|                           ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg13                                                                             ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg14|                           ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg14                                                                             ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg15|                           ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg15                                                                             ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg16|                           ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg16                                                                             ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg17|                           ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg17                                                                             ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg18|                           ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg18                                                                             ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg19|                           ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg19                                                                             ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg1|                            ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg1                                                                              ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg20|                           ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg20                                                                             ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg21|                           ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg21                                                                             ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg22|                           ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg22                                                                             ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg23|                           ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg23                                                                             ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg24|                           ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg24                                                                             ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg25|                           ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg25                                                                             ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg26|                           ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg26                                                                             ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg27|                           ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg27                                                                             ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg28|                           ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg28                                                                             ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg29|                           ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg29                                                                             ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg2|                            ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg2                                                                              ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg30|                           ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg30                                                                             ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg31|                           ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg31                                                                             ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg3|                            ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg3                                                                              ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg4|                            ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg4                                                                              ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg5|                            ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg5                                                                              ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg6|                            ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg6                                                                              ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg7|                            ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg7                                                                              ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg8|                            ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg8                                                                              ; N_bit_reg         ; work         ;
+;       |N_bit_reg:Reg9|                            ; 0 (0)               ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|RegFile:RegFile1|N_bit_reg:Reg9                                                                              ; N_bit_reg         ; work         ;
+;    |mem:DMem|                                     ; 22914 (22914)       ; 32768 (32768)             ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|mem:DMem                                                                                                     ; mem               ; work         ;
+;    |mem:IMem|                                     ; 19504 (19504)       ; 27648 (27648)             ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|mem:IMem                                                                                                     ; mem               ; work         ;
+;    |mux2_1_D:MemtoReg|                            ; 32 (32)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|mux2_1_D:MemtoReg                                                                                            ; mux2_1_D          ; work         ;
+;    |mux_2to1_5bit:RegDst|                         ; 4 (4)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |MIPS_Processor|mux_2to1_5bit:RegDst                                                                                         ; mux_2to1_5bit     ; work         ;
++---------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------------------------------------------------------------------------------------------------+-------------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++-----------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                ;
++--------------------------------------------+--------------------------------------+
+; Register name                              ; Reason for Removal                   ;
++--------------------------------------------+--------------------------------------+
+; RegFile:RegFile1|N_bit_reg:Reg0|s_Q[0..31] ; Stuck at GND due to stuck port clear ;
+; Total Number of Removed Registers = 32     ;                                      ;
++--------------------------------------------+--------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 61408 ;
+; Number of registers using Synchronous Clear  ; 0     ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 992   ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 61408 ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                                                             ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------------------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                                                   ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------------------------------------------------------------+
+; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |MIPS_Processor|ALU_and_Shifter:ALU1|right_left_shifter:Shifter|mux_2to1_32bit:task5|o_f[12] ;
+; 4:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; No         ; |MIPS_Processor|ALU_and_Shifter:ALU1|ALU_control:ALU_cont|ctl_bits_to_shift[4]               ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |MIPS_Processor|ALU_and_Shifter:ALU1|right_left_shifter:Shifter|mux_2to1_32bit:task5|o_f[7]  ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |MIPS_Processor|ALU_and_Shifter:ALU1|right_left_shifter:Shifter|mux_2to1_32bit:task5|o_f[2]  ;
+; 32:1               ; 32 bits   ; 672 LEs       ; 640 LEs              ; 32 LEs                 ; No         ; |MIPS_Processor|RegFile:RegFile1|Mux31_1:mux2|Mux2                                           ;
+; 32:1               ; 32 bits   ; 672 LEs       ; 640 LEs              ; 32 LEs                 ; No         ; |MIPS_Processor|RegFile:RegFile1|Mux31_1:mux1|Mux11                                          ;
+; 10:1               ; 30 bits   ; 180 LEs       ; 120 LEs              ; 60 LEs                 ; No         ; |MIPS_Processor|ALU_and_Shifter:ALU1|F[20]                                                   ;
+; 8:1                ; 4 bits    ; 20 LEs        ; 16 LEs               ; 4 LEs                  ; No         ; |MIPS_Processor|Control_ALU:Control_ALU1|o_ALU_operation[2]                                  ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: Top-level Entity: |MIPS_Processor ;
++----------------+-------+-------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                  ;
++----------------+-------+-------------------------------------------------------+
+; N              ; 32    ; Signed Integer                                        ;
++----------------+-------+-------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------+
+; Parameter Settings for User Entity Instance: mem:IMem ;
++----------------+-------+------------------------------+
+; Parameter Name ; Value ; Type                         ;
++----------------+-------+------------------------------+
+; data_width     ; 32    ; Signed Integer               ;
+; addr_width     ; 10    ; Signed Integer               ;
++----------------+-------+------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------+
+; Parameter Settings for User Entity Instance: mem:DMem ;
++----------------+-------+------------------------------+
+; Parameter Name ; Value ; Type                         ;
++----------------+-------+------------------------------+
+; data_width     ; 32    ; Signed Integer               ;
+; addr_width     ; 10    ; Signed Integer               ;
++----------------+-------+------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg0 ;
++----------------+-------+-----------------------------------------------------+
+; Parameter Name ; Value ; Type                                                ;
++----------------+-------+-----------------------------------------------------+
+; n              ; 32    ; Signed Integer                                      ;
++----------------+-------+-----------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg1 ;
++----------------+-------+-----------------------------------------------------+
+; Parameter Name ; Value ; Type                                                ;
++----------------+-------+-----------------------------------------------------+
+; n              ; 32    ; Signed Integer                                      ;
++----------------+-------+-----------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg2 ;
++----------------+-------+-----------------------------------------------------+
+; Parameter Name ; Value ; Type                                                ;
++----------------+-------+-----------------------------------------------------+
+; n              ; 32    ; Signed Integer                                      ;
++----------------+-------+-----------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg3 ;
++----------------+-------+-----------------------------------------------------+
+; Parameter Name ; Value ; Type                                                ;
++----------------+-------+-----------------------------------------------------+
+; n              ; 32    ; Signed Integer                                      ;
++----------------+-------+-----------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg4 ;
++----------------+-------+-----------------------------------------------------+
+; Parameter Name ; Value ; Type                                                ;
++----------------+-------+-----------------------------------------------------+
+; n              ; 32    ; Signed Integer                                      ;
++----------------+-------+-----------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg5 ;
++----------------+-------+-----------------------------------------------------+
+; Parameter Name ; Value ; Type                                                ;
++----------------+-------+-----------------------------------------------------+
+; n              ; 32    ; Signed Integer                                      ;
++----------------+-------+-----------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg6 ;
++----------------+-------+-----------------------------------------------------+
+; Parameter Name ; Value ; Type                                                ;
++----------------+-------+-----------------------------------------------------+
+; n              ; 32    ; Signed Integer                                      ;
++----------------+-------+-----------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg7 ;
++----------------+-------+-----------------------------------------------------+
+; Parameter Name ; Value ; Type                                                ;
++----------------+-------+-----------------------------------------------------+
+; n              ; 32    ; Signed Integer                                      ;
++----------------+-------+-----------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg8 ;
++----------------+-------+-----------------------------------------------------+
+; Parameter Name ; Value ; Type                                                ;
++----------------+-------+-----------------------------------------------------+
+; n              ; 32    ; Signed Integer                                      ;
++----------------+-------+-----------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg9 ;
++----------------+-------+-----------------------------------------------------+
+; Parameter Name ; Value ; Type                                                ;
++----------------+-------+-----------------------------------------------------+
+; n              ; 32    ; Signed Integer                                      ;
++----------------+-------+-----------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg10 ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg11 ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg12 ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg13 ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg14 ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg15 ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg16 ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg17 ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg18 ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg19 ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg20 ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg21 ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg22 ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg23 ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg24 ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg25 ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg26 ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg27 ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg28 ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg29 ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg30 ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: RegFile:RegFile1|N_bit_reg:Reg31 ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: mux2_1_D:ALUSrc ;
++----------------+-------+-------------------------------------+
+; Parameter Name ; Value ; Type                                ;
++----------------+-------+-------------------------------------+
+; n              ; 32    ; Signed Integer                      ;
++----------------+-------+-------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: mux2_1_D:MemtoReg ;
++----------------+-------+---------------------------------------+
+; Parameter Name ; Value ; Type                                  ;
++----------------+-------+---------------------------------------+
+; n              ; 32    ; Signed Integer                        ;
++----------------+-------+---------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------+
+; Port Connectivity Checks: "mux_2to1_5bit:UpperImm" ;
++-----------+-------+----------+---------------------+
+; Port      ; Type  ; Severity ; Details             ;
++-----------+-------+----------+---------------------+
+; i_1[3..0] ; Input ; Info     ; Stuck at GND        ;
+; i_1[4]    ; Input ; Info     ; Stuck at VCC        ;
++-----------+-------+----------+---------------------+
+
+
++--------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit_MostSig:My_ALU_1_bit_MostSig" ;
++------+-------+----------+------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                      ;
++------+-------+----------+------------------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                                 ;
++------+-------+----------+------------------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:30:ALU_1_bitX" ;
++------+-------+----------+-------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                           ;
++------+-------+----------+-------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                      ;
++------+-------+----------+-------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:29:ALU_1_bitX" ;
++------+-------+----------+-------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                           ;
++------+-------+----------+-------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                      ;
++------+-------+----------+-------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:28:ALU_1_bitX" ;
++------+-------+----------+-------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                           ;
++------+-------+----------+-------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                      ;
++------+-------+----------+-------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:27:ALU_1_bitX" ;
++------+-------+----------+-------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                           ;
++------+-------+----------+-------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                      ;
++------+-------+----------+-------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:26:ALU_1_bitX" ;
++------+-------+----------+-------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                           ;
++------+-------+----------+-------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                      ;
++------+-------+----------+-------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:25:ALU_1_bitX" ;
++------+-------+----------+-------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                           ;
++------+-------+----------+-------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                      ;
++------+-------+----------+-------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:24:ALU_1_bitX" ;
++------+-------+----------+-------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                           ;
++------+-------+----------+-------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                      ;
++------+-------+----------+-------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:23:ALU_1_bitX" ;
++------+-------+----------+-------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                           ;
++------+-------+----------+-------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                      ;
++------+-------+----------+-------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:22:ALU_1_bitX" ;
++------+-------+----------+-------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                           ;
++------+-------+----------+-------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                      ;
++------+-------+----------+-------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:21:ALU_1_bitX" ;
++------+-------+----------+-------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                           ;
++------+-------+----------+-------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                      ;
++------+-------+----------+-------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:20:ALU_1_bitX" ;
++------+-------+----------+-------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                           ;
++------+-------+----------+-------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                      ;
++------+-------+----------+-------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:19:ALU_1_bitX" ;
++------+-------+----------+-------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                           ;
++------+-------+----------+-------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                      ;
++------+-------+----------+-------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:18:ALU_1_bitX" ;
++------+-------+----------+-------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                           ;
++------+-------+----------+-------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                      ;
++------+-------+----------+-------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:17:ALU_1_bitX" ;
++------+-------+----------+-------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                           ;
++------+-------+----------+-------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                      ;
++------+-------+----------+-------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:16:ALU_1_bitX" ;
++------+-------+----------+-------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                           ;
++------+-------+----------+-------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                      ;
++------+-------+----------+-------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:15:ALU_1_bitX" ;
++------+-------+----------+-------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                           ;
++------+-------+----------+-------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                      ;
++------+-------+----------+-------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:14:ALU_1_bitX" ;
++------+-------+----------+-------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                           ;
++------+-------+----------+-------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                      ;
++------+-------+----------+-------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:13:ALU_1_bitX" ;
++------+-------+----------+-------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                           ;
++------+-------+----------+-------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                      ;
++------+-------+----------+-------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:12:ALU_1_bitX" ;
++------+-------+----------+-------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                           ;
++------+-------+----------+-------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                      ;
++------+-------+----------+-------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:11:ALU_1_bitX" ;
++------+-------+----------+-------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                           ;
++------+-------+----------+-------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                      ;
++------+-------+----------+-------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:10:ALU_1_bitX" ;
++------+-------+----------+-------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                           ;
++------+-------+----------+-------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                      ;
++------+-------+----------+-------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:9:ALU_1_bitX" ;
++------+-------+----------+------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                          ;
++------+-------+----------+------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                     ;
++------+-------+----------+------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:8:ALU_1_bitX" ;
++------+-------+----------+------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                          ;
++------+-------+----------+------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                     ;
++------+-------+----------+------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:7:ALU_1_bitX" ;
++------+-------+----------+------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                          ;
++------+-------+----------+------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                     ;
++------+-------+----------+------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:6:ALU_1_bitX" ;
++------+-------+----------+------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                          ;
++------+-------+----------+------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                     ;
++------+-------+----------+------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:5:ALU_1_bitX" ;
++------+-------+----------+------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                          ;
++------+-------+----------+------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                     ;
++------+-------+----------+------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:4:ALU_1_bitX" ;
++------+-------+----------+------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                          ;
++------+-------+----------+------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                     ;
++------+-------+----------+------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:3:ALU_1_bitX" ;
++------+-------+----------+------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                          ;
++------+-------+----------+------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                     ;
++------+-------+----------+------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:2:ALU_1_bitX" ;
++------+-------+----------+------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                          ;
++------+-------+----------+------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                     ;
++------+-------+----------+------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:\G1:1:ALU_1_bitX" ;
++------+-------+----------+------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                          ;
++------+-------+----------+------------------------------------------------------------------+
+; less ; Input ; Info     ; Stuck at GND                                                     ;
++------+-------+----------+------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ALU_and_Shifter:ALU1"                                                                   ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+; Port     ; Type   ; Severity ; Details                                                                             ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+; carryout ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; overflow ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; zero     ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++-------------------------------------------------------------+
+; Port Connectivity Checks: "RegFile:RegFile1|N_bit_reg:Reg0" ;
++-------+-------+----------+----------------------------------+
+; Port  ; Type  ; Severity ; Details                          ;
++-------+-------+----------+----------------------------------+
+; i_rst ; Input ; Info     ; Stuck at VCC                     ;
+; i_we  ; Input ; Info     ; Stuck at GND                     ;
+; i_d   ; Input ; Info     ; Stuck at GND                     ;
++-------+-------+----------+----------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "RegFile:RegFile1|Decoder5_32:Dec"                                                       ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+; Port     ; Type   ; Severity ; Details                                                                             ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+; o_out[0] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "RegFile:RegFile1"                                                                     ;
++--------+--------+----------+-------------------------------------------------------------------------------------+
+; Port   ; Type   ; Severity ; Details                                                                             ;
++--------+--------+----------+-------------------------------------------------------------------------------------+
+; o_reg2 ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++--------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "Control:Control1"                                                                       ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+; Port     ; Type   ; Severity ; Details                                                                             ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+; o_jump   ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; o_branch ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; boundary_port         ; 99                          ;
+; cycloneiii_ff         ; 61408                       ;
+;     ENA               ; 60416                       ;
+;     ENA CLR           ; 992                         ;
+; cycloneiii_lcell_comb ; 44036                       ;
+;     normal            ; 44036                       ;
+;         2 data inputs ; 1106                        ;
+;         3 data inputs ; 1078                        ;
+;         4 data inputs ; 41852                       ;
+;                       ;                             ;
+; Max LUT depth         ; 50.00                       ;
+; Average LUT depth     ; 25.22                       ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:03:16     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 18.1.0 Build 625 09/12/2018 SJ Standard Edition
+    Info: Copyright (C) 2018  Intel Corporation. All rights reserved.
+    Info: Your use of Intel Corporation's design tools, logic functions 
+    Info: and other software and tools, and its AMPP partner logic 
+    Info: functions, and any output files from any of the foregoing 
+    Info: (including device programming or simulation files), and any 
+    Info: associated documentation or information are expressly subject 
+    Info: to the terms and conditions of the Intel Program License 
+    Info: Subscription Agreement, the Intel Quartus Prime License Agreement,
+    Info: the Intel FPGA IP License Agreement, or other applicable license
+    Info: agreement, including, without limitation, that your use is for
+    Info: the sole purpose of programming logic devices manufactured by
+    Info: Intel and sold by Intel or its authorized distributors.  Please
+    Info: refer to the applicable agreement for further details.
+    Info: Processing started: Wed Nov 06 17:12:10 2019
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off toolflow -c toolflow
+Info (125068): Revision "toolflow" was previously opened in Quartus II software version 18.0.0 Standard Edition. Created Quartus Prime Default Settings File U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/QuartusWork/toolflow_assignment_defaults.qdf, which contains the default assignment setting information from Quartus II software version 18.0.0 Standard Edition.
+Info (125069): Default assignment values were changed in the current version of the Quartus Prime software -- changes to default assignments values are contained in file c:/intelfpga/18.1/quartus/bin64/assignment_defaults.qdf
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/alu_1_bit.vhd
+    Info (12022): Found design unit 1: ALU_1_bit-arch File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_1_bit.vhd Line: 23
+    Info (12023): Found entity 1: ALU_1_bit File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_1_bit.vhd Line: 10
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/alu_1_bit_mostsig.vhd
+    Info (12022): Found design unit 1: ALU_1_bit_MostSig-arch File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_1_bit_MostSig.vhd Line: 25
+    Info (12023): Found entity 1: ALU_1_bit_MostSig File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_1_bit_MostSig.vhd Line: 10
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/alu_32_bit.vhd
+    Info (12022): Found design unit 1: ALU_32_bit-arch File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_32_bit.vhd Line: 21
+    Info (12023): Found entity 1: ALU_32_bit File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_32_bit.vhd Line: 11
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/alu_control.vhd
+    Info (12022): Found design unit 1: ALU_control-arch File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_Control.vhd Line: 19
+    Info (12023): Found entity 1: ALU_control File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_Control.vhd Line: 11
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/alu_and_shifter.vhd
+    Info (12022): Found design unit 1: ALU_and_Shifter-arch File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_and_Shifter.vhd Line: 33
+    Info (12023): Found entity 1: ALU_and_Shifter File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_and_Shifter.vhd Line: 11
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/add_sub.vhd
+    Info (12022): Found design unit 1: Add_Sub-structure File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/Add_Sub.vhd Line: 26
+    Info (12023): Found entity 1: Add_Sub File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/Add_Sub.vhd Line: 16
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/control.vhd
+    Info (12022): Found design unit 1: Control-my_ctl File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/Control.vhd Line: 35
+    Info (12023): Found entity 1: Control File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/Control.vhd Line: 18
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/control_alu.vhd
+    Info (12022): Found design unit 1: Control_ALU-my_ALUctl File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/Control_ALU.vhd Line: 25
+    Info (12023): Found entity 1: Control_ALU File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/Control_ALU.vhd Line: 18
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/decoder5_32.vhd
+    Info (12022): Found design unit 1: Decoder5_32-mixed File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/Decoder5_32.vhd Line: 17
+    Info (12023): Found entity 1: Decoder5_32 File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/Decoder5_32.vhd Line: 10
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/full_adder_d.vhd
+    Info (12022): Found design unit 1: Full_Adder_D-structure File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/Full_Adder_D.vhd Line: 26
+    Info (12023): Found entity 1: Full_Adder_D File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/Full_Adder_D.vhd Line: 16
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/mips_processor.vhd
+    Info (12022): Found design unit 1: MIPS_Processor-structure File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 32
+    Info (12023): Found entity 1: MIPS_Processor File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 20
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/mips_processor_v3.vhd
+    Info (12022): Found design unit 1: MIPS_processor_V3-arch File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_processor_V3.vhd Line: 39
+    Info (12023): Found entity 1: MIPS_processor_V3 File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_processor_V3.vhd Line: 10
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/mux31_1.vhd
+    Info (12022): Found design unit 1: Mux31_1-Behavioral File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/Mux31_1.vhd Line: 48
+    Info (12023): Found entity 1: Mux31_1 File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/Mux31_1.vhd Line: 10
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/n_bit_ones_complimenter_d.vhd
+    Info (12022): Found design unit 1: N_bit_ones_complimenter_D-dataflow File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/N_bit_ones_complimenter_D.vhd Line: 23
+    Info (12023): Found entity 1: N_bit_ones_complimenter_D File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/N_bit_ones_complimenter_D.vhd Line: 16
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/n_bit_reg.vhd
+    Info (12022): Found design unit 1: N_bit_reg-arch File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/N_bit_reg.vhd Line: 19
+    Info (12023): Found entity 1: N_bit_reg File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/N_bit_reg.vhd Line: 9
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/regfile.vhd
+    Info (12022): Found design unit 1: RegFile-arch File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/RegFile.vhd Line: 23
+    Info (12023): Found entity 1: RegFile File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/RegFile.vhd Line: 9
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/andg2.vhd
+    Info (12022): Found design unit 1: andg2-dataflow File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/andg2.vhd Line: 31
+    Info (12023): Found entity 1: andg2 File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/andg2.vhd Line: 23
+Warning (12018): Entity "dff" will be ignored because it conflicts with Quartus Prime primitive name File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/dff.vhd Line: 21
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/dff.vhd
+    Info (12022): Found design unit 1: dff-mixed File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/dff.vhd Line: 31
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/fulladder.vhd
+    Info (12022): Found design unit 1: fulladder-structure File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/fulladder.vhd Line: 26
+    Info (12023): Found entity 1: fulladder File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/fulladder.vhd Line: 18
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/mem.vhd
+    Info (12022): Found design unit 1: mem-rtl File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/mem.vhd Line: 27
+    Info (12023): Found entity 1: mem File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/mem.vhd Line: 8
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/mux2_1_d.vhd
+    Info (12022): Found design unit 1: mux2_1_D-structure File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/mux2_1_D.vhd Line: 19
+    Info (12023): Found entity 1: mux2_1_D File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/mux2_1_D.vhd Line: 10
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/mux_2to1_1bit.vhd
+    Info (12022): Found design unit 1: mux_2to1_1bit-dataflow File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/mux_2to1_1bit.vhd Line: 26
+    Info (12023): Found entity 1: mux_2to1_1bit File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/mux_2to1_1bit.vhd Line: 18
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/mux_2to1_32bit.vhd
+    Info (12022): Found design unit 1: mux_2to1_32bit-my_mux File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/mux_2to1_32bit.vhd Line: 25
+    Info (12023): Found entity 1: mux_2to1_32bit File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/mux_2to1_32bit.vhd Line: 18
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/mux_2to1_5bit.vhd
+    Info (12022): Found design unit 1: mux_2to1_5bit-my_mux File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/mux_2to1_5bit.vhd Line: 25
+    Info (12023): Found entity 1: mux_2to1_5bit File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/mux_2to1_5bit.vhd Line: 18
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/mux_5to1_1bit.vhd
+    Info (12022): Found design unit 1: mux_5to1_1bit-dataflow File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/mux_5to1_1bit.vhd Line: 26
+    Info (12023): Found entity 1: mux_5to1_1bit File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/mux_5to1_1bit.vhd Line: 18
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/notg2.vhd
+    Info (12022): Found design unit 1: notg2-dataflow File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/notg2.vhd Line: 25
+    Info (12023): Found entity 1: notg2 File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/notg2.vhd Line: 18
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/org2.vhd
+    Info (12022): Found design unit 1: org2-dataflow File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/org2.vhd Line: 31
+    Info (12023): Found entity 1: org2 File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/org2.vhd Line: 23
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/right_left_shifter.vhd
+    Info (12022): Found design unit 1: right_left_shifter-structure File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/right_left_shifter.vhd Line: 25
+    Info (12023): Found entity 1: right_left_shifter File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/right_left_shifter.vhd Line: 16
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/right_shifter_32bit.vhd
+    Info (12022): Found design unit 1: right_shifter-behavioral File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/right_shifter_32bit.vhd Line: 25
+    Info (12023): Found entity 1: right_shifter File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/right_shifter_32bit.vhd Line: 16
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/xorg2.vhd
+    Info (12022): Found design unit 1: xorg2-dataflow File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/xorg2.vhd Line: 31
+    Info (12023): Found entity 1: xorg2 File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/xorg2.vhd Line: 23
+Info (12021): Found 2 design units, including 1 entities, in source file /cpre381/cpre-381-projects/project_b/cpre381-toolflow-release/modelsimwork/src/zero_sign_ext_16_32bit.vhd
+    Info (12022): Found design unit 1: zero_sign_ext_16_32bit-structure File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/zero_sign_ext_16_32bit.vhd Line: 20
+    Info (12023): Found entity 1: zero_sign_ext_16_32bit File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/zero_sign_ext_16_32bit.vhd Line: 13
+Info (12127): Elaborating entity "MIPS_Processor" for the top level hierarchy
+Warning (10541): VHDL Signal Declaration warning at MIPS_Processor.vhd(47): used implicit default value for signal "s_NextInstAddr" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations. File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 47
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(52): object "s_Halt" assigned a value but never read File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 52
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(154): object "s_Cout" assigned a value but never read File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 154
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(155): object "s_Overflow" assigned a value but never read File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 155
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(156): object "s_Zero" assigned a value but never read File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 156
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(162): object "s_Jump" assigned a value but never read File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 162
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(163): object "s_Branch" assigned a value but never read File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 163
+Info (12128): Elaborating entity "mem" for hierarchy "mem:IMem" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 180
+Info (12128): Elaborating entity "Control" for hierarchy "Control:Control1" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 202
+Warning (10541): VHDL Signal Declaration warning at Control.vhd(27): used implicit default value for signal "o_ALUSrc" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations. File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/Control.vhd Line: 27
+Info (12128): Elaborating entity "mux_2to1_5bit" for hierarchy "mux_2to1_5bit:RegDst" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 217
+Info (12128): Elaborating entity "RegFile" for hierarchy "RegFile:RegFile1" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 223
+Info (12128): Elaborating entity "Decoder5_32" for hierarchy "RegFile:RegFile1|Decoder5_32:Dec" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/RegFile.vhd Line: 117
+Info (12128): Elaborating entity "N_bit_reg" for hierarchy "RegFile:RegFile1|N_bit_reg:Reg0" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/RegFile.vhd Line: 122
+Info (12128): Elaborating entity "Mux31_1" for hierarchy "RegFile:RegFile1|Mux31_1:mux1" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/RegFile.vhd Line: 346
+Info (12128): Elaborating entity "mux2_1_D" for hierarchy "mux2_1_D:ALUSrc" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 238
+Info (12128): Elaborating entity "zero_sign_ext_16_32bit" for hierarchy "zero_sign_ext_16_32bit:Ext1" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 244
+Info (12128): Elaborating entity "Control_ALU" for hierarchy "Control_ALU:Control_ALU1" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 255
+Info (12128): Elaborating entity "ALU_and_Shifter" for hierarchy "ALU_and_Shifter:ALU1" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 260
+Info (12128): Elaborating entity "ALU_32_bit" for hierarchy "ALU_and_Shifter:ALU1|ALU_32_bit:ALU" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_and_Shifter.vhd Line: 75
+Info (12128): Elaborating entity "ALU_1_bit" for hierarchy "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:ALU_1_bit0" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_32_bit.vhd Line: 67
+Info (12128): Elaborating entity "mux_2to1_1bit" for hierarchy "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:ALU_1_bit0|mux_2to1_1bit:Mux_ainvert" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_1_bit.vhd Line: 67
+Info (12128): Elaborating entity "fulladder" for hierarchy "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:ALU_1_bit0|fulladder:fulladder1" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_1_bit.vhd Line: 79
+Info (12128): Elaborating entity "xorg2" for hierarchy "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:ALU_1_bit0|fulladder:fulladder1|xorg2:g_XOR" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/fulladder.vhd Line: 61
+Info (12128): Elaborating entity "andg2" for hierarchy "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:ALU_1_bit0|fulladder:fulladder1|andg2:g_And1" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/fulladder.vhd Line: 69
+Info (12128): Elaborating entity "org2" for hierarchy "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:ALU_1_bit0|fulladder:fulladder1|org2:g_Or" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/fulladder.vhd Line: 85
+Info (12128): Elaborating entity "mux_5to1_1bit" for hierarchy "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit:ALU_1_bit0|mux_5to1_1bit:resultMux" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_1_bit.vhd Line: 94
+Info (12128): Elaborating entity "ALU_1_bit_MostSig" for hierarchy "ALU_and_Shifter:ALU1|ALU_32_bit:ALU|ALU_1_bit_MostSig:My_ALU_1_bit_MostSig" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_32_bit.vhd Line: 93
+Info (12128): Elaborating entity "right_left_shifter" for hierarchy "ALU_and_Shifter:ALU1|right_left_shifter:Shifter" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_and_Shifter.vhd Line: 85
+Info (12128): Elaborating entity "mux_2to1_32bit" for hierarchy "ALU_and_Shifter:ALU1|right_left_shifter:Shifter|mux_2to1_32bit:task1" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/right_left_shifter.vhd Line: 59
+Info (12128): Elaborating entity "ALU_control" for hierarchy "ALU_and_Shifter:ALU1|ALU_control:ALU_cont" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/ALU_and_Shifter.vhd Line: 91
+Info (276014): Found 2 instances of uninferred RAM logic
+    Info (276007): RAM logic "mem:IMem|ram" is uninferred due to asynchronous read logic File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/mem.vhd Line: 35
+    Info (276007): RAM logic "mem:DMem|ram" is uninferred due to asynchronous read logic File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/mem.vhd Line: 35
+Info (286030): Timing-Driven Synthesis is running
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Warning (21074): Design contains 27 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "iInstAddr[0]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 25
+    Warning (15610): No output dependent on input pin "iInstAddr[1]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 25
+    Warning (15610): No output dependent on input pin "iInstAddr[12]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 25
+    Warning (15610): No output dependent on input pin "iInstAddr[13]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 25
+    Warning (15610): No output dependent on input pin "iInstAddr[14]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 25
+    Warning (15610): No output dependent on input pin "iInstAddr[15]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 25
+    Warning (15610): No output dependent on input pin "iInstAddr[16]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 25
+    Warning (15610): No output dependent on input pin "iInstAddr[17]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 25
+    Warning (15610): No output dependent on input pin "iInstAddr[18]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 25
+    Warning (15610): No output dependent on input pin "iInstAddr[19]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 25
+    Warning (15610): No output dependent on input pin "iInstAddr[20]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 25
+    Warning (15610): No output dependent on input pin "iInstAddr[21]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 25
+    Warning (15610): No output dependent on input pin "iInstAddr[22]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 25
+    Warning (15610): No output dependent on input pin "iInstAddr[23]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 25
+    Warning (15610): No output dependent on input pin "iInstAddr[24]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 25
+    Warning (15610): No output dependent on input pin "iInstAddr[25]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 25
+    Warning (15610): No output dependent on input pin "iInstAddr[26]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 25
+    Warning (15610): No output dependent on input pin "iInstAddr[27]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 25
+    Warning (15610): No output dependent on input pin "iInstAddr[28]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 25
+    Warning (15610): No output dependent on input pin "iInstAddr[29]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 25
+    Warning (15610): No output dependent on input pin "iInstAddr[30]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 25
+    Warning (15610): No output dependent on input pin "iInstAddr[31]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 25
+    Warning (15610): No output dependent on input pin "iInstExt[6]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 26
+    Warning (15610): No output dependent on input pin "iInstExt[7]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 26
+    Warning (15610): No output dependent on input pin "iInstExt[8]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 26
+    Warning (15610): No output dependent on input pin "iInstExt[9]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 26
+    Warning (15610): No output dependent on input pin "iInstExt[10]" File: U:/cpre381/cpre-381-projects/Project_B/cpre381-toolflow-release/ModelSimWork/src/MIPS_Processor.vhd Line: 26
+Info (21057): Implemented 105543 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 67 input pins
+    Info (21059): Implemented 32 output pins
+    Info (21061): Implemented 105444 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 38 warnings
+    Info: Peak virtual memory: 5270 megabytes
+    Info: Processing ended: Wed Nov 06 17:15:56 2019
+    Info: Elapsed time: 00:03:46
+    Info: Total CPU time (on all processors): 00:03:28
+
+
