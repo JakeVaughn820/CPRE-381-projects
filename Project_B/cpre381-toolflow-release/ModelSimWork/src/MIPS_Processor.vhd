@@ -129,7 +129,8 @@ component Control is
    o_ALUSrc	: out std_logic;
    o_ReWrite	: out std_logic;
    o_Shift : out std_logic;
-   o_Sign : out std_logic);
+   o_Sign : out std_logic;
+   o_UpperImm : out std_logic);
 end component;
 
 component Control_ALU is
@@ -142,6 +143,7 @@ end component;
 signal       s_rs_data    : std_logic_vector(31 downto 0);
 signal       s_rt_data    : std_logic_vector(31 downto 0);
 signal       s_32Imm      : std_logic_vector(31 downto 0);
+signal       s_seImm      : std_logic_vector(31 downto 0);
 
 signal s_shift_amount : std_logic_vector(4 downto 0);
 
@@ -163,6 +165,7 @@ signal s_ALUOp : std_logic_vector(5 downto 0);
 signal s_ALUSrc : std_logic;
 signal s_Shift : std_logic;
 signal s_Sign : std_logic;
+singal s_UpperImm : std_logic;
 
 begin
 
@@ -237,7 +240,7 @@ begin
    Ext1: zero_sign_ext_16_32bit
       port map( i_16in => s_Inst(15 downto 0),
                 i_sel => s_Sign,
-                o_32out => s_32Imm);
+                o_32out => s_seImm);
 
    MemtoReg: mux2_1_D
       port map(i_A => s_ALU_result,
@@ -265,6 +268,12 @@ begin
                i_1 => s_rs_data(4 downto 0),
                sel => s_shift,
                o_f => s_shift_amount);
+
+   UpperImm: mux2_1_D
+      port map(i_A => s_seImm,
+               i_B => this needs to be shift << out,
+               i_X => s_UpperImm,
+               o_Y => s_32Imm);
 
    s_DMemAddr <= s_ALU_result;
    oALUOut <= s_ALU_result;
