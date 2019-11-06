@@ -144,6 +144,7 @@ signal       s_rs_data    : std_logic_vector(31 downto 0);
 signal       s_rt_data    : std_logic_vector(31 downto 0);
 signal       s_32Imm      : std_logic_vector(31 downto 0);
 signal       s_seImm      : std_logic_vector(31 downto 0);
+signal       s_Imm_Shift16 : std_logic_vector(31 downto 0);
 
 signal s_shift_amount : std_logic_vector(4 downto 0);
 
@@ -209,7 +210,8 @@ begin
                o_ALUSrc => s_ALUSrc,
                o_ReWrite => s_RegWr,
                o_Shift => s_shift,
-               o_Sign => s_Sign);
+               o_Sign => s_Sign
+               o_UpperImm => s_UpperImm);
 
    RegDst: mux_2to1_5bit
       port map(i_0 => s_Inst(20 downto 16),
@@ -269,9 +271,12 @@ begin
                sel => s_shift,
                o_f => s_shift_amount);
 
+   s_Imm_Shift16(31 downto 16) <= s_Inst(15 downto 0);
+   s_imm_shift16(15 downto 0) <= "0000000000000000";
+
    UpperImm: mux2_1_D
       port map(i_A => s_seImm,
-               i_B => this needs to be shift << out,
+               i_B => s_Imm_Shift16,
                i_X => s_UpperImm,
                o_Y => s_32Imm);
 
