@@ -87,11 +87,17 @@ component Add_Sub is
 end component;
 
 component mux2_1_D is
-  generic(N : integer := 32);
-  port( i_A  : in std_logic_vector(N-1 downto 0);
-	i_B  : in std_logic_vector(N-1 downto 0);
-	i_X  : in std_logic;
-        o_Y  : out std_logic_vector(N-1 downto 0));
+   generic(N : integer := 32);
+   port( i_A  : in std_logic_vector(N-1 downto 0);
+   i_B  : in std_logic_vector(N-1 downto 0);
+   i_X  : in std_logic;
+   o_Y  : out std_logic_vector(N-1 downto 0));
+end component;
+
+component mux_2to1_5bit is
+  port(i_0, i_1 : in std_logic_vector(4 downto 0);
+       sel 	: in std_logic;
+       o_f 	: out std_logic_vector(4 downto 0));
 end component;
 
 component zero_sign_ext_16_32bit is
@@ -117,12 +123,13 @@ component Control is
    o_RegDst	: out std_logic;
    o_Jump	: out std_logic;
    o_Branch	: out std_logic;
-   --o_MemRead	: out std_logic;
    o_MemtoReg	: out std_logic;
    o_ALUOp	: out std_logic_vector(5 downto 0);
    o_MemWrite	: out std_logic;
    o_ALUSrc	: out std_logic;
-   o_ReWrite	: out std_logic);
+   o_ReWrite	: out std_logic;
+   o_Shift : out std_logic;
+   o_Sign : out std_logic);
 end component;
 
 component Control_ALU is
@@ -136,6 +143,8 @@ signal       s_rs_data    : std_logic_vector(31 downto 0);
 signal       s_rt_data    : std_logic_vector(31 downto 0);
 signal       s_32Imm      : std_logic_vector(31 downto 0);
 
+signal s_shift_amount : std_logic_vector(4 downto 0);
+
 signal       s_ALUSrc_out     : std_logic_vector(31 downto 0);
 
 signal       s_ALU_operation  : std_logic_vector(5 downto 0);
@@ -145,13 +154,15 @@ signal       s_Overflow : std_logic;
 signal       s_Zero       : std_logic;
 signal       s_ALU_result : std_logic_vector(31 downto 0);
 
+
 signal s_RegDst : std_logic;
 signal s_Jump : std_logic;
 signal s_Branch : std_logic;
-signal s_MemRead : std_logic;
 signal s_MemtoReg : std_logic;
 signal s_ALUOp : std_logic_vector(5 downto 0);
 signal s_ALUSrc : std_logic;
+signal s_Shift : std_logic;
+signal s_Sign : std_logic;
 
 begin
 
@@ -189,18 +200,19 @@ begin
                o_RegDst => s_RegDst,
                o_Jump => s_Jump,
                o_Branch => s_Branch,
-               --o_MemRead => s_MemRead,
                o_MemtoReg => s_MemtoReg,
                o_ALUOp => s_ALUOp,
                o_MemWrite => s_DMemWr,
                o_ALUSrc => s_ALUSrc,
-               o_ReWrite => s_RegWr);
+               o_ReWrite => s_RegWr,
+               o_Shift => s_shift,
+               o_Sign => s_Sign);
 
-   RegDst: mux2_1_D
-      port map(i_A => s_Inst(20 downto 16),
-               i_B => s_Inst(15 downto 11),
-               i_X => s_RegDst,
-               o_Y => s_RegWrAddr);
+   RegDst: mux_2to1_5bit
+      port map(i_0 => s_Inst(20 downto 16),
+               i_1 => s_Inst(15 downto 11),
+               sel => s_RegDst,
+               o_f => s_RegWrAddr);
 
    RegFile1: RegFile
       port map(i_CLK => iCLK,
@@ -224,7 +236,7 @@ begin
 
    Ext1: zero_sign_ext_16_32bit
       port map( i_16in => s_Inst(15 downto 0),
-                i_sel => '1',
+                i_sel => s_Sign,
                 o_32out => s_32Imm);
 
    MemtoReg: mux2_1_D
@@ -242,11 +254,17 @@ begin
      port map(A => s_rs_data,
               B => s_ALUSrc_out,
               ALUOp => s_ALU_operation,
-              Shift_Amount => s_Inst(10 downto 6),
+              Shift_Amount => s_shift_amount,
               F => s_ALU_result,
               Carryout => s_Cout,
               Overflow => s_Overflow,
               Zero => s_Zero);
+
+   shift: mux_2to1_5bit
+      port map(i_0 => s_Inst(10 downto 6),
+               i_1 => s_rs_data(4 downto 0),
+               sel => s_shift,
+               o_f => s_shift_amount);
 
    s_DMemAddr <= s_ALU_result;
    oALUOut <= s_ALU_result;
