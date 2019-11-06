@@ -74,7 +74,8 @@ component RegFile is
          i_reset      : in std_logic;     -- Reset registers
          i_data       : in std_logic_vector(31 downto 0);     -- Data value input
          o_rs_data    : out std_logic_vector(31 downto 0);   -- Data value output
-         o_rt_data    : out std_logic_vector(31 downto 0));   -- Data value output
+         o_rt_data    : out std_logic_vector(31 downto 0);   -- Data value output
+         o_reg2       : out std_logic_vector(31 downto 0));
 end component;
 
 component Add_Sub is
@@ -166,6 +167,7 @@ signal s_ALUSrc : std_logic;
 signal s_Shift : std_logic;
 signal s_Sign : std_logic;
 signal s_UpperImm : std_logic;
+signal s_reg2 : std_logic_vector(31 downto 0); 
 
 begin
 
@@ -227,10 +229,11 @@ begin
             i_reset => iRST,
             i_data => s_RegWrData,
             o_rs_data => s_rs_data,
-            o_rt_data => s_rt_data);
+            o_rt_data => s_rt_data,
+	    o_reg2 => s_reg2);
 
    s_DMemData <= s_rt_data;
-   v0 <= s_rt_data;
+   v0 <= s_reg2;
 
    ALUSrc: mux2_1_D
       port map(i_A => s_rt_data,
