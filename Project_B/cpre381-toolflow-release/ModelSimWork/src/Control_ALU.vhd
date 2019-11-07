@@ -57,8 +57,8 @@ o_ALU_operation  <=	--AND		      and                    andi
 			--OR                 or                     ori
 			s_or when(i_fnCode = "100101" or i_opCode = "001101") else
 
-			--ADD                 addi                   add                    addiu                  addu                   lui                    lw                     sw    
-			s_add when(i_opCode = "001000" or i_fnCode = "100000" or i_opCode = "001001" or i_fnCode = "100001" or i_opCode = "001111" or i_opCode = "100011" or i_opCode = "101011") else
+			--ADD                 addi                   add                    addiu                  addu                     lw                     sw    
+			s_add when(i_opCode = "001000" or i_fnCode = "100000" or i_opCode = "001001" or i_fnCode = "100001" or i_opCode = "100011" or i_opCode = "101011") else
 
 			--XOR                 xor                    xori
 			s_xor when(i_fnCode = "100110" or i_opCode = "001110") else 
@@ -81,8 +81,8 @@ o_ALU_operation  <=	--AND		      and                    andi
 			--SLR                 srl                     srlv
 			s_slr when(i_fnCode = "000010" or  i_fnCode = "000110") else
 
-			--SLL                 sll                    srlv
-			s_sll when(i_fnCode = "000000" or i_fnCode = "000110") else
+			--SLL                 sll                    srlv                      lui
+			s_sll when(i_fnCode = "000000" or i_fnCode = "000110" or i_opCode = "001111") else
 
 			--Branching and jumping
 			"000000";
