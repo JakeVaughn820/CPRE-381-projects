@@ -1,0 +1,5 @@
+MARsWork/Examples/addiSeq.asm
+MARsWork/Examples/lab3Seq.asm
+MARsWork/Examples/fibonacci.asm
+MARsWork/Examples/sampleAssembly.asm
+MARsWork/Examples/simplebranch.asm

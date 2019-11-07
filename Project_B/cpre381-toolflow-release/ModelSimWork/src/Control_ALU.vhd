@@ -52,7 +52,7 @@ s_slr	<= "111101";  	--Logical Shigt Right
 s_sll	<= "111110"; 	--Shift Left
 
 o_ALU_operation  <=	--AND		      and                    andi
-			s_and when(i_fnCode = "100000" or i_opCode = "001100") else
+			s_and when(i_fnCode = "100100" or i_opCode = "001100") else
 
 			--OR                 or                     ori
 			s_or when(i_fnCode = "100101" or i_opCode = "001101") else
