@@ -51,38 +51,38 @@ s_sra	<= "111100"; 	--Arithmetic Shift Right
 s_slr	<= "111101";  	--Logical Shigt Right
 s_sll	<= "111110"; 	--Shift Left
 
-o_ALU_operation  <=	--AND		      and                    andi
-			s_and when(i_fnCode = "100100" or i_opCode = "001100") else
+o_ALU_operation  <=	--AND		      and                                            andi
+			s_and when((i_fnCode = "100100" and i_opCode = "000000") or i_opCode = "001100") else
 
-			--OR                 or                     ori
-			s_or when(i_fnCode = "100101" or i_opCode = "001101") else
+			--OR                    or                                               ori
+			s_or when((i_fnCode = "100101" and i_opCode = "000000") or i_opCode = "001101") else
 
-			--ADD                  addi                   add                    addiu                  addu                     lw                     sw    
-			s_add when(i_opCode = "001000" or i_fnCode = "100000" or i_opCode = "001001" or i_fnCode = "100001" or i_opCode = "100011" or i_opCode = "101011") else
+			--ADD                   addi                   add                                              addiu                  addu                                             lw                     sw    
+			s_add when(i_opCode = "001000" or (i_fnCode = "100000" and i_opCode = "000000") or i_opCode = "001001" or (i_fnCode = "100001" and i_opCode = "000000") or i_opCode = "100011" or i_opCode = "101011") else
 
-			--XOR                 xor                    xori
-			s_xor when(i_fnCode = "100110" or i_opCode = "001110") else 
+			--XOR                    xor                                             xori
+			s_xor when((i_fnCode = "100110" and i_opCode = "000000") or i_opCode = "001110") else 
 
-			--SLT                 slt                    slti                   sltiu                  sltu
-			s_slt when(i_fnCode = "101010" or i_opCode = "001010" or i_opCode = "001011" or i_fnCode = "101011") else
+			--SLT                    slt                                             slti                   sltiu                   sltu
+			s_slt when((i_fnCode = "101010" and i_opCode = "000000") or i_opCode = "001010" or i_opCode = "001011" or (i_fnCode = "101011" and i_opCode = "000000")) else
 
-			--NOR                 nor
-			s_nor when(i_fnCode = "100111") else
+			--NOR                    nor
+			s_nor when((i_fnCode = "100111" and i_opCode = "000000")) else
 
 			--NAND (Does nothing for now)
-			s_nand when(i_fnCode = "111111") else
+			s_nand when((i_fnCode = "111111" and i_opCode = "000000")) else
 
-			--SUB                 sub                    subu
-			s_sub when(i_fnCode = "100010" or i_fnCode = "100011") else
+			--SUB                     sub                    subu
+			s_sub when(((i_fnCode = "100010" or i_fnCode = "100011") and i_opCode = "000000")) else
 
-			--SRA                 sra                    srav
-			s_sra when(i_fnCode = "000011" or i_fnCode = "000111") else
+			--SRA                     sra                    srav
+			s_sra when(((i_fnCode = "000011" or i_fnCode = "000111") and i_opCode = "000000")) else
 
-			--SLR                 srl                     srlv
-			s_slr when(i_fnCode = "000010" or  i_fnCode = "000110") else
+			--SLR                     srl                     srlv
+			s_slr when(((i_fnCode = "000010" or  i_fnCode = "000110") and i_opCode = "000000")) else
 
-			--SLL                 sll                     sllv                      lui
-			s_sll when(i_fnCode = "000000" or i_fnCode = "000100" or i_opCode = "001111") else
+			--SLL                     sll                    sllv                                             lui
+			s_sll when(((i_fnCode = "000000" or i_fnCode = "000100") and i_opCode = "000000") or i_opCode = "001111") else
 
 			--Branching and jumping
 			"000000";

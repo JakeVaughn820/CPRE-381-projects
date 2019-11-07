@@ -38,7 +38,7 @@ begin
 	o_RegDst <= '0' when(i_opCode = "001001" or i_opCode = "001000" or i_opCode = "001111" or i_opCode = "100011" or i_opCode = "001110" or i_opCode = "001101" or i_opCode = "001010" or i_opCode = "001011" or i_opCode = "101011" or i_opCode = "000100" or i_opCode = "000101") else '1';
 
 	--1 for                          j                      jal                    jr
-	o_Jump <= '1' when(i_opCode = "000010" or i_opCode = "000011" or i_fnCode = "001000") else '0';
+	o_Jump <= '1' when(i_opCode = "000010" or i_opCode = "000011" or (i_fnCode = "001000" and i_opCode = "000000")) else '0';
 
 	--1 for                           beq                    bne
 	o_Branch <= '1' when(i_opCode = "000100" or i_opCode = "000101") else '0';
@@ -56,15 +56,15 @@ begin
 	o_ALUSrc <= '1' when(i_opCode = "001000" or i_opCode = "001001" or i_opCode = "001100" or i_opCode = "001111" or i_opCode = "001110" or i_opCode = "001101" or i_opCode = "001010" or i_opCode = "001011" or i_opCode = "101011" or i_opCode = "100011") else '0';
 
 	--0 for                            sw                      beq                     bne                    j                      jr
-	o_ReWrite <= '0' when(i_opCode = "101011" or i_opCode  = "000100" or i_opCode  = "000101" or i_opCode = "000010" or i_fnCode = "001000") else '1';
+	o_ReWrite <= '0' when(i_opCode = "101011" or i_opCode  = "000100" or i_opCode  = "000101" or i_opCode = "000010" or (i_fnCode = "001000" and i_opCode = "000000")) else '1';
 
 	--0 for                          sllv                   srlv                   srav
-	o_Shift <= '0' when(i_fnCode = "000100" or i_fnCode = "000110" or i_fnCode = "000111") else '1';
+	o_Shift <= '0' when((i_fnCode = "000100" or i_fnCode = "000110" or i_fnCode = "000111") and i_opCode = "000000") else '1';
 
-	--0 for                        addiu                 addu                   sltiu                  sltu                   subu
-	o_Sign <= '0' when(i_opCode = "001001" or i_fnCode = "100001" or i_opCode = "001011" or i_fnCode = "101011" or i_fnCode = "100011") else '1';
+	--0 for                        addiu                   sltiu                  addu                  sltu                   subu
+	o_Sign <= '0' when(i_opCode = "001001" or i_opCode = "001011" or ((i_fnCode = "100001" or i_fnCode = "101011" or i_fnCode = "100011") and i_opCode = "000000")) else '1';
 
-	--1 for                           lui
+	--1 for                             lui
 	o_UpperImm <= '1' when(i_opCode = "001111") else '0';
 
 end my_ctl;
