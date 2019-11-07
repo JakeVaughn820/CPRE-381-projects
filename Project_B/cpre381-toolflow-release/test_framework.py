@@ -58,7 +58,7 @@ def main():
 	mars.generate_hex(options['asm-path'] )
 	
 	# 6) sim student vhdl
-	sim_success = modelsim.sim(timeout=options['sim-timeout'])
+	sim_success = modelsim.sim(timeout=options['sim-timeout'], deep_debug=options['deep_debug'])
 	if not sim_success:
 		return
 
@@ -103,13 +103,15 @@ def parse_args():
 	parser.add_argument('--max-mismatches', type=check_max_mismatches ,default=3, help='Number of incorrect instructions to print before the program claims failure, default=3')
 	parser.add_argument('--nocompile', action='store_true', help='flag used to disable compilation in order to save time')
 	parser.add_argument('--sim-timeout',type=check_sim_timeout, default=30, help='change the ammount of time before simulation is forcefully stopped')
+	parser.add_argument('--deep-debug', action='store_true', help='flag used to automatically open vsim.wlf in modelsim after simulation')
 	args = parser.parse_args()
 
 	options = {
 		'asm-path': args.asm_file,
 		'max-mismatches': args.max_mismatches,
 		'compile': not args.nocompile,
-		'sim-timeout': args.sim_timeout
+		'sim-timeout': args.sim_timeout,
+        'deep_debug': args.deep_debug
 	}
 
 	return options

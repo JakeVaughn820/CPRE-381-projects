@@ -101,6 +101,16 @@ component mux_2to1_5bit is
        o_f 	: out std_logic_vector(4 downto 0));
 end component;
 
+component N_bit_reg is
+  generic(N : integer := 32);
+  port(i_CLK        : in std_logic;     -- Clock input
+       i_RST        : in std_logic;     -- Reset input
+       i_WE         : in std_logic;     -- Write enable input
+       i_D          : in std_logic_vector(N-1 downto 0);     -- Data value input
+       o_Q          : out std_logic_vector(N-1 downto 0));   -- Data value output
+
+end component;
+
 component zero_sign_ext_16_32bit is
   port( i_16in  : in std_logic_vector(15 downto 0);
         i_sel   : in std_logic;
@@ -140,7 +150,9 @@ component Control_ALU is
         o_ALU_operation	: out std_logic_vector(5 downto 0));
 end component;
 
---signals
+--signals 
+signal       s_pc_plus4 : std_logic_vector(31 downto 0); 
+signal       s_reg2 : std_logic_vector(31 downto 0);
 signal       s_rs_data    : std_logic_vector(31 downto 0);
 signal       s_rt_data    : std_logic_vector(31 downto 0);
 signal       s_32Imm      : std_logic_vector(31 downto 0);
@@ -167,7 +179,7 @@ signal s_ALUSrc : std_logic;
 signal s_Shift : std_logic;
 signal s_Sign : std_logic;
 signal s_UpperImm : std_logic;
-signal s_reg2 : std_logic_vector(31 downto 0); 
+
 
 begin
 
@@ -198,6 +210,20 @@ begin
   s_Halt <='1' when (s_Inst(31 downto 26) = "000000") and (s_Inst(5 downto 0) = "001100") and (v0 = "00000000000000000000000000001010") else '0';
 
   -- TODO: Implement the rest of your processor below this comment!
+
+   PC:N_bit_reg
+  port map(i_CLK => iCLK,
+       i_RST => iRST, 
+       i_WE => '1',    
+       i_D => s_pc_plus4,   
+       o_Q => s_NextInstAddr);
+
+   AddPC:Add_Sub 
+  port map(i_A => x"00000004",
+	i_B => s_NextInstAddr,
+	i_nAdd_Sub => '0', 
+       	o_S => s_pc_plus4,
+        o_Cout => open);
 
    Control1: Control
       port map(i_opCode => s_Inst(31 downto 26),

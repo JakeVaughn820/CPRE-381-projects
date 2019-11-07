@@ -58,7 +58,7 @@ def compile():
 	print('Successfully compiled vhdl\n')
 	return True
 
-def sim(timeout=30):
+def sim(timeout=30, deep_debug=False):
 	'''
 	Simulates testbench. All work should be compiled before this method is called
 	Returns True if the simulation was successful, otherwise False
@@ -68,10 +68,15 @@ def sim(timeout=30):
 	
 	try:
 
+		do_file = 'modelsim_framework.do'
+		if(deep_debug):
+			do_file = 'modelsim_framework2.do';
+
+
 		# C:\modeltech64_10.5b\win64\vsim.exe -c -novopt tb_SimplifiedMIPSProcessor -do modelsim_fremawork.do
 		with open('temp/vsim.log','w') as sim_log:
 			exit_code = subprocess.call(
-				['C:\\modelsim_dlx64_10.7b\\win64pe\\vsim.exe','-c','tb_SimplifiedMIPSProcessor','-do','modelsim_framework.do'],
+				['C:\\modelsim_dlx64_10.7b\\win64pe\\vsim.exe','-c','tb_SimplifiedMIPSProcessor','-do',do_file],
 				stdout=sim_log,
 				stderr=sim_log,
 				cwd='ModelSimWork/', #Run this process in a different directory for work folder
@@ -106,6 +111,12 @@ def sim(timeout=30):
 	busy_move('ModelSimWork/vsim.wlf', 'temp/vsim.wlf',missingok=False)
 
 	print('Successfully simulated program!\n')
+
+	if(deep_debug):
+		subprocess.Popen(['C:\\modelsim_dlx64_10.7b\\win64pe\\vsim.exe','-view','temp/vsim.wlf'])
+
+
+
 	return True
 
 
