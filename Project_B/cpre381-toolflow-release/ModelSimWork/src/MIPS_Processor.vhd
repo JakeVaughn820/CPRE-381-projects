@@ -133,7 +133,7 @@ component Control is
    i_fnCode	: in std_logic_vector(5 downto 0);
    o_RegDst	: out std_logic;
    o_Jump	: out std_logic;
-   o_Branch	: out std_logic;
+   o_Beq	: out std_logic;
    o_MemtoReg	: out std_logic;
    o_ALUOp	: out std_logic_vector(5 downto 0);
    o_MemWrite	: out std_logic;
@@ -141,7 +141,10 @@ component Control is
    o_ReWrite	: out std_logic;
    o_Shift : out std_logic;
    o_Sign : out std_logic;
-   o_UpperImm : out std_logic);
+   o_UpperImm : out std_logic;
+   o_Jal : out std_logic;
+   o_Jr : out std_logic;
+   o_Bne : out std_logic);
 end component;
 
 component Control_ALU is
@@ -150,35 +153,47 @@ component Control_ALU is
         o_ALU_operation	: out std_logic_vector(5 downto 0));
 end component;
 
---signals 
-signal       s_pc_plus4 : std_logic_vector(31 downto 0); 
-signal       s_reg2 : std_logic_vector(31 downto 0);
-signal       s_rs_data    : std_logic_vector(31 downto 0);
-signal       s_rt_data    : std_logic_vector(31 downto 0);
-signal       s_32Imm      : std_logic_vector(31 downto 0);
+--signals
+  --control
+  signal s_RegDst : std_logic;
+  signal s_Jump : std_logic;
+  signal s_Beq : std_logic;
+  signal s_MemtoReg : std_logic;
+  signal s_ALUOp : std_logic_vector(5 downto 0);
+  signal s_ALUSrc : std_logic;
+  signal s_Shift : std_logic;
+  signal s_Sign : std_logic;
+  signal s_UpperImm : std_logic;
+  signal s_Jal : std_logic;
+  signal s_Jr : std_logic;
+  signal s_Bne : std_logic;
 
-signal s_shift_amount : std_logic_vector(4 downto 0);
+  signal       s_pc_plus4 : std_logic_vector(31 downto 0);
+  signal       s_rs_data    : std_logic_vector(31 downto 0);
+  signal       s_rt_data    : std_logic_vector(31 downto 0);
+  signal       s_reg2 : std_logic_vector(31 downto 0);
+  signal       s_32Imm      : std_logic_vector(31 downto 0);
+  signal       s_32Imm_Shiftleft2 : std_logic_vector(31 downto 0);
+  signal       s_PC_PlusImm      : std_logic_vector(31 downto 0);
+  signal       s_shift_amount : std_logic_vector(4 downto 0);
+  signal       s_ALU_operation  : std_logic_vector(5 downto 0);
+  signal       s_JumpAddress      : std_logic_vector(31 downto 0);
 
-signal       s_ALUSrc_out     : std_logic_vector(31 downto 0);
+  signal       s_Cout : std_logic;
+  signal       s_Overflow : std_logic;
+  signal       s_Zero       : std_logic;
+  signal       s_ALU_result : std_logic_vector(31 downto 0);
+  signal       s_Beq_and_Zero : std_logic;
+  signal       s_NotBne_Nor_Zero : std_logic;
+  signal       s_BranchSel : std_logic;
 
-signal       s_ALU_operation  : std_logic_vector(5 downto 0);
-
-signal       s_Cout : std_logic;
-signal       s_Overflow : std_logic;
-signal       s_Zero       : std_logic;
-signal       s_ALU_result : std_logic_vector(31 downto 0);
-signal       s_shift_out  : std_logic_vector(4 downto 0);
-
-
-signal s_RegDst : std_logic;
-signal s_Jump : std_logic;
-signal s_Branch : std_logic;
-signal s_MemtoReg : std_logic;
-signal s_ALUOp : std_logic_vector(5 downto 0);
-signal s_ALUSrc : std_logic;
-signal s_Shift : std_logic;
-signal s_Sign : std_logic;
-signal s_UpperImm : std_logic;
+  signal       s_shift_out  : std_logic_vector(4 downto 0);
+  signal       s_ALUSrc_out     : std_logic_vector(31 downto 0);
+  signal       s_RegDst_out  : std_logic_vector(4 downto 0);
+  signal       s_MemtoReg_out     : std_logic_vector(31 downto 0);
+  signal       s_BeqXux  : std_logic_vector(31 downto 0);
+  signal       s_JumpMux  : std_logic_vector(31 downto 0);
+  signal       s_JrMux  : std_logic_vector(31 downto 0);
 
 
 begin
@@ -211,26 +226,26 @@ begin
 
   -- TODO: Implement the rest of your processor below this comment!
 
-   PC:N_bit_reg
+  PC: N_bit_reg
   port map(i_CLK => iCLK,
-       i_RST => iRST, 
-       i_WE => '1',    
-       i_D => s_pc_plus4,   
-       o_Q => s_NextInstAddr);
+           i_RST => iRST,
+           i_WE => '1',
+           i_D => s_JrMux,
+           o_Q => s_NextInstAddr);
 
-   AddPC:Add_Sub 
-  port map(i_A => x"00000004",
-	i_B => s_NextInstAddr,
-	i_nAdd_Sub => '0', 
-       	o_S => s_pc_plus4,
-        o_Cout => open);
+  PC_Plus4: Add_Sub
+     port map(i_A => x"00000004",
+              i_B => s_NextInstAddr,
+              i_nAdd_Sub => '0',
+              o_S => s_pc_plus4,
+              o_Cout => open);
 
    Control1: Control
       port map(i_opCode => s_Inst(31 downto 26),
                i_fnCode => s_Inst(5 downto 0),
                o_RegDst => s_RegDst,
                o_Jump => s_Jump,
-               o_Branch => s_Branch,
+               o_Beq => s_Beq,
                o_MemtoReg => s_MemtoReg,
                o_ALUOp => s_ALUOp,
                o_MemWrite => s_DMemWr,
@@ -238,12 +253,21 @@ begin
                o_ReWrite => s_RegWr,
                o_Shift => s_shift,
                o_Sign => s_Sign,
-               o_UpperImm => s_UpperImm);
+               o_UpperImm => s_UpperImm,
+               o_Jal => s_Jal,
+               o_Jr => s_Jr,
+               o_Bne => s_Bne);
 
    RegDst: mux_2to1_5bit
       port map(i_0 => s_Inst(20 downto 16),
                i_1 => s_Inst(15 downto 11),
                sel => s_RegDst,
+               o_f => s_RegDst_out);
+
+   JalRegDst: mux_2to1_5bit
+      port map(i_0 => s_RegDst_out,
+               i_1 => "11111",
+               sel => s_Jal,
                o_f => s_RegWrAddr);
 
    RegFile1: RegFile
@@ -256,7 +280,7 @@ begin
             i_data => s_RegWrData,
             o_rs_data => s_rs_data,
             o_rt_data => s_rt_data,
-	    o_reg2 => s_reg2);
+            o_reg2 => s_reg2);
 
    s_DMemData <= s_rt_data;
    v0 <= s_reg2;
@@ -276,6 +300,12 @@ begin
       port map(i_A => s_ALU_result,
                i_B => s_DMemOut,
                i_X => s_MemtoReg,
+               o_Y => s_MemtoReg_out);
+
+   JalMemtoReg: mux2_1_D
+      port map(i_A => s_MemtoReg_out,
+               i_B => s_pc_plus4,
+               i_X => s_Jal,
                o_Y => s_RegWrData);
 
    Control_ALU1: Control_ALU
@@ -305,8 +335,48 @@ begin
                sel => s_UpperImm,
                o_f => s_shift_amount);
 
-
    s_DMemAddr <= s_ALU_result;
    oALUOut <= s_ALU_result;
+
+   #32 Imm shifted left two
+   s_32Imm_Shiftleft2(31 downto 2) <= s_32Imm(29 downto 0);
+   s_32Imm_Shiftleft2(1 downto 0) <= "00";
+
+   PC_PC_PlusImm: Add_Sub
+      port map(i_A => s_pc_plus4,
+               i_B => s_32Imm_Shiftleft2,
+               i_nAdd_Sub => '0',
+               o_S => s_PC_PlusImm,
+               o_Cout => open);
+
+
+   #Logic for Beq and Bne
+   s_Beq_and_Zero <= s_Beq AND s_Zero;
+   s_NotBne_Nor_Zero <= (Not(s_Bne) NOR s_Zero);
+   s_BranchSel <= (s_Beq_and_Zero OR s_NotBne_Nor_Zero)
+
+   Branchmux: mux2_1_D
+      port map(i_A => s_pc_plus4,
+               i_B => s_PC_PlusImm,
+               i_X => s_BranchSel,
+               o_Y => s_BranchMux);
+
+   #Find jump address for Jump
+   s_JumpAddress(27 downto 2) <= s_Inst(25 downto 0);
+   s_JumpAddress(1 downto 0) <= "00";
+   s_JumpAddress(31 downto 28) <= s_pc_plus4(31 downto 28);
+
+   Jumpmux: mux2_1_D
+      port map(i_A => s_BranchMux,
+               i_B => s_JumpAddress,
+               i_X => s_Jump,
+               o_Y => s_JumpMux);
+
+   Jrmux: mux2_1_D
+      port map(i_A => s_JumpMux,
+               i_B => s_rs_data,
+               i_X => s_Jr,
+               o_Y => s_JrMux);
+
 
 end structure;
