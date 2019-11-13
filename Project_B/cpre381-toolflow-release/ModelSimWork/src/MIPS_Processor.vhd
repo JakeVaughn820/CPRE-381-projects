@@ -140,7 +140,7 @@ component Control is
    o_ALUSrc	: out std_logic;
    o_ReWrite	: out std_logic;
    o_Shift : out std_logic;
-   o_Sign : out std_logic;
+   o_SignExtend : out std_logic;
    o_UpperImm : out std_logic;
    o_Jal : out std_logic;
    o_Jr : out std_logic;
@@ -162,7 +162,7 @@ end component;
   signal s_ALUOp : std_logic_vector(5 downto 0);
   signal s_ALUSrc : std_logic;
   signal s_Shift : std_logic;
-  signal s_Sign : std_logic;
+  signal s_SignExtend : std_logic;
   signal s_UpperImm : std_logic;
   signal s_Jal : std_logic;
   signal s_Jr : std_logic;
@@ -191,11 +191,11 @@ end component;
   signal       s_ALUSrc_out     : std_logic_vector(31 downto 0);
   signal       s_RegDst_out  : std_logic_vector(4 downto 0);
   signal       s_MemtoReg_out     : std_logic_vector(31 downto 0);
-  signal       s_BeqXux  : std_logic_vector(31 downto 0);
+  signal       s_BranchMux  : std_logic_vector(31 downto 0);
   signal       s_JumpMux  : std_logic_vector(31 downto 0);
   signal       s_JrMux  : std_logic_vector(31 downto 0);
-
-
+  signal       s_ResetMux_out  : std_logic_vector(31 downto 0);
+  
 begin
 
   -- TODO: This is required to be your final input to your instruction memory. This provides a feasible method to externally load the memory module which means that the synthesis tool must assume it knows nothing about the values stored in the instruction memory. If this is not included, much, if not all of the design is optimized out because the synthesis tool will believe the memory to be all zeros.
@@ -225,20 +225,25 @@ begin
   s_Halt <='1' when (s_Inst(31 downto 26) = "000000") and (s_Inst(5 downto 0) = "001100") and (v0 = "00000000000000000000000000001010") else '0';
 
   -- TODO: Implement the rest of your processor below this comment!
+   ResetMux: mux2_1_D
+      port map(i_A => s_JrMux,
+               i_B => x"00400000",
+               i_X => iRST,
+               o_Y => s_ResetMux_out);
+			   
+   PC: N_bit_reg
+      port map(i_CLK => iCLK,
+               i_RST => '0',
+               i_WE => '1',
+               i_D => s_ResetMux_out,
+               o_Q => s_NextInstAddr);
 
-  PC: N_bit_reg
-  port map(i_CLK => iCLK,
-           i_RST => iRST,
-           i_WE => '1',
-           i_D => s_JrMux,
-           o_Q => s_NextInstAddr);
-
-  PC_Plus4: Add_Sub
-     port map(i_A => x"00000004",
-              i_B => s_NextInstAddr,
-              i_nAdd_Sub => '0',
-              o_S => s_pc_plus4,
-              o_Cout => open);
+   PC_Plus4: Add_Sub
+      port map(i_A => x"00000004",
+               i_B => s_NextInstAddr,
+               i_nAdd_Sub => '0',
+               o_S => s_pc_plus4,
+               o_Cout => open);
 
    Control1: Control
       port map(i_opCode => s_Inst(31 downto 26),
@@ -252,7 +257,7 @@ begin
                o_ALUSrc => s_ALUSrc,
                o_ReWrite => s_RegWr,
                o_Shift => s_shift,
-               o_Sign => s_Sign,
+               o_SignExtend => s_SignExtend,
                o_UpperImm => s_UpperImm,
                o_Jal => s_Jal,
                o_Jr => s_Jr,
@@ -293,7 +298,7 @@ begin
 
    Ext1: zero_sign_ext_16_32bit
       port map( i_16in => s_Inst(15 downto 0),
-                i_sel => s_Sign,
+                i_sel => s_SignExtend,
                 o_32out => s_32Imm);
 
    MemtoReg: mux2_1_D
@@ -338,7 +343,7 @@ begin
    s_DMemAddr <= s_ALU_result;
    oALUOut <= s_ALU_result;
 
-   #32 Imm shifted left two
+   --32 Imm shifted left two
    s_32Imm_Shiftleft2(31 downto 2) <= s_32Imm(29 downto 0);
    s_32Imm_Shiftleft2(1 downto 0) <= "00";
 
@@ -350,10 +355,10 @@ begin
                o_Cout => open);
 
 
-   #Logic for Beq and Bne
+   --Logic for Beq and Bne
    s_Beq_and_Zero <= s_Beq AND s_Zero;
    s_NotBne_Nor_Zero <= (Not(s_Bne) NOR s_Zero);
-   s_BranchSel <= (s_Beq_and_Zero OR s_NotBne_Nor_Zero)
+   s_BranchSel <= (s_Beq_and_Zero OR s_NotBne_Nor_Zero);
 
    Branchmux: mux2_1_D
       port map(i_A => s_pc_plus4,
@@ -361,7 +366,7 @@ begin
                i_X => s_BranchSel,
                o_Y => s_BranchMux);
 
-   #Find jump address for Jump
+   --Find jump address for Jump
    s_JumpAddress(27 downto 2) <= s_Inst(25 downto 0);
    s_JumpAddress(1 downto 0) <= "00";
    s_JumpAddress(31 downto 28) <= s_pc_plus4(31 downto 28);

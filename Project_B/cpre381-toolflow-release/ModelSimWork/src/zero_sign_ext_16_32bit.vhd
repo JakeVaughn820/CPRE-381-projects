@@ -22,7 +22,7 @@ architecture structure of zero_sign_ext_16_32bit is
 begin
    process(i_16in, i_sel)
       begin
-      if(i_sel = '0') then
+      if(i_sel = '1') then
          o_32out <= conv_std_logic_vector(unsigned(i_16in),32);
       else
          o_32out <= conv_std_logic_vector(signed(i_16in),32);

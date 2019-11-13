@@ -36,6 +36,7 @@ signal s_sub	: std_logic_vector(5 downto 0);
 signal s_sra	: std_logic_vector(5 downto 0); --Arithmetic Shift Right
 signal s_slr	: std_logic_vector(5 downto 0); --Logical Shigt Right
 signal s_sll	: std_logic_vector(5 downto 0); --Shift Left
+signal s_sltu	: std_logic_vector(5 downto 0);
 
 begin
 
@@ -50,6 +51,7 @@ s_sub	<= "011010";
 s_sra	<= "111100"; 	--Arithmetic Shift Right
 s_slr	<= "111101";  	--Logical Shigt Right
 s_sll	<= "111110"; 	--Shift Left
+s_sltu  <= "111111";
 
 o_ALU_operation  <=	--AND		      and                                            andi
 			s_and when((i_fnCode = "100100" and i_opCode = "000000") or i_opCode = "001100") else
@@ -63,8 +65,8 @@ o_ALU_operation  <=	--AND		      and                                            
 			--XOR                    xor                                             xori
 			s_xor when((i_fnCode = "100110" and i_opCode = "000000") or i_opCode = "001110") else 
 
-			--SLT                    slt                                             slti                   sltiu                   sltu
-			s_slt when((i_fnCode = "101010" and i_opCode = "000000") or i_opCode = "001010" or i_opCode = "001011" or (i_fnCode = "101011" and i_opCode = "000000")) else
+			--SLT                    slt                                             slti
+			s_slt when((i_fnCode = "101010" and i_opCode = "000000") or i_opCode = "001010") else
 
 			--NOR                    nor
 			s_nor when((i_fnCode = "100111" and i_opCode = "000000")) else
@@ -72,8 +74,8 @@ o_ALU_operation  <=	--AND		      and                                            
 			--NAND (Does nothing for now)
 			s_nand when((i_fnCode = "111111" and i_opCode = "000000")) else
 
-			--SUB                     sub                    subu
-			s_sub when(((i_fnCode = "100010" or i_fnCode = "100011") and i_opCode = "000000")) else
+			--SUB                     sub                    subu                                             beq                    bne
+			s_sub when(((i_fnCode = "100010" or i_fnCode = "100011") and i_opCode = "000000") or i_opCode = "000100" or i_opCode = "000101") else
 
 			--SRA                     sra                    srav
 			s_sra when(((i_fnCode = "000011" or i_fnCode = "000111") and i_opCode = "000000")) else
@@ -83,8 +85,11 @@ o_ALU_operation  <=	--AND		      and                                            
 
 			--SLL                     sll                    sllv                                             lui
 			s_sll when(((i_fnCode = "000000" or i_fnCode = "000100") and i_opCode = "000000") or i_opCode = "001111") else
+			
+			--SLTU                  sltiu                   sltu
+			s_sltu when(i_opCode = "001011" or (i_fnCode = "101011" and i_opCode = "000000")) else
 
-			--Branching and jumping
+			--jumping
 			"000000";
 
 end my_ALUctl;

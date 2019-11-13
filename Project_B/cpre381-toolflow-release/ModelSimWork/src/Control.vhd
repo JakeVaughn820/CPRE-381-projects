@@ -27,7 +27,7 @@ entity Control is
    o_ALUSrc	: out std_logic;
    o_ReWrite	: out std_logic;
    o_Shift : out std_logic;
-   o_Sign : out std_logic;
+   o_SignExtend : out std_logic;
    o_UpperImm : out std_logic;
    o_Jal : out std_logic;
    o_Jr : out std_logic;
@@ -37,8 +37,8 @@ end Control;
 architecture my_ctl of Control is
 
 begin
-   --0 for 		                  addiu 		          andi                  lui                    lw                      xori                   ori                   slti                   sltiu                  sw                     beq                    bne
-   o_RegDst <= '0' when(i_opCode = "001001" or i_opCode = "001000" or i_opCode = "001111" or i_opCode = "100011" or i_opCode = "001110" or i_opCode = "001101" or i_opCode = "001010" or i_opCode = "001011" or i_opCode = "101011" or i_opCode = "000100" or i_opCode = "000101") else '1';
+   --0 for 		                    addiu 		            andi                   andi                    lui                    lw                      xori                   ori                   slti                   sltiu                  sw                     beq                    bne
+   o_RegDst <= '0' when(i_opCode = "001001" or i_opCode = "001000" or i_opCode = "001100"  or i_opCode = "001111" or i_opCode = "100011" or i_opCode = "001110" or i_opCode = "001101" or i_opCode = "001010" or i_opCode = "001011" or i_opCode = "101011" or i_opCode = "000100" or i_opCode = "000101") else '1';
 
    --1 for                          j                      jal
    o_Jump <= '1' when(i_opCode = "000010" or i_opCode = "000011") else '0';
@@ -61,11 +61,11 @@ begin
    --0 for                            sw                      beq                     bne                    j                      jr
    o_ReWrite <= '0' when(i_opCode = "101011" or i_opCode  = "000100" or i_opCode  = "000101" or i_opCode = "000010" or (i_fnCode = "001000" and i_opCode = "000000")) else '1';
 
-   --0 for                          sllv                   srlv                   srav
-   o_Shift <= '0' when((i_fnCode = "000100" or i_fnCode = "000110" or i_fnCode = "000111") and i_opCode = "000000") else '1';
+   --1 for                          sllv                   srlv                   srav
+   o_Shift <= '1' when((i_fnCode = "000100" or i_fnCode = "000110" or i_fnCode = "000111") and i_opCode = "000000") else '0';
 
-   --0 for                        addiu                   sltiu                  addu                  sltu                   subu
-   o_Sign <= '0' when(i_opCode = "001001" or i_opCode = "001011" or ((i_fnCode = "100001" or i_fnCode = "101011" or i_fnCode = "100011") and i_opCode = "000000")) else '1';
+   --1 for                                andi                  xori                     ori
+   o_SignExtend <= '1' when(i_opCode = "001100" or i_opCode = "001110" or i_opCode = "001101") else '0';
 
    --1 for                             lui
    o_UpperImm <= '1' when(i_opCode = "001111") else '0';

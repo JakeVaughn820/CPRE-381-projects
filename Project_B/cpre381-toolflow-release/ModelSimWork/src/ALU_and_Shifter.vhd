@@ -65,8 +65,9 @@ end component;
 signal       s_Carryout   : std_logic;
 signal       s_Overflow   : std_logic;
 signal       s_Zero       : std_logic;
-signal       s_F_ALU         : std_logic_vector (31 downto 0);
-signal       s_F_Shift         : std_logic_vector (31 downto 0);
+signal       s_F_ALU      : std_logic_vector (31 downto 0);
+signal       s_F_Shift    : std_logic_vector (31 downto 0);
+signal       s_sltu       : std_logic_vector (31 downto 0);
 signal       s_ctl_bits_to_shift 	: std_logic_vector(4 downto 0);
 signal       s_ctl_which_shift		: std_logic_vector(1 downto 0);
 
@@ -94,8 +95,12 @@ begin
             ctl_bits_to_shift => s_ctl_bits_to_shift,
             ctl_which_shift => s_ctl_which_shift);
 
-	F <=  s_F_Shift when (ALUOp =  "111100") else
-              s_F_Shift when (ALUOp =  "111101") else
-              s_F_Shift when (ALUOp =  "111110") else
-              s_F_ALU;
+   s_sltu <= x"00000001" when (A<B) else x"00000000";
+	
+   F <=      s_F_Shift when (ALUOp =  "111100") else
+			 s_F_Shift when (ALUOp =  "111101") else
+			 s_F_Shift when (ALUOp =  "111110") else
+			 s_sltu    when (ALUOp =  "111111") else
+			 s_F_ALU;
+			  
 end arch;

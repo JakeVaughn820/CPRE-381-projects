@@ -5,7 +5,7 @@
 -------------------------------------------------------------------------
 
 
--- dff.vhd
+-- dff1.vhd
 -------------------------------------------------------------------------
 -- DESCRIPTION: This file contains an implementation of an edge-triggered
 -- flip-flop with parallel access and reset.
@@ -18,7 +18,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 
-entity dff is
+entity dff1 is
 
   port(i_CLK        : in std_logic;     -- Clock input
        i_RST        : in std_logic;     -- Reset input
@@ -26,9 +26,9 @@ entity dff is
        i_D          : in std_logic;     -- Data value input
        o_Q          : out std_logic);   -- Data value output
 
-end dff;
+end dff1;
 
-architecture mixed of dff is
+architecture mixed of dff1 is
   signal s_D    : std_logic;    -- Multiplexed input to the FF
   signal s_Q    : std_logic;    -- Output of the FF
 
