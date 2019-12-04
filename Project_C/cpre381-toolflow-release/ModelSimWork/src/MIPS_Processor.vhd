@@ -158,11 +158,11 @@ component IFID_reg is
        IFID_WriteEn    : in std_logic;     -- if 1 writing is enabled
        IF_PC4          : in std_logic_vector(31 downto 0);
        IF_Inst         : in std_logic_vector(31 downto 0);
-       IF_flush        : in std_logic;     -- Reset registers
+       IFID_flush      : in std_logic;     -- Reset registers
        ID_PC4          : out std_logic_vector(31 downto 0);
-       ID_Inst         : out std_logic_vector(31 downto 0);
-       ID_flush        : out std_logic_vector(31 downto 0));
+       ID_Inst         : out std_logic_vector(31 downto 0));
 end component;
+
 --signals
   --control
   signal s_RegDst : std_logic;
@@ -208,7 +208,6 @@ end component;
 
   signal       s_ID_PC4 : std_logic_vector(31 downto 0);
   signal       s_ID_Inst : std_logic_vector(31 downto 0);
-  signal       s_ID_flush : std_logic;
 
 begin
 
@@ -266,8 +265,7 @@ begin
                IF_Inst => s_Inst,
                IF_flush => '0',  --TODO: add flush
                ID_PC4 => s_ID_PC4,
-               ID_Inst => s_ID_Inst,
-               ID_flush => s_ID_flush);
+               ID_Inst => s_ID_Inst);
 
    Control1: Control
       port map(i_opCode => s_ID_Inst(31 downto 26),
