@@ -15,17 +15,21 @@ entity EXMEM_reg is
       EX_RegWrite      : in std_logic;
       EX_MemtoReg      : in std_logic;
       EX_MemWrite      : in std_logic;
+      EX_jal           : in std_logic;
       EX_ALUResult     : in std_logic_vector(31 downto 0);
       EX_WriteData     : in std_logic_vector(31 downto 0);
       EX_WriteReg      : in std_logic_vector(4 downto 0);
+      EX_PC4           : in std_logic_vector(31 downto 0);
 
       --Outputs (MEM)
-      MEM_RegWrite      : out std_logic;
-      MEM_MemtoReg      : out std_logic;
-      MEM_MemWrite    : out std_logic;
-      MEM_ALUResult   : out std_logic_vector(31 downto 0);
-      MEM_WriteData   : out std_logic_vector(31 downto 0);
-      MEM_WriteReg      : out std_logic_vector(4 downto 0));
+      MEM_RegWrite     : out std_logic;
+      MEM_MemtoReg     : out std_logic;
+      MEM_MemWrite     : out std_logic;
+      MEM_jal          : out std_logic;
+      MEM_ALUResult    : out std_logic_vector(31 downto 0);
+      MEM_WriteData    : out std_logic_vector(31 downto 0);
+      MEM_WriteReg     : out std_logic_vector(4 downto 0);
+      MEM_PC4          : out std_logic_vector(31 downto 0));
 end EXMEM_reg;
 
 architecture arch of EXMEM_reg is
@@ -42,7 +46,6 @@ end component;
 component one_bit_reg
   port(i_CLK        : in std_logic;     -- Clock input
        i_RST        : in std_logic;     -- Reset input
-      -- i_flush      : in std_logic;     -- Flu
        i_WE         : in std_logic;     -- Write enable input
        i_D          : in std_logic;     -- Data value input
        o_Q          : out std_logic);   -- Data value output
@@ -80,6 +83,13 @@ begin
           i_D => EX_MemWrite,
           o_Q => MEM_MemWrite);
 
+   EXMEM_jal_reg: one_bit_reg
+   port map(i_CLK => CLK,
+          i_RST => EXMEM_flush,
+          i_WE => EXMEM_WriteEn,
+          i_D => EX_jal,
+          o_Q => MEM_jal);
+
    EXMEM_ALUResult_reg: N_bit_reg
    port map(i_CLK => CLK,
           i_RST => EXMEM_flush,
@@ -101,4 +111,10 @@ begin
           i_D => EX_WriteReg,
           o_Q => MEM_WriteReg);
 
+   EXMEM_PC4_reg: N_bit_reg
+   port map(i_CLK => CLK,
+          i_RST => EXMEM_flush,
+          i_WE => EXMEM_WriteEn,
+          i_D => EX_PC4,
+          o_Q => MEM_PC4);
 end arch;

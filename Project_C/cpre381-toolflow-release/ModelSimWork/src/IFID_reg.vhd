@@ -11,7 +11,7 @@ entity IFID_reg is
        IFID_WriteEn    : in std_logic;     -- if 1 writing is enabled
        IF_PC4          : in std_logic_vector(31 downto 0);
        IF_Inst         : in std_logic_vector(31 downto 0);
-       IFID_flush        : in std_logic;     -- Reset registers
+       IFID_flush      : in std_logic;     -- Reset registers
        ID_PC4          : out std_logic_vector(31 downto 0);
        ID_Inst         : out std_logic_vector(31 downto 0));
 

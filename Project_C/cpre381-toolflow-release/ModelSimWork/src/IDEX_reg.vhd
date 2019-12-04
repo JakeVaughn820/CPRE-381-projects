@@ -70,7 +70,7 @@ component one_bit_reg
        o_Q          : out std_logic);   -- Data value output
 end component;
 
-component four_bit_reg
+component five_bit_reg
   generic(N : integer := 4);
   port(i_CLK        : in std_logic;     -- Clock input
        i_RST        : in std_logic;     -- Reset input
@@ -79,7 +79,7 @@ component four_bit_reg
        o_Q          : out std_logic_vector(N-1 downto 0));   -- Data value output
 end component;
 
-component five_bit_reg
+component six_bit_reg
   generic(N : integer := 5);
   port(i_CLK        : in std_logic;     -- Clock input
        i_RST        : in std_logic;     -- Reset input
@@ -111,7 +111,7 @@ begin
             i_D => ID_MemtoReg,
             o_Q => EX_MemtoReg);
 
-   IDEX_ALUOp_reg: five_bit_reg
+   IDEX_ALUOp_reg: six_bit_reg
    port map(i_CLK => CLK,
             i_RST => IDEX_flush,
             i_WE => IDEX_WriteEn,
@@ -195,7 +195,7 @@ begin
             i_D => ID_rd,
             o_Q => EX_rd);
 
-   IDEX_Funct_reg: five_bit_reg
+   IDEX_Funct_reg: six_bit_reg
    port map(i_CLK => CLK,
             i_RST => IDEX_flush,
             i_WE => IDEX_WriteEn,
@@ -209,10 +209,10 @@ begin
             i_D => ID_PC4,
             o_Q => EX_PC4);
 
-   IDEX_Funct_reg: four_bit_reg
+   IDEX_Funct_reg: five_bit_reg
    port map(i_CLK => CLK,
             i_RST => IDEX_flush,
             i_WE => IDEX_WriteEn,
             i_D => ID_Shift_Amount,
-            o_Q => EX_Shift_Amount);            
+            o_Q => EX_Shift_Amount);
 end arch;
