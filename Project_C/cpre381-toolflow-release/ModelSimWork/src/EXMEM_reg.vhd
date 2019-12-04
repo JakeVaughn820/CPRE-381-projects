@@ -15,7 +15,7 @@ entity EXMEM_reg is
 	   EX_RegWrite	   : in std_logic; 	  
 	   EX_MemtoReg	   : in std_logic; 
 	   EX_MemWrite     : in std_logic;
-       EX_ALUResult    : in std_logic_vector(31 downto 0); 
+           EX_ALUResult    : in std_logic_vector(31 downto 0); 
 	   EX_WriteData    : in std_logic_vector(31 downto 0);
 	   EX_WriteReg	   : in std_logic_vector(4 downto 0); 
 	   
@@ -26,7 +26,7 @@ entity EXMEM_reg is
 	   MEM_MemWrite    : out std_logic;
 	   MEM_ALUResult   : out std_logic_vector(31 downto 0); 
 	   MEM_WriteData   : out std_logic_vector(31 downto 0);
-	   MEM_WriteReg	   : out std_logic_vector(4 downto 0); 
+	   MEM_WriteReg	   : out std_logic_vector(4 downto 0)); 
 end EXMEM_reg;
 
 architecture arch of EXMEM_reg is
@@ -40,16 +40,16 @@ component N_bit_reg
        o_Q          : out std_logic_vector(N-1 downto 0));   -- Data value output
 end component;
 
-component 1_bit_reg
+component one_bit_reg  
   port(i_CLK        : in std_logic;     -- Clock input
        i_RST        : in std_logic;     -- Reset input
-       i_flush      : in std_logic;     -- Flu
+      -- i_flush      : in std_logic;     -- Flu
        i_WE         : in std_logic;     -- Write enable input
        i_D          : in std_logic;     -- Data value input
        o_Q          : out std_logic);   -- Data value output
 end component;
 
-component 5_bit_reg
+component five_bit_reg  
   generic(N : integer := 5);
   port(i_CLK        : in std_logic;     -- Clock input
        i_RST        : in std_logic;     -- Reset input
@@ -60,28 +60,28 @@ end component;
 
 begin
 
-   EXMEM_Flush_reg: 1_bit_reg
+   EXMEM_Flush_reg: one_bit_reg
    port map(i_CLK => CLK,
             i_RST => '0',
             i_WE => EXMEM_WriteEn,
             i_D => EX_flush,
             o_Q => MEM_flush);
 			
-	EXMEM_RegWrite_reg: 1_bit_reg
+	EXMEM_RegWrite_reg: one_bit_reg
 	port map(i_CLK => CLK, 
 			 i_RST => EX_flush, 
 			 i_WE => EXMEM_WriteEn,
 			 i_D => EX_RegWrite, 
 			 o_Q => MEM_RegWrite); 
 			
-	EXMEM_MemtoReg_reg: 1_bit_reg
+	EXMEM_MemtoReg_reg: one_bit_reg
 	port map(i_CLK => CLK, 
 			 i_RST => EX_flush, 
 			 i_WE => EXMEM_WriteEn,
 			 i_D => EX_MemtoReg, 
 			 o_Q => MEM_MemtoReg);
 
-	EXMEM_MemWrite_reg: 1_bit_reg
+	EXMEM_MemWrite_reg: one_bit_reg
 	port map(i_CLK => CLK, 
 			 i_RST => EX_flush, 
 			 i_WE => EXMEM_WriteEn,
@@ -100,9 +100,9 @@ begin
 			 i_RST => EX_flush, 
 			 i_WE => EXMEM_WriteEn, 
 			 i_D => EX_WriteData,
-			 o_Q => MEM__WriteData);
+			 o_Q => MEM_WriteData);
 
-	EXMEM_WriteReg_reg: 5_bit_reg
+	EXMEM_WriteReg_reg: five_bit_reg
 	port map(i_CLK => CLK, 
 			 i_RST => EX_flush, 
 			 i_WE => EXMEM_WriteEn,

@@ -14,7 +14,7 @@ entity IFID_reg is
        IF_flush        : in std_logic;     -- Reset registers
        ID_PC4          : out std_logic_vector(31 downto 0);
        ID_Inst         : out std_logic_vector(31 downto 0);
-       ID_flush        : out std_logic_vector(31 downto 0));
+       ID_flush        : out std_logic);
 
 end IFID_reg;
 
@@ -29,10 +29,10 @@ component N_bit_reg
        o_Q          : out std_logic_vector(N-1 downto 0));   -- Data value output
 end component;
 
-component 1_bit_reg
+component one_bit_reg
   port(i_CLK        : in std_logic;     -- Clock input
        i_RST        : in std_logic;     -- Reset input
-       i_flush      : in std_logic;     -- Flu
+     --  i_flush      : in std_logic;     -- Flu
        i_WE         : in std_logic;     -- Write enable input
        i_D          : in std_logic;     -- Data value input
        o_Q          : out std_logic);   -- Data value output
@@ -54,7 +54,7 @@ begin
             i_D => IF_Inst,
             o_Q => ID_Inst);
 
-   IFID_flush_reg: 1_bit_reg
+   IFID_flush_reg: one_bit_reg
    port map(i_CLK => CLK,
             i_RST => '0',
             i_WE => IFID_WriteEn,
