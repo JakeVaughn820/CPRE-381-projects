@@ -30,6 +30,7 @@ entity IDEX_reg is
        ID_rd           : in std_logic_vector(4 downto 0);
        ID_Funct        : in std_logic_vector(5 downto 0);
        ID_Shift_Amount : in std_logic_vector(4 downto 0);
+	   ID_Halt         : in std_logic; 
 
        EX_PC4          : out std_logic_vector(31 downto 0);
        EX_RegDst       : out std_logic;
@@ -49,7 +50,8 @@ entity IDEX_reg is
        EX_rt           : out std_logic_vector(4 downto 0);
        EX_rd           : out std_logic_vector(4 downto 0);
        EX_Funct        : out std_logic_vector(5 downto 0);
-       EX_Shift_Amount : out std_logic_vector(4 downto 0));
+       EX_Shift_Amount : out std_logic_vector(4 downto 0);
+	   EX_Halt		   : out std_logic); 
 end IDEX_reg;
 
 architecture arch of IDEX_reg is
@@ -224,4 +226,11 @@ begin
             i_WE => IDEX_WriteEn,
             i_D => ID_Shift_Amount,
             o_Q => EX_Shift_Amount);
+			
+   IDEX_Halt_reg: one_bit_reg
+   port map(i_CLK => CLK,
+            i_RST => IDEX_flush,
+            i_WE => IDEX_WriteEn,
+            i_D => ID_Halt,
+            o_Q => EX_Halt);
 end arch;

@@ -20,6 +20,7 @@ entity EXMEM_reg is
       EX_WriteData     : in std_logic_vector(31 downto 0);
       EX_WriteReg      : in std_logic_vector(4 downto 0);
       EX_PC4           : in std_logic_vector(31 downto 0);
+	  EX_Halt		   : in std_logic; 
 
       --Outputs (MEM)
       MEM_RegWrite     : out std_logic;
@@ -29,7 +30,8 @@ entity EXMEM_reg is
       MEM_ALUResult    : out std_logic_vector(31 downto 0);
       MEM_WriteData    : out std_logic_vector(31 downto 0);
       MEM_WriteReg     : out std_logic_vector(4 downto 0);
-      MEM_PC4          : out std_logic_vector(31 downto 0));
+      MEM_PC4          : out std_logic_vector(31 downto 0);
+	  MEM_Halt         : out std_logic); 
 end EXMEM_reg;
 
 architecture arch of EXMEM_reg is
@@ -117,4 +119,11 @@ begin
           i_WE => EXMEM_WriteEn,
           i_D => EX_PC4,
           o_Q => MEM_PC4);
+		  
+   EXMEM_Halt_reg: one_bit_reg
+   port map(i_CLK => CLK,
+          i_RST => EXMEM_flush,
+          i_WE => EXMEM_WriteEn,
+          i_D => EX_Halt,
+          o_Q => MEM_Halt);
 end arch;

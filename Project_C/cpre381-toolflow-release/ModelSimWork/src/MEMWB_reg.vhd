@@ -19,6 +19,7 @@ entity MEMWB_reg is
       MEM_ALUResult   : in std_logic_vector(31 downto 0);
       MEM_WriteReg    : in std_logic_vector(4 downto 0);
       MEM_PC4         : in std_logic_vector(31 downto 0);
+	  MEM_Halt        : in std_logic; 
 
       --Outputs (WB)
       WB_RegWrite     : out std_logic;
@@ -27,7 +28,8 @@ entity MEMWB_reg is
       WB_DMemOut      : out std_logic_vector(31 downto 0);
       WB_ALUResult    : out std_logic_vector(31 downto 0);
       WB_WriteReg     : out std_logic_vector(4 downto 0);
-      WB_PC4          : out std_logic_vector(31 downto 0));
+      WB_PC4          : out std_logic_vector(31 downto 0);
+	  WB_Halt         : out std_logic); 
 
 end MEMWB_reg;
 
@@ -109,4 +111,11 @@ begin
             i_WE => MEMWB_WriteEn,
             i_D => MEM_PC4,
             o_Q => WB_PC4);
+			
+MEMWB_Halt_reg: one_bit_reg
+   port map(i_CLK => CLK,
+           i_RST => MEMWB_flush,
+           i_WE => MEMWB_WriteEn,
+           i_D => MEM_Halt,
+           o_Q => WB_Halt);
 end arch;

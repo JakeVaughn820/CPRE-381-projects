@@ -188,6 +188,7 @@ component IDEX_reg is
        ID_rd           : in std_logic_vector(4 downto 0);
        ID_Funct        : in std_logic_vector(5 downto 0);
        ID_Shift_Amount : in std_logic_vector(4 downto 0);
+	   ID_Halt         : in std_logic; 
 
        EX_PC4          : out std_logic_vector(31 downto 0);
        EX_RegDst       : out std_logic;
@@ -207,7 +208,8 @@ component IDEX_reg is
        EX_rt           : out std_logic_vector(4 downto 0);
        EX_rd           : out std_logic_vector(4 downto 0);
        EX_Funct        : out std_logic_vector(5 downto 0);
-       EX_Shift_Amount : out std_logic_vector(4 downto 0));
+       EX_Shift_Amount : out std_logic_vector(4 downto 0);
+	   EX_Halt         : out std_logic);
 end component;
 
 component EXMEM_reg is
@@ -224,6 +226,7 @@ component EXMEM_reg is
       EX_WriteData     : in std_logic_vector(31 downto 0);
       EX_WriteReg      : in std_logic_vector(4 downto 0);
       EX_PC4           : in std_logic_vector(31 downto 0);
+	  EX_Halt		   : in std_logic;
 
       --Outputs (MEM)
       MEM_RegWrite     : out std_logic;
@@ -233,7 +236,8 @@ component EXMEM_reg is
       MEM_ALUResult    : out std_logic_vector(31 downto 0);
       MEM_WriteData    : out std_logic_vector(31 downto 0);
       MEM_WriteReg     : out std_logic_vector(4 downto 0);
-      MEM_PC4          : out std_logic_vector(31 downto 0));
+      MEM_PC4          : out std_logic_vector(31 downto 0);
+	  MEM_Halt		   : out std_logic); 
 end component;
 
 component MEMWB_reg is
@@ -249,6 +253,7 @@ component MEMWB_reg is
       MEM_ALUResult   : in std_logic_vector(31 downto 0);
       MEM_WriteReg    : in std_logic_vector(4 downto 0);
       MEM_PC4         : in std_logic_vector(31 downto 0);
+	  MEM_Halt 		  : in std_logic;
 
       --Outputs (WB)
       WB_RegWrite     : out std_logic;
@@ -257,7 +262,8 @@ component MEMWB_reg is
       WB_DMemOut      : out std_logic_vector(31 downto 0);
       WB_ALUResult    : out std_logic_vector(31 downto 0);
       WB_WriteReg     : out std_logic_vector(4 downto 0);
-      WB_PC4          : out std_logic_vector(31 downto 0));
+      WB_PC4          : out std_logic_vector(31 downto 0);
+	  WB_Halt         : out std_logic); 
 
 end component;
 
@@ -309,6 +315,7 @@ end component;
   signal       ID_Inst         : std_logic_vector(31 downto 0);
   signal       ID_flush        : std_logic;
   signal       ID_MemWrite     : std_logic;
+  signal       ID_Halt         :   std_logic;
   --IDEX register signals
   signal       IDEX_flush      :   std_logic;
   
@@ -333,6 +340,7 @@ end component;
   signal       EX_Funct        :   std_logic_vector(5 downto 0);
   signal       EX_Shift_Amount :   std_logic_vector(4 downto 0);
   signal       EX_WriteReg     :   std_logic_vector(4 downto 0);
+  signal       EX_Halt         :   std_logic; 
   
   --MEM register signals
   signal      MEM_RegWrite     :   std_logic;
@@ -344,6 +352,7 @@ end component;
   signal      MEM_WriteReg     :   std_logic_vector(4 downto 0);
   signal      MEM_PC4          :   std_logic_vector(31 downto 0);
   signal      MEM_DMemOut      :   std_logic_vector(31 downto 0);
+  signal      MEM_Halt         :   std_logic;  
   
   --WB register signals
   signal      WB_RegWrite     :   std_logic;
@@ -353,7 +362,10 @@ end component;
   signal      WB_ALUResult    :   std_logic_vector(31 downto 0);
   signal      WB_WriteReg     :   std_logic_vector(4 downto 0);
   signal      WB_PC4          :   std_logic_vector(31 downto 0);
+  
   signal      s_WriteReg      :   std_logic_vector(4 downto 0);
+  signal      WB_Halt         :   std_logic; 
+
   
   signal      ID_equal        :   std_logic;
 begin
@@ -382,7 +394,7 @@ begin
              we   => s_DMemWr,
              q    => s_DMemOut);
 
-  s_Halt <='1' when (s_Inst(31 downto 26) = "000000") and (s_Inst(5 downto 0) = "001100") and (v0 = "00000000000000000000000000001010") else '0';
+  
 
   -- TODO: Implement the rest of your processor below this comment!
 
@@ -488,7 +500,8 @@ begin
 		o_reg2 => s_reg2);
 	
    v0 <= s_reg2;
-   
+   ID_Halt <='1' when (ID_Inst(31 downto 26) = "000000") and (ID_Inst(5 downto 0) = "001100") and (v0 = "00000000000000000000000000001010") else '0';
+ 
    Ext1: zero_sign_ext_16_32bit
       port map( i_16in => ID_Inst(15 downto 0),
                 i_sel => s_SignExtend,
@@ -532,6 +545,7 @@ begin
 		   ID_rd => ID_Inst(15 downto 11),
 		   ID_Funct => ID_Inst(5 downto 0),
 		   ID_Shift_Amount => ID_Inst(10 downto 6),
+		   ID_Halt => ID_Halt, 
 
 		   EX_PC4 => EX_PC4,
 		   EX_RegDst => EX_RegDst,
@@ -551,7 +565,8 @@ begin
 		   EX_rt => EX_rt,
 		   EX_rd => EX_rd,
 		   EX_Funct => EX_Funct,
-		   EX_Shift_Amount => EX_Shift_Amount);
+		   EX_Shift_Amount => EX_Shift_Amount,
+		   EX_Halt => EX_Halt); 
 		
 --EX Stage
    Shift: mux_2to1_5bit
@@ -611,6 +626,7 @@ begin
 		  EX_WriteData => EX_Rt_data,
 		  EX_WriteReg => EX_WriteReg,
 		  EX_PC4 => EX_PC4,
+		  EX_Halt => EX_Halt, 
 
 		  --Outputs (MEM)
 		  MEM_RegWrite => MEM_RegWrite,
@@ -620,7 +636,8 @@ begin
 		  MEM_ALUResult => MEM_ALUResult,
 		  MEM_WriteData => MEM_WriteData,
 		  MEM_WriteReg => MEM_WriteReg,
-		  MEM_PC4 => MEM_PC4);
+		  MEM_PC4 => MEM_PC4,
+		  MEM_Halt => MEM_Halt); 
 		
 --MEM Stage	
    s_DMemAddr <= MEM_ALUResult;
@@ -644,6 +661,7 @@ begin
 		  MEM_ALUResult => MEM_ALUResult,
 		  MEM_WriteReg => MEM_WriteReg,
 		  MEM_PC4 => MEM_PC4,
+		  MEM_Halt => MEM_Halt, 
 
 		  --Outputs (WB)
 		  WB_RegWrite => WB_RegWrite,
@@ -652,7 +670,8 @@ begin
 		  WB_DMemOut => WB_DMemOut,
 		  WB_ALUResult => WB_ALUResult,
 		  WB_WriteReg => WB_WriteReg,
-		  WB_PC4 => WB_PC4);
+		  WB_PC4 => WB_PC4,
+		  WB_Halt => WB_Halt); 
 
 
 --WB Stage	
@@ -674,7 +693,8 @@ begin
                i_1 => "11111",
                sel => WB_jal,
                o_f => s_WriteReg);
-			   
+		
+   s_Halt <= WB_Halt;		
 --WB Stage End
 
 
