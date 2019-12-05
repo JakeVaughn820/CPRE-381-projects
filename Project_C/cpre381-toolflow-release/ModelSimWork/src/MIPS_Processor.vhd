@@ -498,7 +498,7 @@ begin
 		o_reg2 => s_reg2);
 	
    v0 <= s_reg2;
-   ID_Halt <='1' when (ID_Inst(31 downto 26) = "000000") and (ID_Inst(5 downto 0) = "001100") and (v0 = "00000000000000000000000000001010") else '0';
+   ID_Halt <='1' when (ID_Inst(31 downto 26) = "000000") and (ID_Inst(5 downto 0) = "001100") else '0';
  
    Ext1: zero_sign_ext_16_32bit
       port map( i_16in => ID_Inst(15 downto 0),
@@ -691,9 +691,8 @@ begin
                i_1 => "11111",
                sel => WB_jal,
                o_f => s_RegWrAddr);
-			   
-   s_Halt <= WB_Halt;		
-			   
+			   		
+   s_Halt <= '1' when (WB_Halt = '1') and (v0 = "00000000000000000000000000001010") else '0';	   
 --WB Stage End
 
 
