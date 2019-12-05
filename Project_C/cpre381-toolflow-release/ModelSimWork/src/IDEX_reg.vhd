@@ -73,7 +73,7 @@ component one_bit_reg
 end component;
 
 component five_bit_reg
-  generic(N : integer := 4);
+  generic(N : integer := 5);
   port(i_CLK        : in std_logic;     -- Clock input
        i_RST        : in std_logic;     -- Reset input
        i_WE         : in std_logic;     -- Write enable input
@@ -82,7 +82,7 @@ component five_bit_reg
 end component;
 
 component six_bit_reg
-  generic(N : integer := 5);
+  generic(N : integer := 6);
   port(i_CLK        : in std_logic;     -- Clock input
        i_RST        : in std_logic;     -- Reset input
        i_WE         : in std_logic;     -- Write enable input

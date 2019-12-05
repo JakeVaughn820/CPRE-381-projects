@@ -161,7 +161,7 @@ component IFID_reg is
        IF_flush        : in std_logic;     -- Reset registers
        ID_PC4          : out std_logic_vector(31 downto 0);
        ID_Inst         : out std_logic_vector(31 downto 0);
-       ID_flush        : in std_logic);     -- Reset registers
+       ID_flush        : out std_logic);     -- Reset registers
 end component;
 
 component IDEX_reg is
@@ -307,7 +307,7 @@ end component;
   --ID register signals
   signal       ID_PC4          : std_logic_vector(31 downto 0);
   signal       ID_Inst         : std_logic_vector(31 downto 0);
-  signal       ID_flush        :   std_logic;
+  signal       ID_flush        : std_logic;
   signal       ID_MemWrite     : std_logic;
   --IDEX register signals
   signal       IDEX_flush      :   std_logic;
@@ -454,7 +454,7 @@ begin
                IF_flush => iRST,  --TODO: add flush
                ID_PC4 => ID_PC4,
                ID_Inst => ID_Inst,
-	       ID_flush => ID_flush);
+	           ID_flush => ID_flush);
 			   
 --ID Stage
    Control1: Control
@@ -506,7 +506,7 @@ begin
                o_Cout => open);
 --ID Stage End	
 
-	IDEX_flush <= ID_flush AND iRST;
+	IDEX_flush <= ID_flush OR iRST;
 		
 	IDEX_Register: IDEX_reg
 	  port map(CLK => iCLK,
