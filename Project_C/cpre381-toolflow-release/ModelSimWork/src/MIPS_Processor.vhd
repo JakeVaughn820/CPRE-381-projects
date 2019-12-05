@@ -353,7 +353,6 @@ end component;
   signal      WB_ALUResult    :   std_logic_vector(31 downto 0);
   signal      WB_WriteReg     :   std_logic_vector(4 downto 0);
   signal      WB_PC4          :   std_logic_vector(31 downto 0);
-  signal      s_WriteReg      :   std_logic_vector(4 downto 0);
   
   signal      ID_equal        :   std_logic;
 begin
@@ -480,7 +479,7 @@ begin
 	        i_read_write => WB_RegWrite,
 		i_rs => ID_Inst(25 downto 21),
 		i_rt => ID_Inst(20 downto 16),
-		i_rd => s_WriteReg,
+		i_rd => s_RegWrAddr,
 		i_reset => iRST,
 		i_data => s_RegWrData,
 		o_rs_data => s_rs_data,
@@ -673,7 +672,9 @@ begin
       port map(i_0 => WB_WriteReg,
                i_1 => "11111",
                sel => WB_jal,
-               o_f => s_WriteReg);
+               o_f => s_RegWrAddr);
+			   
+
 			   
 --WB Stage End
 
