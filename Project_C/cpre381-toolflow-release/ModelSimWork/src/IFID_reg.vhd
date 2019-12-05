@@ -11,9 +11,10 @@ entity IFID_reg is
        IFID_WriteEn    : in std_logic;     -- if 1 writing is enabled
        IF_PC4          : in std_logic_vector(31 downto 0);
        IF_Inst         : in std_logic_vector(31 downto 0);
-       IFID_flush      : in std_logic;     -- Reset registers
+       IF_flush        : in std_logic;     -- Reset registers
        ID_PC4          : out std_logic_vector(31 downto 0);
-       ID_Inst         : out std_logic_vector(31 downto 0));
+       ID_Inst         : out std_logic_vector(31 downto 0);
+       ID_flush        : out std_logic);
 
 end IFID_reg;
 
@@ -41,16 +42,22 @@ begin
 
    IFID_PC4_reg: N_bit_reg
    port map(i_CLK => CLK,
-            i_RST => IFID_flush,
+            i_RST => IF_flush,
             i_WE => IFID_WriteEn,
             i_D => IF_PC4,
             o_Q => ID_PC4);
 
    IFID_Inst_reg: N_bit_reg
    port map(i_CLK => CLK,
-            i_RST => IFID_flush,
+            i_RST => IF_flush,
             i_WE => IFID_WriteEn,
             i_D => IF_Inst,
             o_Q => ID_Inst);
 
+   IFID_flush_reg: one_bit_reg
+   port map(i_CLK => CLK,
+            i_RST => IF_flush,
+            i_WE => IFID_WriteEn,
+            i_D => IF_flush,
+            o_Q => ID_flush);
 end arch;

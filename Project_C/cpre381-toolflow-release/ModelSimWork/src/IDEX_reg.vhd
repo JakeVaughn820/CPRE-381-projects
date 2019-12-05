@@ -19,15 +19,16 @@ entity IDEX_reg is
        ID_ALUSrc       : in std_logic;
        ID_ReWrite      : in std_logic;
        ID_Shift        : in std_logic;
+	   ID_UpperImm     : in std_logic;
        ID_Jr           : in std_logic;
+	   ID_jal          : in std_logic;
        ID_Rs_data      : in std_logic_vector(31 downto 0);
        ID_Rt_data      : in std_logic_vector(31 downto 0);
        ID_32Imm        : in std_logic_vector(31 downto 0);
-       ID_rs           : in std_logic_vector(5 downto 0);
-       ID_rt           : in std_logic_vector(5 downto 0);
-       ID_rd           : in std_logic_vector(5 downto 0);
+       ID_rs           : in std_logic_vector(4 downto 0);
+       ID_rt           : in std_logic_vector(4 downto 0);
+       ID_rd           : in std_logic_vector(4 downto 0);
        ID_Funct        : in std_logic_vector(5 downto 0);
-       ID_PC4          : in std_logic_vector(31 downto 0);
        ID_Shift_Amount : in std_logic_vector(4 downto 0);
 
        EX_PC4          : out std_logic_vector(31 downto 0);
@@ -38,15 +39,16 @@ entity IDEX_reg is
        EX_ALUSrc       : out std_logic;
        EX_ReWrite      : out std_logic;
        EX_Shift        : out std_logic;
+	   EX_UpperImm     : out std_logic;
        EX_Jr           : out std_logic;
+	   EX_jal          : out std_logic;
        EX_Rs_data      : out std_logic_vector(31 downto 0);
        EX_Rt_data      : out std_logic_vector(31 downto 0);
        EX_32Imm        : out std_logic_vector(31 downto 0);
-       EX_rs           : out std_logic_vector(5 downto 0);
-       EX_rt           : out std_logic_vector(5 downto 0);
-       EX_rd           : out std_logic_vector(5 downto 0);
+       EX_rs           : out std_logic_vector(4 downto 0);
+       EX_rt           : out std_logic_vector(4 downto 0);
+       EX_rd           : out std_logic_vector(4 downto 0);
        EX_Funct        : out std_logic_vector(5 downto 0);
-       EX_PC4          : out std_logic_vector(31 downto 0);
        EX_Shift_Amount : out std_logic_vector(4 downto 0));
 end IDEX_reg;
 
@@ -146,6 +148,13 @@ begin
             i_D => ID_Shift,
             o_Q => EX_Shift);
 
+   IDEX_UpperImm_reg: one_bit_reg
+   port map(i_CLK => CLK,
+            i_RST => IDEX_flush,
+            i_WE => IDEX_WriteEn,
+            i_D => ID_UpperImm,
+            o_Q => EX_UpperImm);
+			
    IDEX_Jr_reg: one_bit_reg
    port map(i_CLK => CLK,
             i_RST => IDEX_flush,
@@ -153,6 +162,13 @@ begin
             i_D => ID_Jr,
             o_Q => EX_Jr);
 
+   IDEX_jal_reg: one_bit_reg
+   port map(i_CLK => CLK,
+            i_RST => IDEX_flush,
+            i_WE => IDEX_WriteEn,
+            i_D => ID_jal,
+            o_Q => EX_jal);
+			
    IDEX_Rs_data_reg: N_bit_reg
    port map(i_CLK => CLK,
             i_RST => IDEX_flush,
@@ -174,21 +190,21 @@ begin
             i_D => ID_32Imm,
             o_Q => EX_32Imm);
 
-   IDEX_rs_reg: N_bit_reg
+   IDEX_rs_reg: five_bit_reg
    port map(i_CLK => CLK,
             i_RST => IDEX_flush,
             i_WE => IDEX_WriteEn,
             i_D => ID_rs,
             o_Q => EX_rs);
 
-   IDEX_rt_reg: N_bit_reg
+   IDEX_rt_reg: five_bit_reg
    port map(i_CLK => CLK,
             i_RST => IDEX_flush,
             i_WE => IDEX_WriteEn,
             i_D => ID_rt,
             o_Q => EX_rt);
 
-   IDEX_rd_reg: N_bit_reg
+   IDEX_rd_reg: five_bit_reg
    port map(i_CLK => CLK,
             i_RST => IDEX_flush,
             i_WE => IDEX_WriteEn,
@@ -202,14 +218,7 @@ begin
             i_D => ID_Funct,
             o_Q => EX_Funct);
 
-   IDEX_PC4_reg: N_bit_reg
-   port map(i_CLK => CLK,
-            i_RST => IDEX_flush,
-            i_WE => IDEX_WriteEn,
-            i_D => ID_PC4,
-            o_Q => EX_PC4);
-
-   IDEX_Funct_reg: five_bit_reg
+   IDEX_Shift_Amount_reg: five_bit_reg
    port map(i_CLK => CLK,
             i_RST => IDEX_flush,
             i_WE => IDEX_WriteEn,

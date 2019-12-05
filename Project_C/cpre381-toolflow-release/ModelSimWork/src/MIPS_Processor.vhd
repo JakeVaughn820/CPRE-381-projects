@@ -158,9 +158,107 @@ component IFID_reg is
        IFID_WriteEn    : in std_logic;     -- if 1 writing is enabled
        IF_PC4          : in std_logic_vector(31 downto 0);
        IF_Inst         : in std_logic_vector(31 downto 0);
-       IFID_flush      : in std_logic;     -- Reset registers
+       IF_flush        : in std_logic;     -- Reset registers
        ID_PC4          : out std_logic_vector(31 downto 0);
-       ID_Inst         : out std_logic_vector(31 downto 0));
+       ID_Inst         : out std_logic_vector(31 downto 0);
+       ID_flush        : in std_logic);     -- Reset registers
+end component;
+
+component IDEX_reg is
+  port(CLK             : in std_logic;     -- Clock input
+       IDEX_WriteEn    : in std_logic;     -- ID 1 writing is enabled
+       IDEX_flush      : in std_logic;
+
+       ID_PC4          : in std_logic_vector(31 downto 0);
+       ID_RegDst       : in std_logic;
+       ID_MemtoReg     : in std_logic;
+       ID_ALUOp        : in std_logic_vector(5 downto 0);
+       ID_MemWrite     : in std_logic;
+       ID_ALUSrc       : in std_logic;
+       ID_ReWrite      : in std_logic;
+       ID_Shift        : in std_logic;
+	   ID_UpperImm     : in std_logic;
+       ID_Jr           : in std_logic;
+	   ID_jal          : in std_logic;
+       ID_Rs_data      : in std_logic_vector(31 downto 0);
+       ID_Rt_data      : in std_logic_vector(31 downto 0);
+       ID_32Imm        : in std_logic_vector(31 downto 0);
+       ID_rs           : in std_logic_vector(4 downto 0);
+       ID_rt           : in std_logic_vector(4 downto 0);
+       ID_rd           : in std_logic_vector(4 downto 0);
+       ID_Funct        : in std_logic_vector(5 downto 0);
+       ID_Shift_Amount : in std_logic_vector(4 downto 0);
+
+       EX_PC4          : out std_logic_vector(31 downto 0);
+       EX_RegDst       : out std_logic;
+       EX_MemtoReg     : out std_logic;
+       EX_ALUOp        : out std_logic_vector(5 downto 0);
+       EX_MemWrite     : out std_logic;
+       EX_ALUSrc       : out std_logic;
+       EX_ReWrite      : out std_logic;
+       EX_Shift        : out std_logic;
+       EX_UpperImm     : out std_logic;
+       EX_Jr           : out std_logic;
+       EX_jal          : out std_logic;
+       EX_Rs_data      : out std_logic_vector(31 downto 0);
+       EX_Rt_data      : out std_logic_vector(31 downto 0);
+       EX_32Imm        : out std_logic_vector(31 downto 0);
+       EX_rs           : out std_logic_vector(4 downto 0);
+       EX_rt           : out std_logic_vector(4 downto 0);
+       EX_rd           : out std_logic_vector(4 downto 0);
+       EX_Funct        : out std_logic_vector(5 downto 0);
+       EX_Shift_Amount : out std_logic_vector(4 downto 0));
+end component;
+
+component EXMEM_reg is
+  port(CLK             : in std_logic;     -- Clock input
+       EXMEM_WriteEn   : in std_logic;     -- Write enable (1)
+       EXMEM_flush     : in std_logic;
+
+      --Inputs (EX)
+      EX_RegWrite      : in std_logic;
+      EX_MemtoReg      : in std_logic;
+      EX_MemWrite      : in std_logic;
+      EX_jal           : in std_logic;
+      EX_ALUResult     : in std_logic_vector(31 downto 0);
+      EX_WriteData     : in std_logic_vector(31 downto 0);
+      EX_WriteReg      : in std_logic_vector(4 downto 0);
+      EX_PC4           : in std_logic_vector(31 downto 0);
+
+      --Outputs (MEM)
+      MEM_RegWrite     : out std_logic;
+      MEM_MemtoReg     : out std_logic;
+      MEM_MemWrite     : out std_logic;
+      MEM_jal          : out std_logic;
+      MEM_ALUResult    : out std_logic_vector(31 downto 0);
+      MEM_WriteData    : out std_logic_vector(31 downto 0);
+      MEM_WriteReg     : out std_logic_vector(4 downto 0);
+      MEM_PC4          : out std_logic_vector(31 downto 0));
+end component;
+
+component MEMWB_reg is
+  port(CLK             : in std_logic;     -- Clock input
+       MEMWB_WriteEn   : in std_logic;     -- Write enable (1)
+       MEMWB_flush       : in std_logic;
+
+      --Inputs (MEM)
+      MEM_RegWrite    : in std_logic;
+      MEM_MemtoReg    : in std_logic;
+      MEM_jal         : in std_logic;
+      MEM_DMemOut     : in std_logic_vector(31 downto 0);
+      MEM_ALUResult   : in std_logic_vector(31 downto 0);
+      MEM_WriteReg    : in std_logic_vector(4 downto 0);
+      MEM_PC4         : in std_logic_vector(31 downto 0);
+
+      --Outputs (WB)
+      WB_RegWrite     : out std_logic;
+      WB_MemtoReg     : out std_logic;
+      WB_jal          : out std_logic;
+      WB_DMemOut      : out std_logic_vector(31 downto 0);
+      WB_ALUResult    : out std_logic_vector(31 downto 0);
+      WB_WriteReg     : out std_logic_vector(4 downto 0);
+      WB_PC4          : out std_logic_vector(31 downto 0));
+
 end component;
 
 --signals
@@ -206,9 +304,58 @@ end component;
   signal       s_JrMux  : std_logic_vector(31 downto 0);
   signal       s_ResetMux_out  : std_logic_vector(31 downto 0);
 
-  signal       s_ID_PC4 : std_logic_vector(31 downto 0);
-  signal       s_ID_Inst : std_logic_vector(31 downto 0);
-
+  --ID register signals
+  signal       ID_PC4          : std_logic_vector(31 downto 0);
+  signal       ID_Inst         : std_logic_vector(31 downto 0);
+  signal       ID_flush        :   std_logic;
+  signal       ID_MemWrite     : std_logic;
+  --IDEX register signals
+  signal       IDEX_flush      :   std_logic;
+  
+  --EX register signals
+  signal       EX_PC4          :   std_logic_vector(31 downto 0);
+  signal       EX_RegDst       :   std_logic;
+  signal       EX_MemtoReg     :   std_logic;
+  signal       EX_ALUOp        :   std_logic_vector(5 downto 0);
+  signal       EX_MemWrite     :   std_logic;
+  signal       EX_ALUSrc       :   std_logic;
+  signal       EX_ReWrite      :   std_logic;
+  signal       EX_Shift        :   std_logic;
+  signal       EX_UpperImm     :   std_logic;
+  signal       EX_Jr           :   std_logic;
+  signal	   EX_jal      :   std_logic;
+  signal       EX_Rs_data      :   std_logic_vector(31 downto 0);
+  signal       EX_Rt_data      :   std_logic_vector(31 downto 0);
+  signal       EX_32Imm        :   std_logic_vector(31 downto 0);
+  signal       EX_rs           :   std_logic_vector(4 downto 0);
+  signal       EX_rt           :   std_logic_vector(4 downto 0);
+  signal       EX_rd           :   std_logic_vector(4 downto 0);
+  signal       EX_Funct        :   std_logic_vector(5 downto 0);
+  signal       EX_Shift_Amount :   std_logic_vector(4 downto 0);
+  signal       EX_WriteReg     :   std_logic_vector(4 downto 0);
+  
+  --MEM register signals
+  signal      MEM_RegWrite     :   std_logic;
+  signal      MEM_MemtoReg     :   std_logic;
+  signal      MEM_MemWrite     :   std_logic;
+  signal      MEM_jal          :   std_logic;
+  signal      MEM_ALUResult    :   std_logic_vector(31 downto 0);
+  signal      MEM_WriteData    :   std_logic_vector(31 downto 0);
+  signal      MEM_WriteReg     :   std_logic_vector(4 downto 0);
+  signal      MEM_PC4          :   std_logic_vector(31 downto 0);
+  signal      MEM_DMemOut      :   std_logic_vector(31 downto 0);
+  
+  --WB register signals
+  signal      WB_RegWrite     :   std_logic;
+  signal      WB_MemtoReg     :   std_logic;
+  signal      WB_jal          :   std_logic;
+  signal      WB_DMemOut      :   std_logic_vector(31 downto 0);
+  signal      WB_ALUResult    :   std_logic_vector(31 downto 0);
+  signal      WB_WriteReg     :   std_logic_vector(4 downto 0);
+  signal      WB_PC4          :   std_logic_vector(31 downto 0);
+  signal      s_WriteReg      :   std_logic_vector(4 downto 0);
+  
+  signal      ID_equal        :   std_logic;
 begin
 
   -- TODO: This is required to be your final input to your instruction memory. This provides a feasible method to externally load the memory module which means that the synthesis tool must assume it knows nothing about the values stored in the instruction memory. If this is not included, much, if not all of the design is optimized out because the synthesis tool will believe the memory to be all zeros.
@@ -238,12 +385,51 @@ begin
   s_Halt <='1' when (s_Inst(31 downto 26) = "000000") and (s_Inst(5 downto 0) = "001100") and (v0 = "00000000000000000000000000001010") else '0';
 
   -- TODO: Implement the rest of your processor below this comment!
+
+--IF Stage
+
+			   
+--Mux line that goes into PC
+ --Branchmux
+   --Logic for Beq and Bne
+   ID_equal <= '0';
+   s_Beq_and_Zero <= s_Beq AND ID_equal;
+   s_NotBne_Nor_Zero <= (Not(s_Bne) NOR ID_equal);
+   s_BranchSel <= (s_Beq_and_Zero OR s_NotBne_Nor_Zero);
+
+   Branchmux: mux2_1_D
+      port map(i_A => s_pc_plus4,
+               i_B => s_PC_PlusImm,
+               i_X => s_BranchSel,
+               o_Y => s_BranchMux);
+ --end Branchmux
+
+ --Jumpmux
+   --Find jump address for Jump
+   s_JumpAddress(27 downto 2) <= ID_Inst(25 downto 0);
+   s_JumpAddress(1 downto 0) <= "00";
+   s_JumpAddress(31 downto 28) <= ID_PC4(31 downto 28);
+
+   Jumpmux: mux2_1_D
+      port map(i_A => s_BranchMux,
+               i_B => s_JumpAddress,
+               i_X => s_Jump,
+               o_Y => s_JumpMux);
+ --end Jumpmux
+ 
+   Jrmux: mux2_1_D
+      port map(i_A => s_JumpMux,
+               i_B => s_rs_data,
+               i_X => s_Jr,
+               o_Y => s_JrMux);		  
+
    ResetMux: mux2_1_D
       port map(i_A => s_JrMux,
                i_B => x"00400000",
                i_X => iRST,
                o_Y => s_ResetMux_out);
-
+--End Muxline
+		   
    PC: N_bit_reg
       port map(i_CLK => iCLK,
                i_RST => '0',
@@ -251,31 +437,35 @@ begin
                i_D => s_ResetMux_out,
                o_Q => s_NextInstAddr);
 
+
    PC_Plus4: Add_Sub
       port map(i_A => x"00000004",
                i_B => s_NextInstAddr,
                i_nAdd_Sub => '0',
                o_S => s_pc_plus4,
-               o_Cout => open);
+               o_Cout => open);		   
+--End IF Stage
 
    IFID_Register: IFID_reg
       port map(CLK => iCLK,
                IFID_WriteEn => '1',  --TODO: add stall
                IF_PC4 => s_pc_plus4,
                IF_Inst => s_Inst,
-               IF_flush => '0',  --TODO: add flush
-               ID_PC4 => s_ID_PC4,
-               ID_Inst => s_ID_Inst);
-
+               IF_flush => iRST,  --TODO: add flush
+               ID_PC4 => ID_PC4,
+               ID_Inst => ID_Inst,
+	       ID_flush => ID_flush);
+			   
+--ID Stage
    Control1: Control
-      port map(i_opCode => s_ID_Inst(31 downto 26),
-               i_fnCode => s_ID_Inst(5 downto 0),
+      port map(i_opCode => ID_Inst(31 downto 26),
+               i_fnCode => ID_Inst(5 downto 0),
                o_RegDst => s_RegDst,
                o_Jump => s_Jump,
                o_Beq => s_Beq,
                o_MemtoReg => s_MemtoReg,
                o_ALUOp => s_ALUOp,
-               o_MemWrite => s_DMemWr,
+               o_MemWrite => ID_MemWrite,
                o_ALUSrc => s_ALUSrc,
                o_ReWrite => s_RegWr,
                o_Shift => s_shift,
@@ -284,64 +474,112 @@ begin
                o_Jal => s_Jal,
                o_Jr => s_Jr,
                o_Bne => s_Bne);
-
-   RegDst: mux_2to1_5bit
-      port map(i_0 => s_ID_Inst(20 downto 16),
-               i_1 => s_ID_Inst(15 downto 11),
-               sel => s_RegDst,
-               o_f => s_RegDst_out);
-
-   JalRegDst: mux_2to1_5bit
-      port map(i_0 => s_RegDst_out,
-               i_1 => "11111",
-               sel => s_Jal,
-               o_f => s_RegWrAddr);
-
+			   
    RegFile1: RegFile
       port map(i_CLK => iCLK,
-            i_read_write => s_RegWr,
-            i_rs => s_ID_Inst(25 downto 21),
-            i_rt => s_ID_Inst(20 downto 16),
-            i_rd => s_RegWrAddr,
-            i_reset => iRST,
-            i_data => s_RegWrData,
-            o_rs_data => s_rs_data,
-            o_rt_data => s_rt_data,
-            o_reg2 => s_reg2);
-
-   s_DMemData <= s_rt_data;
+	        i_read_write => WB_RegWrite,
+		i_rs => ID_Inst(25 downto 21),
+		i_rt => ID_Inst(20 downto 16),
+		i_rd => s_WriteReg,
+		i_reset => iRST,
+		i_data => s_RegWrData,
+		o_rs_data => s_rs_data,
+		o_rt_data => s_rt_data,
+		o_reg2 => s_reg2);
+	
    v0 <= s_reg2;
-
-   ALUSrc: mux2_1_D
-      port map(i_A => s_rt_data,
-               i_B => s_32Imm,
-               i_X => s_ALUSrc,
-               o_Y => s_ALUSrc_out);
-
+   
    Ext1: zero_sign_ext_16_32bit
-      port map( i_16in => s_ID_Inst(15 downto 0),
+      port map( i_16in => ID_Inst(15 downto 0),
                 i_sel => s_SignExtend,
-                o_32out => s_32Imm);
+                o_32out => s_32Imm);	
 
-   MemtoReg: mux2_1_D
-      port map(i_A => s_ALU_result,
-               i_B => s_DMemOut,
-               i_X => s_MemtoReg,
-               o_Y => s_MemtoReg_out);
+   --32 Imm shifted left two added to pc
+   s_32Imm_Shiftleft2(31 downto 2) <= s_32Imm(29 downto 0);
+   s_32Imm_Shiftleft2(1 downto 0) <= "00";
 
-   JalMemtoReg: mux2_1_D
-      port map(i_A => s_MemtoReg_out,
-               i_B => s_pc_plus4,  --TODO: this is prob not right
-               i_X => s_Jal,
-               o_Y => s_RegWrData);
+   PC_PC_PlusImm: Add_Sub
+      port map(i_A => ID_PC4,
+               i_B => s_32Imm_Shiftleft2,
+               i_nAdd_Sub => '0',
+               o_S => s_PC_PlusImm,
+               o_Cout => open);
+--ID Stage End	
 
+	IDEX_flush <= ID_flush AND iRST;
+		
+	IDEX_Register: IDEX_reg
+	  port map(CLK => iCLK,
+		   IDEX_WriteEn => '1',  --TODO: add stall
+		   IDEX_flush => IDEX_flush,  --TODO: add flush
+
+		   ID_PC4 => ID_PC4,
+		   ID_RegDst => s_RegDst,
+		   ID_MemtoReg => s_MemtoReg,
+		   ID_ALUOp => s_ALUOp,
+		   ID_MemWrite => ID_MemWrite,
+		   ID_ALUSrc => s_ALUSrc,
+		   ID_ReWrite => s_RegWr,
+		   ID_Shift => s_Shift,
+		   ID_UpperImm => s_UpperImm,
+		   ID_Jr => s_Jr,
+		   ID_jal => s_Jal,
+		   ID_Rs_data => s_rs_data,
+		   ID_Rt_data => s_rt_data,
+		   ID_32Imm => s_32Imm,
+		   ID_rs => ID_Inst(25 downto 21),
+		   ID_rt => ID_Inst(20 downto 16),
+		   ID_rd => ID_Inst(15 downto 11),
+		   ID_Funct => ID_Inst(5 downto 0),
+		   ID_Shift_Amount => ID_Inst(10 downto 6),
+
+		   EX_PC4 => EX_PC4,
+		   EX_RegDst => EX_RegDst,
+		   EX_MemtoReg => EX_MemtoReg,
+		   EX_ALUOp => EX_ALUOp,
+		   EX_MemWrite => EX_MemWrite,
+		   EX_ALUSrc => EX_ALUSrc,
+		   EX_ReWrite => EX_ReWrite,
+		   EX_Shift => EX_Shift,
+		   EX_UpperImm => EX_UpperImm,
+		   EX_Jr => EX_Jr,
+		   EX_jal => EX_jal,
+		   EX_Rs_data => EX_Rs_data,
+		   EX_Rt_data => EX_Rt_data,
+		   EX_32Imm => EX_32Imm,
+		   EX_rs => EX_rs,
+		   EX_rt => EX_rt,
+		   EX_rd => EX_rd,
+		   EX_Funct => EX_Funct,
+		   EX_Shift_Amount => EX_Shift_Amount);
+		
+--EX Stage
+   Shift: mux_2to1_5bit
+      port map(i_0 => EX_Shift_Amount,
+               i_1 => EX_Rs_data(4 downto 0),
+               sel => EX_Shift,
+               o_f => s_shift_out);
+	
+	
+   UpperImm: mux_2to1_5bit
+      port map(i_0 => s_shift_out,
+               i_1 => "10000",
+               sel => EX_UpperImm,
+               o_f => s_shift_amount);
+			   
+   ALUSrc: mux2_1_D
+      port map(i_A => EX_Rt_data,
+               i_B => EX_32Imm,
+               i_X => EX_ALUSrc,
+               o_Y => s_ALUSrc_out);
+	
    Control_ALU1: Control_ALU
-     port map (i_opCode => s_ALUOp,
-               i_fnCode => s_ID_Inst(5 downto 0),
+     port map (i_opCode => EX_ALUOp,
+               i_fnCode => EX_Funct,
                o_ALU_operation => s_ALU_operation);
 
    ALU1: ALU_and_Shifter
-     port map(A => s_rs_data,
+     port map(A => EX_Rs_data,
               B => s_ALUSrc_out,
               ALUOp => s_ALU_operation,
               Shift_Amount => s_shift_amount,
@@ -350,60 +588,118 @@ begin
               Overflow => s_Overflow,
               Zero => s_Zero);
 
-   Shift: mux_2to1_5bit
-      port map(i_0 => s_ID_Inst(10 downto 6),
-               i_1 => s_rs_data(4 downto 0),
-               sel => s_shift,
-               o_f => s_shift_out);
+   EX_WriteRegister: mux_2to1_5bit
+      port map(i_0 => EX_rt,
+               i_1 => EX_rd,
+               sel => EX_RegDst,
+               o_f => EX_WriteReg);
 
-   UpperImm: mux_2to1_5bit
-      port map(i_0 => s_shift_out,
-               i_1 => "10000",
-               sel => s_UpperImm,
-               o_f => s_shift_amount);
-
-   s_DMemAddr <= s_ALU_result;
    oALUOut <= s_ALU_result;
+--EX Stage End
+	
+	EXMEM_Register: EXMEM_reg
+	  port map(CLK => iCLK,
+		   EXMEM_WriteEn => '1',  --TODO: add stall
+		   EXMEM_flush => iRST,   --TODO: add flush
 
-   --32 Imm shifted left two
-   s_32Imm_Shiftleft2(31 downto 2) <= s_32Imm(29 downto 0);
-   s_32Imm_Shiftleft2(1 downto 0) <= "00";
+		  --Inputs (EX)
+		  EX_RegWrite => EX_ReWrite,
+		  EX_MemtoReg => EX_MemtoReg,
+		  EX_MemWrite => EX_MemWrite,
+		  EX_jal => EX_jal,
+		  EX_ALUResult => s_ALU_result,
+		  EX_WriteData => EX_Rt_data,
+		  EX_WriteReg => EX_WriteReg,
+		  EX_PC4 => EX_PC4,
 
-   PC_PC_PlusImm: Add_Sub
-      port map(i_A => s_pc_plus4, --TODO: this is prob not right
-               i_B => s_32Imm_Shiftleft2,
-               i_nAdd_Sub => '0',
-               o_S => s_PC_PlusImm,
-               o_Cout => open);
+		  --Outputs (MEM)
+		  MEM_RegWrite => MEM_RegWrite,
+		  MEM_MemtoReg => MEM_MemtoReg,
+		  MEM_MemWrite => MEM_MemWrite,
+		  MEM_jal => MEM_jal,
+		  MEM_ALUResult => MEM_ALUResult,
+		  MEM_WriteData => MEM_WriteData,
+		  MEM_WriteReg => MEM_WriteReg,
+		  MEM_PC4 => MEM_PC4);
+		
+--MEM Stage	
+   s_DMemAddr <= MEM_ALUResult;
+   s_DMemData <= MEM_WriteData;
+   s_DMemWr <= MEM_MemWrite;
 
 
-   --Logic for Beq and Bne
-   s_Beq_and_Zero <= s_Beq AND s_Zero;
-   s_NotBne_Nor_Zero <= (Not(s_Bne) NOR s_Zero);
-   s_BranchSel <= (s_Beq_and_Zero OR s_NotBne_Nor_Zero);
 
-   Branchmux: mux2_1_D
-      port map(i_A => s_pc_plus4, --TODO: needs change
-               i_B => s_PC_PlusImm,
-               i_X => s_BranchSel,
-               o_Y => s_BranchMux);
+--MEM Stage	End
 
-   --Find jump address for Jump
-   s_JumpAddress(27 downto 2) <= s_ID_Inst(25 downto 0);
-   s_JumpAddress(1 downto 0) <= "00";
-   s_JumpAddress(31 downto 28) <= s_pc_plus4(31 downto 28); --TODO: might need change
+	MEMWB_Register: MEMWB_reg
+	  port map(CLK => iCLK,
+		   MEMWB_WriteEn => '1',  --TODO: add stall
+		   MEMWB_flush => iRST,   --TODO: add flush
 
-   Jumpmux: mux2_1_D
-      port map(i_A => s_BranchMux,
-               i_B => s_JumpAddress,
-               i_X => s_Jump,
-               o_Y => s_JumpMux);
+		  --Inputs (MEM)
+		  MEM_RegWrite => MEM_RegWrite,
+		  MEM_MemtoReg => MEM_MemtoReg,
+		  MEM_jal => MEM_jal,
+		  MEM_DMemOut => MEM_DMemOut,
+		  MEM_ALUResult => MEM_ALUResult,
+		  MEM_WriteReg => MEM_WriteReg,
+		  MEM_PC4 => MEM_PC4,
 
-   Jrmux: mux2_1_D
-      port map(i_A => s_JumpMux,
-               i_B => s_rs_data,
-               i_X => s_Jr,
-               o_Y => s_JrMux);
+		  --Outputs (WB)
+		  WB_RegWrite => WB_RegWrite,
+		  WB_MemtoReg => WB_MemtoReg,
+		  WB_jal => WB_jal,
+		  WB_DMemOut => WB_DMemOut,
+		  WB_ALUResult => WB_ALUResult,
+		  WB_WriteReg => WB_WriteReg,
+		  WB_PC4 => WB_PC4);
+
+
+--WB Stage	
+   MemtoReg: mux2_1_D
+      port map(i_A => WB_ALUResult,
+               i_B => WB_DMemOut,
+               i_X => WB_MemtoReg,
+               o_Y => s_MemtoReg_out);
+			   
+   JalMemtoReg: mux2_1_D
+      port map(i_A => s_MemtoReg_out,
+               i_B => WB_PC4,
+               i_X => WB_jal,
+               o_Y => s_RegWrData);
+
+
+   JalRegDst: mux_2to1_5bit
+      port map(i_0 => WB_WriteReg,
+               i_1 => "11111",
+               sel => WB_jal,
+               o_f => s_WriteReg);
+			   
+--WB Stage End
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 end structure;
