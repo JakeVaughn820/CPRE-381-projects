@@ -652,8 +652,8 @@ begin
 		  MEM_Halt => MEM_Halt); 
 		
 --MEM Stage	
-   s_DMemData <= MEM_ALUResult;
-   s_DMemAddr <= MEM_WriteData;
+   s_DMemData <= MEM_WriteData;
+   s_DMemAddr <= MEM_ALUResult;
    s_DMemWr <= MEM_MemWrite;
 
 --MEM Stage	End

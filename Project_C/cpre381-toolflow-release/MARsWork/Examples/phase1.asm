@@ -7,8 +7,6 @@
 
 # instructions
 .text 
-
-<<<<<<< HEAD
 	#la $9, temp1
 	lui $1, 0x00001001
 	sll $0, $0, 0
@@ -28,37 +26,9 @@
 	sll $0, $0, 0
 	sll $0, $0, 0
 	sll $0, $0, 0
-	
-	
 
 ###########################
 #DON'T USE $9, and $16
-=======
-	la $8, temp1
-	#lui $1, 0x00001001 
-	#sll $0, $0, 0
-	#sll $0, $0, 0
-	#sll $0, $0, 0
-	#ori $8, $1, 0x00000000
-	#sll $0, $0, 0
-	#sll $0, $0, 0
-	#sll $0, $0, 0 
-	
-	la $16, arr1
-	#lui $at, 0x00001001#4097(0x1001)
-	#sll $0, $0, 0
-	#sll $0, $0, 0
-	#sll $0, $0, 0
-	#ori $s0, $at, 31 
-	#sll $0, $0, 0
-	#sll $0, $0, 0
-	#sll $0, $0, 0
-
-
-
-###########################
-#DON'T USE $8, $9, and $16
->>>>>>> d5d937bb39b8eb7016f6385f09be43653340ca74
 ###########################
 
 
@@ -83,13 +53,9 @@ add $13, $7, $8
 and $13, $1, $2
 andi $14, $3, 11
 
-<<<<<<< HEAD
 # Load stuff 	
 lw $17, 0($9)	
-=======
-# Load stuff 
-lw $15, 0($8)		
->>>>>>> d5d937bb39b8eb7016f6385f09be43653340ca74
+
 
 # NOR, XOR, and OR stuff
 nor $19, $1, $2		
@@ -110,19 +76,35 @@ srl $29, $2, 4
 sra $30, $3, 4
 sllv $31, $4, $5
 srlv $11, $6, $7
+sll $0, $0, 0
+sll $0, $0, 0
+sll $0, $0, 0
 srav $12, $8, $1
 
 # Store stuff
-sw $13, 4($16)
+#sw $13, 4($16)
 
-# Using reg10 for subing 
+# Using reg10 for subing
 sub $14, $3, $4
-subu $15, $5, 3
+
+#subu $15, $5, 3
+sll $0, $0, 0
+sll $0, $0, 0
+sll $0, $0, 0
+lui $1, 0x00000000
+sll $0, $0, 0
+sll $0, $0, 0
+sll $0, $0, 0
+ori $1, $1, 0x00000003
+sll $0, $0, 0
+sll $0, $0, 0
+sll $0, $0, 0
+subu $15, $5, $1 
 
 #branching stuff
 beq $1, $8, equal
 	
-equal:  sll $0, $0, 0
+equal:          sll $0, $0, 0
 		sll $0, $0, 0
 		sll $0, $0, 0
 		beq $2, $3, na
@@ -135,12 +117,12 @@ equal:  sll $0, $0, 0
 		sll $0, $0, 0
 	    bne $4, $5, jumping
 	
-jumping:sll $0, $0, 0
+jumping:        sll $0, $0, 0
 		sll $0, $0, 0
 		sll $0, $0, 0
 		j next
 
-next:	sll $0, $0, 0
+next:	        sll $0, $0, 0
 		sll $0, $0, 0
 		sll $0, $0, 0   
 		jal message
@@ -156,12 +138,11 @@ next:	sll $0, $0, 0
 		ori $17, $at, 0x1111
 
 message:
+		sll $0, $0, 0
+		sll $0, $0, 0
+		sll $0, $0, 0
 		#la $a0, arr1
-<<<<<<< HEAD
 		lui $1, 0x00001001
-=======
-		lui $at, 0x00001001#4097(0x1001)
->>>>>>> d5d937bb39b8eb7016f6385f09be43653340ca74
 		sll $0, $0, 0
 		sll $0, $0, 0
 		sll $0, $0, 0
@@ -177,7 +158,10 @@ message:
 		syscall
 		jr $ra
 
-na: add $31, $1, $2  		#If $t7 = 3, it's bad.
+na:   sll $0, $0, 0
+      sll $0, $0, 0
+      sll $0, $0, 0 
+      add $31, $1, $2  		#If $t7 = 3, it's bad.
 
 #addi $2, $0, 0		# Clear reg2
 addi $2, $0, 10 	# Cause the halt 
