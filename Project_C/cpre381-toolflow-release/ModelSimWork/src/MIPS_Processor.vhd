@@ -306,7 +306,7 @@ end component;
   signal       s_Zero       : std_logic;
   signal       s_ALU_result : std_logic_vector(31 downto 0);
   signal       s_Beq_and_Zero : std_logic;
-  signal       s_NotBne_Nor_Zero : std_logic;
+  signal       s_Bne_and_notEqual : std_logic;
   signal       s_BranchSel : std_logic;
 
   signal       s_shift_out  : std_logic_vector(4 downto 0);
@@ -413,8 +413,8 @@ begin
  --Branchmux
    --Logic for Beq and Bne
    s_Beq_and_Zero <= s_Beq AND ID_equal;
-   s_NotBne_Nor_Zero <= (s_Bne NOR not(ID_equal));
-   s_BranchSel <= (s_Beq_and_Zero OR s_NotBne_Nor_Zero);
+   s_Bne_and_notEqual <= (s_Bne and (not ID_equal));
+   s_BranchSel <= (s_Beq_and_Zero OR s_Bne_and_notEqual);
 
    Branchmux: mux2_1_D
       port map(i_A => s_pc_plus4,
