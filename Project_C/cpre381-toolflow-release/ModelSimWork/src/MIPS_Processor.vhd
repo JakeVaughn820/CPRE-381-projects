@@ -365,6 +365,7 @@ end component;
   
   --WB register signals
 
+  signal      WB_RegWr        :   std_logic; 
   signal      WB_MemtoReg     :   std_logic;
   signal      WB_jal          :   std_logic;
   signal      WB_DMemOut      :   std_logic_vector(31 downto 0);
@@ -477,16 +478,16 @@ begin
 --ID Stage
    Control1: Control
       port map(i_opCode => ID_Inst(31 downto 26),
-               i_fnCode => ID_Inst(5 downto 0),
-               o_RegDst => s_RegDst,
-               o_Jump => s_Jump,
-               o_Beq => s_Beq,
+			   i_fnCode => ID_Inst(5 downto 0),
+               o_RegDst => s_RegDst,			   
+               o_Jump => s_Jump,              
+               o_Beq => s_Beq,			   
                o_MemtoReg => s_MemtoReg,
                o_ALUOp => s_ALUOp,
                o_MemWrite => ID_MemWrite,
                o_ALUSrc => s_ALUSrc,
                o_ReWrite => ID_ReWrite,
-               o_Shift => s_shift,
+               o_Shift => s_Shift,				   
                o_SignExtend => s_SignExtend,
                o_UpperImm => s_UpperImm,
                o_Jal => s_Jal,
@@ -651,11 +652,9 @@ begin
 		  MEM_Halt => MEM_Halt); 
 		
 --MEM Stage	
-   s_DMemAddr <= MEM_ALUResult;
-   s_DMemData <= MEM_WriteData;
+   s_DMemData <= MEM_ALUResult;
+   s_DMemAddr <= MEM_WriteData;
    s_DMemWr <= MEM_MemWrite;
-
-
 
 --MEM Stage	End
 
@@ -668,7 +667,7 @@ begin
 		  MEM_RegWrite => MEM_RegWrite,
 		  MEM_MemtoReg => MEM_MemtoReg,
 		  MEM_jal => MEM_jal,
-		  MEM_DMemOut => MEM_DMemOut,
+		  MEM_DMemOut => s_DMemOut,
 		  MEM_ALUResult => MEM_ALUResult,
 		  MEM_WriteReg => MEM_WriteReg,
 		  MEM_PC4 => MEM_PC4,
@@ -686,6 +685,8 @@ begin
 
 
 --WB Stage	
+
+   
    MemtoReg: mux2_1_D
       port map(i_A => WB_ALUResult,
                i_B => WB_DMemOut,
