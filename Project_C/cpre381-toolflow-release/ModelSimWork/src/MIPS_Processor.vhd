@@ -413,7 +413,7 @@ begin
  --Branchmux
    --Logic for Beq and Bne
    s_Beq_and_Zero <= s_Beq AND ID_equal;
-   s_NotBne_Nor_Zero <= (Not(s_Bne) NOR ID_equal);
+   s_NotBne_Nor_Zero <= (s_Bne NOR not(ID_equal));
    s_BranchSel <= (s_Beq_and_Zero OR s_NotBne_Nor_Zero);
 
    Branchmux: mux2_1_D
