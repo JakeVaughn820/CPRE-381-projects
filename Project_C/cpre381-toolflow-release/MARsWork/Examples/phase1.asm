@@ -137,7 +137,7 @@ next:	        sll $0, $0, 0
 		sll $0, $0, 0
 		sll $0, $0, 0
 		sll $0, $0, 0 
-	        #jal message
+	        jal message
 	    	#li $16, 10
 		lui $at, 0x1001
 		sll $0, $0, 0

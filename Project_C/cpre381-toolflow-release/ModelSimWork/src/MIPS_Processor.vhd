@@ -413,13 +413,8 @@ begin
  --Branchmux
    --Logic for Beq and Bne
    s_Beq_and_Zero <= s_Beq AND ID_equal;
-<<<<<<< HEAD
    s_Bne_and_notEqual <= (s_Bne and (not ID_equal));
    s_BranchSel <= (s_Beq_and_Zero OR s_Bne_and_notEqual);
-=======
-   s_NotBne_Nor_Zero <= (s_Bne AND not(ID_equal));
-   s_BranchSel <= (s_Beq_and_Zero OR s_NotBne_Nor_Zero);
->>>>>>> d08e183dd6e04ab249f9b97919dab1b498501d67
 
    Branchmux: mux2_1_D
       port map(i_A => s_pc_plus4,
