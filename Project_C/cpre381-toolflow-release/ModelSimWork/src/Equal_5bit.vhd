@@ -18,7 +18,7 @@ entity Equal_5bit is
   generic(N : integer := 5);
   port( i_A  : in std_logic_vector(N-1 downto 0);
 	    i_B  : in std_logic_vector(N-1 downto 0);
-       	o_Equal_5bit  : out std_logic);
+       	o_Equal  : out std_logic);
 
 end Equal_5bit;
 
@@ -33,6 +33,6 @@ G1: for i in 0 to N-1 generate
 
 end generate;
 
-o_Equal_5bit <= and_reduce(s_xnor_vals);
+o_Equal <= and_reduce(s_xnor_vals);
 
 end structure;
