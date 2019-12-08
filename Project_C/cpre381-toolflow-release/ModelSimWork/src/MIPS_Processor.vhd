@@ -78,6 +78,14 @@ component RegFile is
          o_reg2       : out std_logic_vector(31 downto 0));
 end component;
 
+component Equal is
+  generic(N : integer := 32);
+  port( i_A  : in std_logic_vector(N-1 downto 0);
+	    i_B  : in std_logic_vector(N-1 downto 0);
+       	o_Equal  : out std_logic);
+
+end component;
+
 component Add_Sub is
   generic(N : integer := 32);
   port( i_A  : in std_logic_vector(N-1 downto 0);
@@ -303,7 +311,7 @@ end component;
 
   signal       s_shift_out  : std_logic_vector(4 downto 0);
   signal       s_ALUSrc_out     : std_logic_vector(31 downto 0);
-  signal       s_RegDst_out  : std_logic_vector(4 downto 0);
+  --signal       s_RegDst_out  : std_logic_vector(4 downto 0);
   signal       s_MemtoReg_out     : std_logic_vector(31 downto 0);
   signal       s_BranchMux  : std_logic_vector(31 downto 0);
   signal       s_JumpMux  : std_logic_vector(31 downto 0);
@@ -316,6 +324,7 @@ end component;
   signal       ID_flush        : std_logic;
   signal       ID_MemWrite     : std_logic;
   signal       ID_Halt         :   std_logic;
+  signal       ID_ReWrite     :   std_logic;
   --IDEX register signals
   signal       IDEX_flush      :   std_logic;
   
@@ -355,7 +364,7 @@ end component;
   signal      MEM_Halt         :   std_logic;  
   
   --WB register signals
-  signal      WB_RegWrite     :   std_logic;
+
   signal      WB_MemtoReg     :   std_logic;
   signal      WB_jal          :   std_logic;
   signal      WB_DMemOut      :   std_logic_vector(31 downto 0);
@@ -402,7 +411,6 @@ begin
 --Mux line that goes into PC
  --Branchmux
    --Logic for Beq and Bne
-   ID_equal <= '0';
    s_Beq_and_Zero <= s_Beq AND ID_equal;
    s_NotBne_Nor_Zero <= (Not(s_Bne) NOR ID_equal);
    s_BranchSel <= (s_Beq_and_Zero OR s_NotBne_Nor_Zero);
@@ -477,7 +485,7 @@ begin
                o_ALUOp => s_ALUOp,
                o_MemWrite => ID_MemWrite,
                o_ALUSrc => s_ALUSrc,
-               o_ReWrite => s_RegWr,
+               o_ReWrite => ID_ReWrite,
                o_Shift => s_shift,
                o_SignExtend => s_SignExtend,
                o_UpperImm => s_UpperImm,
@@ -487,7 +495,7 @@ begin
 			   
    RegFile1: RegFile
       port map(i_CLK => iCLK,
-	        i_read_write => WB_RegWrite,
+	    i_read_write => s_RegWr,
 		i_rs => ID_Inst(25 downto 21),
 		i_rt => ID_Inst(20 downto 16),
 		i_rd => s_RegWrAddr,
@@ -497,6 +505,11 @@ begin
 		o_rt_data => s_rt_data,
 		o_reg2 => s_reg2);
 	
+   Equal_rs_rt: Equal
+      port map(i_A => s_rs_data,
+	           i_B => s_rt_data,
+       	       o_Equal => ID_equal);
+
    v0 <= s_reg2;
    ID_Halt <='1' when (ID_Inst(31 downto 26) = "000000") and (ID_Inst(5 downto 0) = "001100") else '0';
  
@@ -530,7 +543,7 @@ begin
 		   ID_ALUOp => s_ALUOp,
 		   ID_MemWrite => ID_MemWrite,
 		   ID_ALUSrc => s_ALUSrc,
-		   ID_ReWrite => s_RegWr,
+		   ID_ReWrite => ID_ReWrite,
 		   ID_Shift => s_Shift,
 		   ID_UpperImm => s_UpperImm,
 		   ID_Jr => s_Jr,
@@ -662,7 +675,7 @@ begin
 		  MEM_Halt => MEM_Halt, 
 
 		  --Outputs (WB)
-		  WB_RegWrite => WB_RegWrite,
+		  WB_RegWrite => s_RegWr,
 		  WB_MemtoReg => WB_MemtoReg,
 		  WB_jal => WB_jal,
 		  WB_DMemOut => WB_DMemOut,

@@ -5,3 +5,6 @@ MARsWork/Examples/sampleAssembly.asm
 MARsWork/Examples/simplebranch.asm
 MARsWork/Examples/project-b_test1.asm
 MARsWork/Examples/N_queens.asm
+
+MARsWork/Examples/phase1.asm
+MARsWork/Examples/bubblesNOP.asm
