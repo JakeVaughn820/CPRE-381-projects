@@ -5,9 +5,9 @@
 -------------------------------------------------------------------------
 
 
--- MIPS_Processor.vhd
+-- MIPS_Processor_no_branchhazard.vhd
 -------------------------------------------------------------------------
--- DESCRIPTION: This file contains a skeleton of a MIPS_Processor
+-- DESCRIPTION: This file contains a skeleton of a MIPS_Processor_no_branchhazard
 -- implementation.
 
 -- 01/29/2019 by H3::Design created.
@@ -17,7 +17,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 
-entity MIPS_Processor is
+entity MIPS_Processor_no_branchhazard is
   generic(N : integer := 32);
   port(iCLK            : in std_logic;
        iRST            : in std_logic;
@@ -26,10 +26,10 @@ entity MIPS_Processor is
        iInstExt        : in std_logic_vector(N-1 downto 0);
        oALUOut         : out std_logic_vector(N-1 downto 0)); -- TODO: Hook this up to the output of the ALU. It is important for synthesis that you have this output that can effectively be impacted by all other components so they are not optimized away.
 
-end  MIPS_Processor;
+end  MIPS_Processor_no_branchhazard;
 
 
-architecture structure of MIPS_Processor is
+architecture structure of MIPS_Processor_no_branchhazard is
 
   -- Required data memory signals
   signal s_DMemWr       : std_logic; -- TODO: use this signal as the final active high data memory write enable signal
@@ -163,7 +163,6 @@ end component;
 
 component IFID_reg is
   port(CLK             : in std_logic;     -- Clock input
-       i_RST           : in std_logic;
        IFID_WriteEn    : in std_logic;     -- if 1 writing is enabled
        IF_PC4          : in std_logic_vector(31 downto 0);
        IF_Inst         : in std_logic_vector(31 downto 0);
@@ -295,82 +294,57 @@ component mux_3to1_32bit is
 
 end component;
 
-component Hazard_detection_Unit is
-  port(ID_RegisterRs   : in std_logic_vector(4 downto 0);
-       ID_RegisterRt   : in std_logic_vector(4 downto 0);
-	   EX_MemRead      : in std_logic;
-	   EX_RegisterRt   : in std_logic_vector(4 downto 0);
-       
-	   PCWrite         : out std_logic;
-	   IFID_Write      : out std_logic;
-	   Mux_Stall       : out std_logic);
-end component;
-
 --signals
   --control
+  signal s_RegDst : std_logic;
+  signal s_Jump : std_logic;
+  signal s_Beq : std_logic;
+  signal s_MemtoReg : std_logic;
+  signal s_ALUOp : std_logic_vector(5 downto 0);
+  signal s_ALUSrc : std_logic;
+  signal s_Shift : std_logic;
+  signal s_SignExtend : std_logic;
+  signal s_UpperImm : std_logic;
+  signal s_Jal : std_logic;
+  signal s_Jr : std_logic;
+  signal s_Bne : std_logic;
 
-
-  signal       s_PCWrite  : std_logic;
   signal       s_pc_plus4 : std_logic_vector(31 downto 0);
-
-  signal       s_Cout : std_logic;
-  signal       s_Overflow : std_logic;
-  signal       s_Zero       : std_logic;
-
-
-
-  --signal       ID_RegDst_out  : std_logic_vector(4 downto 0);
-  signal       s_BranchMux  : std_logic_vector(31 downto 0);
-  signal       IF_JumpMux  : std_logic_vector(31 downto 0);
-  signal       IF_JrMux  : std_logic_vector(31 downto 0);
-  signal       s_ResetMux_out  : std_logic_vector(31 downto 0);
-  
-  --IF register signals
-  signal       IF_flush_or1 : std_logic;
-  signal       IF_flush_ors : std_logic;
-  signal       IF_flush     : std_logic;
-  signal IF_SignExtend : std_logic;
-  signal IF_UpperImm : std_logic;
-  signal IF_Jal : std_logic;
-  signal IF_Jump : std_logic;
-  signal IF_Beq : std_logic;
-  signal IF_Bne : std_logic;
-  signal       IF_JumpAddress      : std_logic_vector(31 downto 0);
-  
-  signal       IF_Beq_and_Zero : std_logic;
-  signal       IF_Bne_and_notEqual : std_logic;
-  signal       s_BranchSel : std_logic;
-  
-  --ID register signals
-  signal ID_RegDst : std_logic;
-  signal ID_MemtoReg : std_logic;
-  signal ID_ALUOp : std_logic_vector(5 downto 0);
-  signal ID_ALUSrc : std_logic;
-  signal ID_Shift : std_logic;
-  signal ID_Jr : std_logic;
-  signal       ID_PC4          : std_logic_vector(31 downto 0);
-  signal       ID_Inst         : std_logic_vector(31 downto 0);
-  signal       ID_opCode       : std_logic_vector(5 downto 0);
-  signal       ID_fnCode       : std_logic_vector(5 downto 0);
-  signal       ID_flush        : std_logic;
-  signal       ID_MemWrite     : std_logic;
-  signal       ID_Halt         : std_logic;
-  signal       ID_ReWrite      : std_logic;
-  signal       Stall_Mux_Out   : std_logic_vector(31 downto 0);
-  signal       ID_rs           : std_logic_vector(4 downto 0);
-  signal       ID_rt           : std_logic_vector(4 downto 0);
-  signal       ID_rd           : std_logic_vector(4 downto 0);
   signal       s_rs_data    : std_logic_vector(31 downto 0);
   signal       s_rt_data    : std_logic_vector(31 downto 0);
   signal       s_reg2 : std_logic_vector(31 downto 0);
   signal       s_32Imm      : std_logic_vector(31 downto 0);
   signal       s_32Imm_Shiftleft2 : std_logic_vector(31 downto 0);
   signal       s_PC_PlusImm      : std_logic_vector(31 downto 0);
+  signal       s_shift_amount : std_logic_vector(4 downto 0);
+  signal       s_ALU_operation  : std_logic_vector(5 downto 0);
+  signal       s_JumpAddress      : std_logic_vector(31 downto 0);
 
-  signal       Mux_Stall       : std_logic;
+  signal       s_Cout : std_logic;
+  signal       s_Overflow : std_logic;
+  signal       s_Zero       : std_logic;
+  signal       s_ALU_result : std_logic_vector(31 downto 0);
+  signal       s_Beq_and_Zero : std_logic;
+  signal       s_Bne_and_notEqual : std_logic;
+  signal       s_BranchSel : std_logic;
+
+  signal       s_shift_out  : std_logic_vector(4 downto 0);
+  signal       s_ALUSrc_out     : std_logic_vector(31 downto 0);
+  --signal       s_RegDst_out  : std_logic_vector(4 downto 0);
+  signal       s_MemtoReg_out     : std_logic_vector(31 downto 0);
+  signal       s_BranchMux  : std_logic_vector(31 downto 0);
+  signal       s_JumpMux  : std_logic_vector(31 downto 0);
+  signal       s_JrMux  : std_logic_vector(31 downto 0);
+  signal       s_ResetMux_out  : std_logic_vector(31 downto 0);
+
+  --ID register signals
+  signal       ID_PC4          : std_logic_vector(31 downto 0);
+  signal       ID_Inst         : std_logic_vector(31 downto 0);
+  signal       ID_flush        : std_logic;
+  signal       ID_MemWrite     : std_logic;
+  signal       ID_Halt         :   std_logic;
+  signal       ID_ReWrite     :   std_logic;
   --IDEX register signals
-  signal       NotEX_Jal_and_ID_flush : std_logic;
-  signal       IFID_WriteEn    :   std_logic;
   signal       IDEX_flush      :   std_logic;
   
   --EX register signals
@@ -397,11 +371,7 @@ end component;
   signal       EX_Halt         :   std_logic; 
   signal       ForwardA_mux_out:   std_logic_vector(31 downto 0);
   signal       ForwardB_mux_out:   std_logic_vector(31 downto 0);
-  signal       EX_Shift_out    : std_logic_vector(4 downto 0);
-  signal       EX_ALUSrc_out     : std_logic_vector(31 downto 0);
-  signal       EX_ALU_result : std_logic_vector(31 downto 0); 
-  signal       ID_Shift_amount : std_logic_vector(4 downto 0);
-  signal       s_ALU_operation  : std_logic_vector(5 downto 0);  
+	
   --MEM register signals
   signal      MEM_RegWrite     :   std_logic;
   signal      MEM_MemtoReg     :   std_logic;
@@ -423,8 +393,7 @@ end component;
   signal      WB_ALUResult    :   std_logic_vector(31 downto 0);
   signal      WB_WriteReg     :   std_logic_vector(4 downto 0);
   signal      WB_PC4          :   std_logic_vector(31 downto 0);
-  signal       WB_MemtoReg_out     : std_logic_vector(31 downto 0);
-
+  
   signal      WB_Halt         :   std_logic; 
   
   signal      ID_equal        :   std_logic;
@@ -468,9 +437,9 @@ begin
 --Mux line that goes into PC
  --Branchmux
    --Logic for Beq and Bne
-   IF_Beq_and_Zero <= IF_Beq AND ID_equal;
-   IF_Bne_and_notEqual <= (IF_Bne AND not(ID_equal));
-   s_BranchSel <= (IF_Beq_and_Zero OR IF_Bne_and_notEqual);
+   s_Beq_and_Zero <= s_Beq AND ID_equal;
+   s_Bne_and_notEqual <= (s_Bne AND not(ID_equal));
+   s_BranchSel <= (s_Beq_and_Zero OR s_Bne_and_notEqual);
 
    Branchmux: mux2_1_D
       port map(i_A => s_pc_plus4,
@@ -481,25 +450,25 @@ begin
 
  --Jumpmux
    --Find jump address for Jump
-   IF_JumpAddress(27 downto 2) <= ID_Inst(25 downto 0);
-   IF_JumpAddress(1 downto 0) <= "00";
-   IF_JumpAddress(31 downto 28) <= ID_PC4(31 downto 28);
+   s_JumpAddress(27 downto 2) <= ID_Inst(25 downto 0);
+   s_JumpAddress(1 downto 0) <= "00";
+   s_JumpAddress(31 downto 28) <= ID_PC4(31 downto 28);
 
    Jumpmux: mux2_1_D
       port map(i_A => s_BranchMux,
-               i_B => IF_JumpAddress,
-               i_X => IF_Jump,
-               o_Y => IF_JumpMux);
+               i_B => s_JumpAddress,
+               i_X => s_Jump,
+               o_Y => s_JumpMux);
  --end Jumpmux
  
    Jrmux: mux2_1_D
-      port map(i_A => IF_JumpMux,
-               i_B => ForwardA_mux_out,
-               i_X => EX_Jr,
-               o_Y => IF_JrMux);		  
+      port map(i_A => s_JumpMux,
+               i_B => s_rs_data,
+               i_X => s_Jr,
+               o_Y => s_JrMux);		  
 
    ResetMux: mux2_1_D
-      port map(i_A => IF_JrMux,
+      port map(i_A => s_JrMux,
                i_B => x"00400000",
                i_X => iRST,
                o_Y => s_ResetMux_out);
@@ -508,7 +477,7 @@ begin
    PC: N_bit_reg
       port map(i_CLK => iCLK,
                i_RST => '0',
-               i_WE => s_PCWrite,
+               i_WE => '1',
                i_D => s_ResetMux_out,
                o_Q => s_NextInstAddr);
 
@@ -521,64 +490,40 @@ begin
                o_Cout => open);		   
 --End IF Stage
 
-   IF_flush_or1 <= s_BranchSel OR IF_Jump;
-   IF_flush <= IF_flush_or1 OR EX_Jr;
-   
    IFID_Register: IFID_reg
       port map(CLK => iCLK,
-	           i_RST => iRST,
-               IFID_WriteEn => IFID_WriteEn,
+               IFID_WriteEn => '1',  --TODO: add stall
                IF_PC4 => s_pc_plus4,
                IF_Inst => s_Inst,
-               IF_flush => IF_flush,
+               IF_flush => iRST,  --TODO: add flush
                ID_PC4 => ID_PC4,
                ID_Inst => ID_Inst,
 	           ID_flush => ID_flush);
 			   
 --ID Stage
-   Hazard_detection_Unit1: Hazard_detection_Unit
-     port map(ID_RegisterRs => ID_Inst(25 downto 21),
-              ID_RegisterRt => ID_Inst(20 downto 16),
-	          EX_MemRead => EX_MemtoReg,
-	          EX_RegisterRt => EX_rt,
-       
-	          PCWrite => s_PCWrite,
-	          IFID_Write => IFID_WriteEn,
-	          Mux_Stall => Mux_Stall);
-
-   Stall_Mux: mux2_1_D
-      port map(i_A => ID_Inst,
-               i_B => x"00000000",
-               i_X => Mux_Stall,
-               o_Y => Stall_Mux_Out);			  
-			   
-   ID_opCode <= Stall_Mux_Out(31 downto 26);
-   ID_fnCode <= Stall_Mux_Out(5 downto 0);
-   
    Control1: Control
-      port map(i_opCode => ID_opCode,
-			   i_fnCode => ID_fnCode,
-               o_RegDst => ID_RegDst,			   
-               o_Jump => IF_Jump,              
-               o_Beq => IF_Beq,			   
-               o_MemtoReg => ID_MemtoReg,
-               o_ALUOp => ID_ALUOp,
+      port map(i_opCode => ID_Inst(31 downto 26),
+			   i_fnCode => ID_Inst(5 downto 0),
+               o_RegDst => s_RegDst,			   
+               o_Jump => s_Jump,              
+               o_Beq => s_Beq,			   
+               o_MemtoReg => s_MemtoReg,
+               o_ALUOp => s_ALUOp,
                o_MemWrite => ID_MemWrite,
-               o_ALUSrc => ID_ALUSrc,
+               o_ALUSrc => s_ALUSrc,
                o_ReWrite => ID_ReWrite,
-               o_Shift => ID_Shift,				   
-               o_SignExtend => IF_SignExtend,
-               o_UpperImm => IF_UpperImm,
-               o_Jal => IF_Jal,
-               o_Jr => ID_Jr,
-               o_Bne => IF_Bne);
-	
-	
+               o_Shift => s_Shift,				   
+               o_SignExtend => s_SignExtend,
+               o_UpperImm => s_UpperImm,
+               o_Jal => s_Jal,
+               o_Jr => s_Jr,
+               o_Bne => s_Bne);
+			   
    RegFile1: RegFile
       port map(i_CLK => iCLK,
 	    i_read_write => s_RegWr,
-		i_rs => ID_rs,
-		i_rt => ID_rt,
+		i_rs => ID_Inst(25 downto 21),
+		i_rt => ID_Inst(20 downto 16),
 		i_rd => s_RegWrAddr,
 		i_reset => iRST,
 		i_data => s_RegWrData,
@@ -592,11 +537,11 @@ begin
        	       o_Equal => ID_equal);
 
    v0 <= s_reg2;
-   ID_Halt <='1' when (ID_opCode = "000000") and (ID_fnCode = "001100") else '0';
+   ID_Halt <='1' when (ID_Inst(31 downto 26) = "000000") and (ID_Inst(5 downto 0) = "001100") else '0';
  
    Ext1: zero_sign_ext_16_32bit
-      port map( i_16in => Stall_Mux_Out(15 downto 0),
-                i_sel => IF_SignExtend,
+      port map( i_16in => ID_Inst(15 downto 0),
+                i_sel => s_SignExtend,
                 o_32out => s_32Imm);	
 
    --32 Imm shifted left two added to pc
@@ -609,37 +554,33 @@ begin
                i_nAdd_Sub => '0',
                o_S => s_PC_PlusImm,
                o_Cout => open);
-			   
-   ID_rs <= Stall_Mux_Out(25 downto 21);
-   ID_rt <= Stall_Mux_Out(20 downto 16);
-   ID_rd <= Stall_Mux_Out(15 downto 11);
 --ID Stage End	
-    NotEX_Jal_and_ID_flush <= (not EX_jal) and ID_flush;
-	IDEX_flush <= NotEX_Jal_and_ID_flush OR iRST;
+
+	IDEX_flush <= ID_flush OR iRST;
 		
 	IDEX_Register: IDEX_reg
 	  port map(CLK => iCLK,
 		   IDEX_WriteEn => '1',  --TODO: add stall
-		   IDEX_flush => IDEX_flush,
+		   IDEX_flush => IDEX_flush,  --TODO: add flush
 
 		   ID_PC4 => ID_PC4,
-		   ID_RegDst => ID_RegDst,
-		   ID_MemtoReg => ID_MemtoReg,
-		   ID_ALUOp => ID_ALUOp,
+		   ID_RegDst => s_RegDst,
+		   ID_MemtoReg => s_MemtoReg,
+		   ID_ALUOp => s_ALUOp,
 		   ID_MemWrite => ID_MemWrite,
-		   ID_ALUSrc => ID_ALUSrc,
+		   ID_ALUSrc => s_ALUSrc,
 		   ID_ReWrite => ID_ReWrite,
-		   ID_Shift => ID_Shift,
-		   ID_UpperImm => IF_UpperImm,
-		   ID_Jr => ID_Jr,
-		   ID_jal => IF_Jal,
+		   ID_Shift => s_Shift,
+		   ID_UpperImm => s_UpperImm,
+		   ID_Jr => s_Jr,
+		   ID_jal => s_Jal,
 		   ID_Rs_data => s_rs_data,
 		   ID_Rt_data => s_rt_data,
 		   ID_32Imm => s_32Imm,
-		   ID_rs => ID_rs,
-		   ID_rt => ID_rt,
-		   ID_rd => ID_rd,
-		   ID_Funct => ID_fnCode,
+		   ID_rs => ID_Inst(25 downto 21),
+		   ID_rt => ID_Inst(20 downto 16),
+		   ID_rd => ID_Inst(15 downto 11),
+		   ID_Funct => ID_Inst(5 downto 0),
 		   ID_Shift_Amount => ID_Inst(10 downto 6),
 		   ID_Halt => ID_Halt, 
 
@@ -669,14 +610,14 @@ begin
       port map(i_0 => EX_Shift_Amount,
                i_1 => EX_Rs_data(4 downto 0),
                sel => EX_Shift,
-               o_f => EX_Shift_out);
+               o_f => s_shift_out);
 	
 	
    UpperImm: mux_2to1_5bit
-      port map(i_0 => EX_Shift_out,
+      port map(i_0 => s_shift_out,
                i_1 => "10000",
                sel => EX_UpperImm,
-               o_f => ID_Shift_amount);
+               o_f => s_shift_amount);
 	
    ForwardA_mux: mux_3to1_32bit
       port map(i_0 => EX_Rs_data,
@@ -696,7 +637,7 @@ begin
       port map(i_A => ForwardB_mux_out,
                i_B => EX_32Imm,
                i_X => EX_ALUSrc,
-               o_Y => EX_ALUSrc_out);
+               o_Y => s_ALUSrc_out);
 	
    Control_ALU1: Control_ALU
      port map (i_opCode => EX_ALUOp,
@@ -705,10 +646,10 @@ begin
 
    ALU1: ALU_and_Shifter
      port map(A => ForwardA_mux_out,
-              B => EX_ALUSrc_out,
+              B => s_ALUSrc_out,
               ALUOp => s_ALU_operation,
-              Shift_Amount => ID_Shift_amount,
-              F => EX_ALU_result,
+              Shift_Amount => s_shift_amount,
+              F => s_ALU_result,
               Carryout => s_Cout,
               Overflow => s_Overflow,
               Zero => s_Zero);
@@ -719,7 +660,7 @@ begin
                sel => EX_RegDst,
                o_f => EX_WriteReg);
 
-   oALUOut <= EX_ALU_result;
+   oALUOut <= s_ALU_result;
 --EX Stage End
 	
 	EXMEM_Register: EXMEM_reg
@@ -732,7 +673,7 @@ begin
 		  EX_MemtoReg => EX_MemtoReg,
 		  EX_MemWrite => EX_MemWrite,
 		  EX_jal => EX_jal,
-		  EX_ALUResult => EX_ALU_result,
+		  EX_ALUResult => s_ALU_result,
 		  EX_WriteData => EX_Rt_data,
 		  EX_WriteReg => EX_WriteReg,
 		  EX_PC4 => EX_PC4,
@@ -789,10 +730,10 @@ begin
       port map(i_A => WB_ALUResult,
                i_B => WB_DMemOut,
                i_X => WB_MemtoReg,
-               o_Y => WB_MemtoReg_out);
+               o_Y => s_MemtoReg_out);
 			   
    JalMemtoReg: mux2_1_D
-      port map(i_A => WB_MemtoReg_out,
+      port map(i_A => s_MemtoReg_out,
                i_B => WB_PC4,
                i_X => WB_jal,
                o_Y => s_RegWrData);

@@ -3,8 +3,9 @@ MARsWork/Examples/lab3Seq.asm
 MARsWork/Examples/fibonacci.asm
 MARsWork/Examples/sampleAssembly.asm
 MARsWork/Examples/simplebranch.asm
-MARsWork/Examples/project-b_test1.asm
+MARsWork/Examples/Proj-B_test3.asm
 MARsWork/Examples/N_queens.asm
 
 MARsWork/Examples/phase1.asm
 MARsWork/Examples/bubblesNOP.asm
+MARsWork/Examples/bubbles.asm

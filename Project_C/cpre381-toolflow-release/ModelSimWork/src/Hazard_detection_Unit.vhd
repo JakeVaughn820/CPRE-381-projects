@@ -1,0 +1,60 @@
+-------------------------------------------------------------------------
+-- Jacob Vaughn
+-- Nickolas Mitchell
+-------------------------------------------------------------------------
+
+-- Hazard_detection_Unit.vhd
+library IEEE;
+use IEEE.std_logic_1164.all;
+use ieee.std_logic_misc.all;
+
+entity Hazard_detection_Unit is
+  port(ID_RegisterRs   : in std_logic_vector(4 downto 0);
+       ID_RegisterRt   : in std_logic_vector(4 downto 0);
+	   EX_MemRead      : in std_logic;
+	   EX_RegisterRt   : in std_logic_vector(4 downto 0);
+       
+	   PCWrite         : out std_logic;
+	   IFID_Write      : out std_logic;
+	   Mux_Stall       : out std_logic);
+end Hazard_detection_Unit;
+
+architecture arch of Hazard_detection_Unit is
+
+component Equal_5bit is
+  generic(N : integer := 5);
+  port( i_A  : in std_logic_vector(N-1 downto 0);
+	    i_B  : in std_logic_vector(N-1 downto 0);
+       	o_Equal  : out std_logic);
+
+end component;
+
+ --signals
+
+signal       EXRt_EQUAL_IDRs            : std_logic;
+signal       EXRt_EQUAL_IDRt            : std_logic;
+signal       EXRt_EQUAL_IDRs_OR_EXRt_EQUAL_IDRt :std_logic;
+signal       EX_MemRead_AND_EXRt_EQUAL_IDRs_OR_EXRt_EQUAL_IDRt    : std_logic;
+
+
+begin
+
+EXRt_EQUAL_IDRs_Equal: Equal_5bit
+  port map( i_A => EX_RegisterRt,
+	        i_B => ID_RegisterRs,
+       	    o_Equal => EXRt_EQUAL_IDRs);
+		
+EXRt_EQUAL_IDRt_Equal: Equal_5bit
+  port map( i_A => EX_RegisterRt,
+	        i_B => ID_RegisterRs,
+       	    o_Equal => EXRt_EQUAL_IDRt);
+
+EXRt_EQUAL_IDRs_OR_EXRt_EQUAL_IDRt <= EXRt_EQUAL_IDRs OR EXRt_EQUAL_IDRt;
+
+EX_MemRead_AND_EXRt_EQUAL_IDRs_OR_EXRt_EQUAL_IDRt <= EX_MemRead AND EXRt_EQUAL_IDRs_OR_EXRt_EQUAL_IDRt;
+
+PCWrite <= not EX_MemRead_AND_EXRt_EQUAL_IDRs_OR_EXRt_EQUAL_IDRt;
+IFID_Write <= not EX_MemRead_AND_EXRt_EQUAL_IDRs_OR_EXRt_EQUAL_IDRt;
+Mux_Stall <= EX_MemRead_AND_EXRt_EQUAL_IDRs_OR_EXRt_EQUAL_IDRt;
+
+end arch;
