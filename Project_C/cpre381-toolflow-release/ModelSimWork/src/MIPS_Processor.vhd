@@ -478,7 +478,7 @@ begin
                o_MemWrite => ID_MemWrite,
                o_ALUSrc => s_ALUSrc,
                o_ReWrite => s_RegWr,
-               o_Shift => s_shift,
+               o_Shift => s_Shift,	
                o_SignExtend => s_SignExtend,
                o_UpperImm => s_UpperImm,
                o_Jal => s_Jal,
@@ -638,11 +638,9 @@ begin
 		  MEM_Halt => MEM_Halt); 
 		
 --MEM Stage	
-   s_DMemAddr <= MEM_ALUResult;
-   s_DMemData <= MEM_WriteData;
+   s_DMemData <= MEM_ALUResult;
+   s_DMemAddr <= MEM_WriteData;
    s_DMemWr <= MEM_MemWrite;
-
-
 
 --MEM Stage	End
 
@@ -655,7 +653,7 @@ begin
 		  MEM_RegWrite => MEM_RegWrite,
 		  MEM_MemtoReg => MEM_MemtoReg,
 		  MEM_jal => MEM_jal,
-		  MEM_DMemOut => MEM_DMemOut,
+		  MEM_DMemOut => s_DMemOut,
 		  MEM_ALUResult => MEM_ALUResult,
 		  MEM_WriteReg => MEM_WriteReg,
 		  MEM_PC4 => MEM_PC4,
