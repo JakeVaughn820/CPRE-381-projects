@@ -5,9 +5,9 @@
 -------------------------------------------------------------------------
 
 
--- MIPS_Processor.vhd
+-- MIPS_Processor_no_forwarding.vhd
 -------------------------------------------------------------------------
--- DESCRIPTION: This file contains a skeleton of a MIPS_Processor
+-- DESCRIPTION: This file contains a skeleton of a MIPS_Processor_no_forwarding
 -- implementation.
 
 -- 01/29/2019 by H3::Design created.
@@ -17,7 +17,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 
-entity MIPS_Processor is
+entity MIPS_Processor_no_forwarding is
   generic(N : integer := 32);
   port(iCLK            : in std_logic;
        iRST            : in std_logic;
@@ -26,10 +26,10 @@ entity MIPS_Processor is
        iInstExt        : in std_logic_vector(N-1 downto 0);
        oALUOut         : out std_logic_vector(N-1 downto 0)); -- TODO: Hook this up to the output of the ALU. It is important for synthesis that you have this output that can effectively be impacted by all other components so they are not optimized away.
 
-end  MIPS_Processor;
+end  MIPS_Processor_no_forwarding;
 
 
-architecture structure of MIPS_Processor is
+architecture structure of MIPS_Processor_no_forwarding is
 
   -- Required data memory signals
   signal s_DMemWr       : std_logic; -- TODO: use this signal as the final active high data memory write enable signal
@@ -275,25 +275,6 @@ component MEMWB_reg is
 
 end component;
 
-component Forward_Unit is
-  port(WB_RegWrite     : in std_logic;
-  	   WB_RegisterRd   : in std_logic_vector(4 downto 0);
-       MEM_RegWrite    : in std_logic;
-	   MEM_RegisterRd  : in std_logic_vector(4 downto 0);
-	   EX_RegisterRs   : in std_logic_vector(4 downto 0);
-	   EX_RegisterRt   : in std_logic_vector(4 downto 0);
-	   ForwardA        : out std_logic_vector(1 downto 0);
-	   ForwardB        : out std_logic_vector(1 downto 0));
-end component;
-
-component mux_3to1_32bit is
-
-  port(i_0, i_1, i_2       : in std_logic_vector(31 downto 0);
-       i_sel				: in std_logic_vector(1 downto 0); 
-       o_F          	    : out std_logic_vector(31 downto 0));
-
-end component;
-
 --signals
   --control
   signal s_RegDst : std_logic;
@@ -369,9 +350,7 @@ end component;
   signal       EX_Shift_Amount :   std_logic_vector(4 downto 0);
   signal       EX_WriteReg     :   std_logic_vector(4 downto 0);
   signal       EX_Halt         :   std_logic; 
-  signal       ForwardA_mux_out:   std_logic_vector(31 downto 0);
-  signal       ForwardB_mux_out:   std_logic_vector(31 downto 0);
-	
+  
   --MEM register signals
   signal      MEM_RegWrite     :   std_logic;
   signal      MEM_MemtoReg     :   std_logic;
@@ -397,10 +376,6 @@ end component;
   signal      WB_Halt         :   std_logic; 
   
   signal      ID_equal        :   std_logic;
-  
-  signal      ForwardA        :   std_logic_vector(1 downto 0);
-  signal      ForwardB        :   std_logic_vector(1 downto 0);
-
 begin
 
   -- TODO: This is required to be your final input to your instruction memory. This provides a feasible method to externally load the memory module which means that the synthesis tool must assume it knows nothing about the values stored in the instruction memory. If this is not included, much, if not all of the design is optimized out because the synthesis tool will believe the memory to be all zeros.
@@ -618,23 +593,9 @@ begin
                i_1 => "10000",
                sel => EX_UpperImm,
                o_f => s_shift_amount);
-	
-   ForwardA_mux: mux_3to1_32bit
-      port map(i_0 => EX_Rs_data,
-               i_1 => s_RegWrData,
- 			   i_2 => MEM_ALUResult,
-               i_sel => ForwardA,
-               o_F => ForwardA_mux_out);
-
-   ForwardB_mux: mux_3to1_32bit
-      port map(i_0 => EX_Rt_data,
-               i_1 => s_RegWrData,
- 			   i_2 => MEM_ALUResult,
-               i_sel => ForwardB,
-               o_F => ForwardB_mux_out);
 			   
    ALUSrc: mux2_1_D
-      port map(i_A => ForwardB_mux_out,
+      port map(i_A => EX_Rt_data,
                i_B => EX_32Imm,
                i_X => EX_ALUSrc,
                o_Y => s_ALUSrc_out);
@@ -645,7 +606,7 @@ begin
                o_ALU_operation => s_ALU_operation);
 
    ALU1: ALU_and_Shifter
-     port map(A => ForwardA_mux_out,
+     port map(A => EX_Rs_data,
               B => s_ALUSrc_out,
               ALUOp => s_ALU_operation,
               Shift_Amount => s_shift_amount,
@@ -747,44 +708,6 @@ begin
 			   		
    s_Halt <= '1' when (WB_Halt = '1') and (v0 = "00000000000000000000000000001010") else '0';	   
 --WB Stage End
-
---Forwarding
-
-Forward_unit1: Forward_Unit
-  port map(WB_RegWrite => WB_RegWr,
-  	   WB_RegisterRd => s_RegWrAddr,
-       MEM_RegWrite => MEM_RegWrite,
-	   MEM_RegisterRd => MEM_WriteReg,
-	   EX_RegisterRs => EX_rs,
-	   EX_RegisterRt => EX_rt,
-	   ForwardA => ForwardA,
-	   ForwardB => ForwardB);
-	   
---End Forwarding
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
