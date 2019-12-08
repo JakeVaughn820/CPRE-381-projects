@@ -111,7 +111,7 @@ equal:          sll $0, $0, 0
 		sll $0, $0, 0
 		sll $0, $0, 0
 		sll $0, $0, 0
-	    bne $1, $8, na
+	        bne $1, $8, na
 		sll $0, $0, 0
 		sll $0, $0, 0
 		sll $0, $0, 0
@@ -161,7 +161,7 @@ message:
 na:   sll $0, $0, 0
       sll $0, $0, 0
       sll $0, $0, 0 
-      add $31, $1, $2  		#If $t7 = 3, it's bad.
+      add $20, $1, $2  		#If $t7 = 3, it's bad.
 
 #addi $2, $0, 0		# Clear reg2
 sll $0, $0, 0
