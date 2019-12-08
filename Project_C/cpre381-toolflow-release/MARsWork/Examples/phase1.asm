@@ -111,11 +111,9 @@ equal:          sll $0, $0, 0
 		sll $0, $0, 0
 		sll $0, $0, 0
 		sll $0, $0, 0
-	        bne $1, $8, na
-		sll $0, $0, 0
-		sll $0, $0, 0
-		sll $0, $0, 0
-	    bne $4, $5, jumping
+	        #beq $1, $8, na
+	        bne $4, $5, jumping
+	        j jumping
 	
 jumping:        sll $0, $0, 0
 		sll $0, $0, 0
@@ -124,18 +122,36 @@ jumping:        sll $0, $0, 0
 
 next:	        sll $0, $0, 0
 		sll $0, $0, 0
-		sll $0, $0, 0   
-		jal message
 		sll $0, $0, 0
 		sll $0, $0, 0
 		sll $0, $0, 0
-	    jal message
+		sll $0, $0, 0
+		sll $0, $0, 0
+		sll $0, $0, 0      
+		#jal message
+		sll $0, $0, 0
+		sll $0, $0, 0
+		sll $0, $0, 0
+		sll $0, $0, 0
+		sll $0, $0, 0
+		sll $0, $0, 0
+		sll $0, $0, 0
+		sll $0, $0, 0 
+	        #jal message
 	    	#li $16, 10
 		lui $at, 0x1001
 		sll $0, $0, 0
 		sll $0, $0, 0
 		sll $0, $0, 0
+		sll $0, $0, 0
+		sll $0, $0, 0 
 		ori $17, $at, 0x1111
+		sll $0, $0, 0
+		sll $0, $0, 0
+		sll $0, $0, 0
+		sll $0, $0, 0
+		sll $0, $0, 0 
+		j end
 
 message:
 		sll $0, $0, 0
@@ -163,9 +179,10 @@ na:   sll $0, $0, 0
       sll $0, $0, 0 
       add $20, $1, $2  		#If $t7 = 3, it's bad.
 
-#addi $2, $0, 0		# Clear reg2
-sll $0, $0, 0
-sll $0, $0, 0
-sll $0, $0, 0
-addi $2, $0, 10 	# Cause the halt 
-syscall 		# Halt 
+end: 
+	#addi $2, $0, 0		# Clear reg2
+	sll $0, $0, 0
+	sll $0, $0, 0
+	sll $0, $0, 0
+	addi $2, $0, 10 	# Cause the halt 
+	syscall 		# Halt 
