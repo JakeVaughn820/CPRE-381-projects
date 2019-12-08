@@ -439,7 +439,7 @@ begin
    Jrmux: mux2_1_D
       port map(i_A => s_JumpMux,
                i_B => s_rs_data,
-               i_X => s_Jr,
+               i_X => EX_Jr,
                o_Y => s_JrMux);		  
 
    ResetMux: mux2_1_D
