@@ -413,8 +413,13 @@ begin
  --Branchmux
    --Logic for Beq and Bne
    s_Beq_and_Zero <= s_Beq AND ID_equal;
+<<<<<<< HEAD
    s_Bne_and_notEqual <= (s_Bne and (not ID_equal));
    s_BranchSel <= (s_Beq_and_Zero OR s_Bne_and_notEqual);
+=======
+   s_NotBne_Nor_Zero <= (s_Bne AND not(ID_equal));
+   s_BranchSel <= (s_Beq_and_Zero OR s_NotBne_Nor_Zero);
+>>>>>>> d08e183dd6e04ab249f9b97919dab1b498501d67
 
    Branchmux: mux2_1_D
       port map(i_A => s_pc_plus4,
@@ -652,8 +657,8 @@ begin
 		  MEM_Halt => MEM_Halt); 
 		
 --MEM Stage	
-   s_DMemData <= MEM_ALUResult;
-   s_DMemAddr <= MEM_WriteData;
+   s_DMemData <= MEM_WriteData;
+   s_DMemAddr <= MEM_ALUResult;
    s_DMemWr <= MEM_MemWrite;
 
 --MEM Stage	End
@@ -674,7 +679,7 @@ begin
 		  MEM_Halt => MEM_Halt, 
 
 		  --Outputs (WB)
-		  WB_RegWrite => s_RegWr,
+		  WB_RegWrite => WB_RegWr,
 		  WB_MemtoReg => WB_MemtoReg,
 		  WB_jal => WB_jal,
 		  WB_DMemOut => WB_DMemOut,
@@ -685,7 +690,7 @@ begin
 
 
 --WB Stage	
-
+   s_RegWr <= WB_RegWr;
    
    MemtoReg: mux2_1_D
       port map(i_A => WB_ALUResult,
