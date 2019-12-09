@@ -11,4 +11,5 @@ MARsWork/Examples/bubblesNOP.asm
 MARsWork/Examples/bubbles.asm
 
 
-N_queens runs in 10:57.94 !!!!
+Single cycle it runs in 10:33.38
+N_queens runs in 10:57.94 
