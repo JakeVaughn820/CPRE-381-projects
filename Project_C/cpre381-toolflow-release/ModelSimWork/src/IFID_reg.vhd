@@ -41,25 +41,25 @@ end component;
 
   signal reset : std_logic;
 begin
-   reset <= i_RST or ID_flush;
-   
+
+
    IFID_PC4_reg: N_bit_reg
    port map(i_CLK => CLK,
-            i_RST => reset,
+            i_RST => i_RST,
             i_WE => IFID_WriteEn,
             i_D => IF_PC4,
             o_Q => ID_PC4);
 
    IFID_Inst_reg: N_bit_reg
    port map(i_CLK => CLK,
-            i_RST => reset,
+            i_RST => i_RST,
             i_WE => IFID_WriteEn,
             i_D => IF_Inst,
             o_Q => ID_Inst);
 
    IFID_flush_reg: one_bit_reg
    port map(i_CLK => CLK,
-            i_RST => reset,
+            i_RST => i_RST,
             i_WE => IFID_WriteEn,
             i_D => IF_flush,
             o_Q => ID_flush);
