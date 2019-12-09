@@ -110,9 +110,9 @@ component mux_2to1_5bit is
 end component;
 
 component mux_2to1_1bit is
-  port(i_0, i_1 : in std_logic_vector;
-       sel  : in std_logic;
-       o_f  : out std_logic_vector);
+  port(i_0, i_1 : in std_logic;
+       i_sel  : in std_logic;
+       o_f  : out std_logic);
 end component;
 
 component N_bit_reg is
@@ -369,7 +369,6 @@ end component;
   signal       ID_Halt         : std_logic;
   signal       s_ReWrite       : std_logic;
   signal       ID_ReWrite      : std_logic;
-  signal       ID_Inst   : std_logic_vector(31 downto 0);
   signal       ID_rs           : std_logic_vector(4 downto 0);
   signal       ID_rt           : std_logic_vector(4 downto 0);
   signal       ID_rd           : std_logic_vector(4 downto 0);
@@ -432,8 +431,8 @@ end component;
 
   --WB register signals
   signal      WB_RegWr        :   std_logic;
-  signal      WB_RegWrData    :   std_logic;
-  signal      WB_RegWrAddr    :   std_logic;
+  signal      WB_RegWrData    :   std_logic_vector(31 downto 0);
+  signal      WB_RegWrAddr    :   std_logic_vector(4 downto 0);
   signal      WB_MemtoReg     :   std_logic;
   signal      WB_jal          :   std_logic;
   signal      WB_DMemOut      :   std_logic_vector(31 downto 0);
@@ -536,7 +535,7 @@ begin
 --End IF Stage
 
    s_BranchSel_OR_ID_Jump <= s_BranchSel OR ID_Jump;
-   IF_flush <= s_BranchSel_OR_ID_Jump OR ID_Jr
+   IF_flush <= s_BranchSel_OR_ID_Jump OR ID_Jr;
    IFID_reset <= ID_flush OR iRST;
 
    IFID_Register: IFID_reg
@@ -590,19 +589,19 @@ begin
    Stall_RegWr_Mux: mux_2to1_1bit
      port map(i_0 => s_ReWrite,
               i_1 => '0',
-              sel => Mux_Stall,
+              i_sel => Mux_Stall,
               o_f => ID_ReWrite);
 
    Stall_MemWr_Mux: mux_2to1_1bit
      port map(i_0 => s_MemWrite,
               i_1 => '0',
-              sel => Mux_Stall,
+              i_sel => Mux_Stall,
               o_f => ID_MemWrite);
 
    Stall_MemtoReg_Mux: mux_2to1_1bit
-     port map(i_0 => s_MemWrite,
+     port map(i_0 => s_MemtoReg,
               i_1 => '0',
-              sel => Mux_Stall,
+              i_sel => Mux_Stall,
               o_f => ID_MemtoReg);
 
    RegFile1: RegFile
@@ -632,6 +631,9 @@ begin
                i_3 => EX_ALU_result,
                i_sel => ForwardB,
                o_F => ID_rt_data);
+
+ForwardA_mux_out <= ID_Rs_data;
+ForwardB_mux_out <= ID_Rt_data;
 
    Equal_rs_rt: Equal
       port map(i_A => ID_rs_data,
@@ -735,7 +737,7 @@ begin
                o_f => s_Shift_amount);
 
    ALUSrc: mux2_1_D
-      port map(i_A => ForwardB_mux_out,
+      port map(i_A => EX_Rt_data,
                i_B => EX_32Imm,
                i_X => EX_ALUSrc,
                o_Y => EX_ALUSrc_out);
@@ -746,7 +748,7 @@ begin
                o_ALU_operation => s_ALU_operation);
 
    ALU1: ALU_and_Shifter
-     port map(A => ForwardA_mux_out,
+     port map(A => EX_Rs_data,
               B => EX_ALUSrc_out,
               ALUOp => s_ALU_operation,
               Shift_Amount => s_Shift_amount,

@@ -17,7 +17,7 @@ end mux_3to1_32bit;
 
 architecture dataflow of mux_3to1_32bit is
 begin
-   process(i_sel, i_0, i_1, i_2)
+   process(i_sel, i_0, i_1, i_2, i_3)
    begin
    case i_sel is
     when "00" => o_F <= i_0;

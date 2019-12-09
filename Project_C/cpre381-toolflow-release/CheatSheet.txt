@@ -9,3 +9,6 @@ MARsWork/Examples/N_queens.asm
 MARsWork/Examples/phase1.asm
 MARsWork/Examples/bubblesNOP.asm
 MARsWork/Examples/bubbles.asm
+
+
+N_queens runs in 10:57.94 !!!!
