@@ -287,8 +287,6 @@ component Forward_Unit is
        WB_RegisterRd   : in std_logic_vector(4 downto 0);
        MEM_RegWrite    : in std_logic;
        MEM_RegisterRd  : in std_logic_vector(4 downto 0);
-       EX_RegWrite     : in std_logic;
-       EX_RegisterRd   : in std_logic_vector(4 downto 0);
        ID_RegisterRs   : in std_logic_vector(4 downto 0);
        ID_RegisterRt   : in std_logic_vector(4 downto 0);
        ForwardA        : out std_logic_vector(1 downto 0);
@@ -310,6 +308,8 @@ component Hazard_detection_Unit is
        EX_RegisterRt    : in std_logic_vector(4 downto 0);
        MEM_MemRead      : in std_logic;
        MEM_WriteRegister: in std_logic_vector(4 downto 0);
+	   EX_RegWrite     : in std_logic;
+       EX_RegisterRd   : in std_logic_vector(4 downto 0);
        PCWrite          : out std_logic;
        IFID_Write       : out std_logic;
        Mux_Stall        : out std_logic);
@@ -564,6 +564,8 @@ begin
               EX_RegisterRt => EX_rt,
               MEM_MemRead => MEM_MemtoReg,
               MEM_WriteRegister => MEM_WriteReg,
+              EX_RegWrite => EX_ReWrite,
+              EX_RegisterRd => EX_WriteReg,			  
               PCWrite => s_PCWrite,
               IFID_Write => IFID_WriteEn,
               Mux_Stall => Mux_Stall);
@@ -620,7 +622,7 @@ begin
       port map(i_0 => s_rs_data,
                i_1 => WB_RegWrData,
                i_2 => MEM_ALUResult,
-               i_3 => EX_ALU_result,
+               i_3 => x"00000000",
                i_sel => ForwardA,
                o_F => ID_rs_data);
 
@@ -628,7 +630,7 @@ begin
       port map(i_0 => s_rt_data,
                i_1 => WB_RegWrData,
                i_2 => MEM_ALUResult,
-               i_3 => EX_ALU_result,
+               i_3 => x"00000000", --EX_ALU_result,
                i_sel => ForwardB,
                o_F => ID_rt_data);
 
@@ -661,8 +663,6 @@ ForwardB_mux_out <= ID_Rt_data;
               WB_RegisterRd => s_RegWrAddr,
               MEM_RegWrite => MEM_RegWrite,
               MEM_RegisterRd => MEM_WriteReg,
-              EX_RegWrite => EX_ReWrite,
-              EX_RegisterRd => EX_WriteReg,
               ID_RegisterRs => ID_rs,
               ID_RegisterRt => ID_rt,
               ForwardA => ForwardA,

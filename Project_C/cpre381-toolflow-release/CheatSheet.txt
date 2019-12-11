@@ -11,5 +11,7 @@ MARsWork/Examples/bubblesNOP.asm
 MARsWork/Examples/bubbles.asm
 
 
+N_queens runs in
 Single cycle it runs in 10:33.38
-N_queens runs in 10:57.94 
+Piplined w/ forward from EX 10:57.94 
+Piplined w/ stall if forward from EX 11:35.18
