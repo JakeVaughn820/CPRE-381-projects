@@ -33,9 +33,6 @@ sort:
 # Scan inner-loop
 scan:
     #la $t3, array
-    #sll $0, $0, 0
-    #sll $0, $0, 0
-    sll $0, $0, 0 
     lui $1, 0x00001001
     sll $0, $0, 0
     sll $0, $0, 0
@@ -53,26 +50,14 @@ scan:
     sll $0, $0, 0
     sll $0, $0, 0           
     lw $a1, 4($t3)
-    #sll $0, $0, 0
-    #sll $0, $0, 0
-    #sll $0, $0, 0                        
-    jal compare
-    #sll $0, $0, 0
-    #sll $0, $0, 0
-    #sll $0, $0, 0              
+    sll $0, $0, 0                        
+    jal compare             
     #bne $v0, 1, less
     addi $1, $0, 0x00000001
-    sll $0, $0, 0
-    sll $0, $0, 0
     sll $0, $0, 0  
     bne $1, $2, less
-    #sll $0, $0, 0 
-    #sll $0, $0, 0
-    #sll $0, $0, 0          
-    jal swap
-    #sll $0, $0, 0
-    #sll $0, $0, 0  
-    #sll $0, $0, 0                    
+    sll $0, $0, 0          
+    jal swap                   
     sw $a0, 0($t3)
     sll $0, $0, 0
     sll $0, $0, 0  
@@ -82,12 +67,7 @@ scan:
 #Exit if no swaps happend, else go back to scan
 less:
     #beq $t1, 0, exit
-    sll $0, $0, 0
-    sll $0, $0, 0  
-    sll $0, $0, 0 
-    addi $1, $0, 0x00000000
-    sll $0, $0, 0
-    sll $0, $0, 0  
+    addi $1, $0, 0x00000000 
     sll $0, $0, 0
     beq $1, $9, exit 
     sll $0, $0, 0
@@ -104,9 +84,7 @@ less:
     addi $t4, $t4, 4
     sll $0, $0, 0          
     #blt $t2, $t6, scan
-    slt $1, $10, $14
-    sll $0, $0, 0
-    sll $0, $0, 0  
+    slt $1, $10, $14 
     sll $0, $0, 0 
     bne $1, $0, scan 
     sll $0, $0, 0
@@ -115,9 +93,7 @@ less:
     addi $8, $8, 1
     sll $0, $0, 0          
     #blt $t0, $t7, sort
-    slt $1, $8, $15
-    sll $0, $0, 0
-    sll $0, $0, 0  
+    slt $1, $8, $15  
     sll $0, $0, 0 
     bne $1, $0, sort 
     sll $0, $0, 0       
@@ -131,15 +107,10 @@ compare:
     sll $0, $0, 0                 
     #sgt $v0, $a0, $a1
     slt $2, $5, $4
-    sll $0, $0, 0
-    sll $0, $0, 0  
     sll $0, $0, 0                            
     jr $ra
 
 swap:
-    sll $0, $0, 0
-    sll $0, $0, 0
-    sll $0, $0, 0
     add  $s0, $0, $a0
     sll $0, $0, 0
     sll $0, $0, 0  
@@ -150,9 +121,7 @@ swap:
     sll $0, $0, 0        
     add  $a1, $0, $s0       
     #li $t1, 1
-    addiu $9, $0, 0x00000001
-    sll $0, $0, 0
-    sll $0, $0, 0  
+    addiu $9, $0, 0x00000001  
     sll $0, $0, 0                
     jr $ra
 
@@ -186,20 +155,13 @@ print:
     addi $a3, $a3, 1        
     #blt $a3, $t7, print
     slt $1, $7, $15
-    sll $0, $0, 0
-    sll $0, $0, 0  
     sll $0, $0, 0 
-    bne $1, $0, print
-    sll $0, $0, 0
-    sll $0, $0, 0  
+    bne $1, $0, print 
     sll $0, $0, 0     
     jr $ra
 
 exit:
     #li $a2, 0
-    sll $0, $0, 0
-    sll $0, $0, 0  
-    sll $0, $0, 0 
     addiu $6, $0, 0x00000000              
     #li $a3, 0
     addiu $7, $0, 0x00000000
